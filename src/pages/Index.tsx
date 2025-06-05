@@ -3,368 +3,217 @@ import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Heart, BookOpen, Users, MessageCircle, Compass, Shield, Home, Scale, ArrowRight, Menu, X } from "lucide-react";
+import { Heart, BookOpen, Users, MessageCircle, Compass, Shield, Home, Scale, ArrowRight, Menu, X, Sparkles, Star, Zap } from "lucide-react";
 import { NavigationMenu } from "@/components/NavigationMenu";
-import { ModuleCard } from "@/components/ModuleCard";
-import { StoryCard } from "@/components/StoryCard";
-import { InteractiveTools } from "@/components/InteractiveTools";
-import { CommunitySection } from "@/components/CommunitySection";
-
-const caregivingModules = [
-  {
-    id: "new-to-caregiving",
-    title: "New to Caregiving",
-    description: "Guidance for those starting their caregiving journey",
-    icon: Compass,
-    color: "bg-emerald-100 text-emerald-700",
-    stories: ["Reluctantly", "Obligatory", "Overwhelmed"]
-  },
-  {
-    id: "conflicts",
-    title: "Conflicts",
-    description: "Strategies for resolving common caregiving tensions",
-    icon: MessageCircle,
-    color: "bg-amber-100 text-amber-700",
-    stories: ["Timeliness", "Money Matters", "Family Dynamics"]
-  },
-  {
-    id: "housing",
-    title: "Housing",
-    description: "Navigating housing decisions for seniors",
-    icon: Home,
-    color: "bg-blue-100 text-blue-700",
-    stories: ["Not in the Same City", "Shared Housing with Other Care Recipients"]
-  },
-  {
-    id: "safety",
-    title: "Safety",
-    description: "Ensuring safety for caregivers and care recipients",
-    icon: Shield,
-    color: "bg-red-100 text-red-700",
-    stories: ["Financial Obstacles", "Hazard Falls"]
-  },
-  {
-    id: "dependence",
-    title: "Dependence",
-    description: "Coping with increasing dependence",
-    icon: Heart,
-    color: "bg-purple-100 text-purple-700",
-    stories: ["Independence vs Safety", "Role Reversal"]
-  },
-  {
-    id: "legal",
-    title: "Legal",
-    description: "Understanding legal responsibilities",
-    icon: Scale,
-    color: "bg-indigo-100 text-indigo-700",
-    stories: ["Power of Attorney", "Healthcare Directives"]
-  },
-  {
-    id: "transition",
-    title: "Transition",
-    description: "Managing significant changes in caregiving",
-    icon: ArrowRight,
-    color: "bg-teal-100 text-teal-700",
-    stories: ["Moving to Care Facility", "Changing Needs"]
-  },
-  {
-    id: "end-of-life",
-    title: "End of Life",
-    description: "Support for life's final stages",
-    icon: Heart,
-    color: "bg-rose-100 text-rose-700",
-    stories: ["Difficult Conversations", "Comfort Care"]
-  },
-  {
-    id: "end-of-caregiving",
-    title: "End of Caregiving",
-    description: "Finding closure after caregiving concludes",
-    icon: BookOpen,
-    color: "bg-slate-100 text-slate-700",
-    stories: ["Grief and Healing", "Moving Forward"]
-  }
-];
+import { FloatingModuleGrid } from "@/components/FloatingModuleGrid";
+import { CreativeStorySection } from "@/components/CreativeStorySection";
+import { InteractiveToolsRevamped } from "@/components/InteractiveToolsRevamped";
+import { ArtisticCommunitySection } from "@/components/ArtisticCommunitySection";
 
 const Index = () => {
-  const [selectedModule, setSelectedModule] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-rose-50 via-white to-blue-50">
-      {/* Header */}
-      <header className="bg-white/80 backdrop-blur-sm border-b border-rose-100 sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <Heart className="h-8 w-8 text-rose-500" />
-              <h1 className="text-2xl font-bold text-gray-800">Experiences of Living</h1>
+    <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 relative overflow-hidden">
+      {/* Animated Background Elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-20 left-10 w-72 h-72 bg-blue-400/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute top-40 right-20 w-96 h-96 bg-purple-400/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute bottom-20 left-1/3 w-80 h-80 bg-pink-400/20 rounded-full blur-3xl animate-pulse delay-2000"></div>
+      </div>
+
+      {/* Floating Navigation */}
+      <header className="relative z-50 p-4">
+        <div className="container mx-auto">
+          <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 shadow-2xl">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-3">
+                <div className="relative">
+                  <Heart className="h-10 w-10 text-pink-400" />
+                  <Sparkles className="h-4 w-4 text-yellow-300 absolute -top-1 -right-1" />
+                </div>
+                <div>
+                  <h1 className="text-2xl font-bold text-white">Experiences</h1>
+                  <p className="text-pink-200 text-sm">of Living</p>
+                </div>
+              </div>
+              
+              <div className="hidden md:block">
+                <NavigationMenu />
+              </div>
+              
+              <button 
+                className="md:hidden p-2 text-white bg-white/20 rounded-xl backdrop-blur-sm"
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              >
+                {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              </button>
             </div>
             
-            {/* Desktop Navigation */}
-            <div className="hidden md:block">
-              <NavigationMenu />
-            </div>
-            
-            {/* Mobile Menu Button */}
-            <button 
-              className="md:hidden p-2"
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            >
-              {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-            </button>
+            {mobileMenuOpen && (
+              <div className="md:hidden mt-6 pt-6 border-t border-white/20">
+                <NavigationMenu mobile />
+              </div>
+            )}
           </div>
-          
-          {/* Mobile Navigation */}
-          {mobileMenuOpen && (
-            <div className="md:hidden mt-4 pb-4 border-t border-rose-100">
-              <NavigationMenu mobile />
-            </div>
-          )}
         </div>
       </header>
 
-      {/* Hero Section */}
-      <section className="py-12 md:py-20">
+      {/* Artistic Hero Section */}
+      <section className="relative z-10 py-20">
         <div className="container mx-auto px-4">
-          <div className="text-center max-w-4xl mx-auto">
-            <div className="mb-8">
-              <div className="inline-flex items-center space-x-2 bg-rose-100 rounded-full px-4 py-2 mb-6">
-                <span className="text-2xl">👋</span>
-                <span className="text-rose-700 font-medium">Welcome from Rosie</span>
+          <div className="text-center max-w-5xl mx-auto">
+            <div className="relative mb-12">
+              <div className="absolute inset-0 bg-gradient-to-r from-pink-500/20 to-purple-500/20 blur-3xl rounded-full"></div>
+              <div className="relative bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-8 shadow-2xl">
+                <div className="flex items-center justify-center space-x-3 mb-6">
+                  <div className="relative">
+                    <div className="w-16 h-16 bg-gradient-to-br from-pink-400 to-purple-500 rounded-2xl flex items-center justify-center">
+                      <span className="text-3xl">👋</span>
+                    </div>
+                    <div className="absolute -top-2 -right-2 w-6 h-6 bg-yellow-400 rounded-full flex items-center justify-center">
+                      <Star className="w-4 h-4 text-yellow-900" />
+                    </div>
+                  </div>
+                  <div className="text-left">
+                    <p className="text-pink-200 text-lg">Welcome from</p>
+                    <p className="text-white text-2xl font-bold">Rosie</p>
+                  </div>
+                </div>
+                
+                <h2 className="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-300 via-purple-300 to-indigo-300 mb-8 leading-tight">
+                  Your Journey
+                  <br />
+                  <span className="text-white">Starts Here</span>
+                </h2>
+                
+                <p className="text-xl text-purple-100 mb-10 leading-relaxed max-w-3xl mx-auto">
+                  Step into a world of shared experiences and wisdom. I'm your virtual companion, 
+                  here to illuminate your caregiving path with stories, resources, and heartfelt guidance.
+                </p>
+                
+                <div className="flex flex-col sm:flex-row gap-6 justify-center">
+                  <Button size="lg" className="bg-gradient-to-r from-pink-500 to-purple-600 hover:from-pink-600 hover:to-purple-700 text-white px-8 py-4 rounded-2xl shadow-2xl transform hover:scale-105 transition-all duration-300">
+                    <Zap className="mr-3 h-6 w-6" />
+                    Begin Your Journey
+                  </Button>
+                  <Button size="lg" variant="outline" className="border-2 border-white/30 text-white hover:bg-white/10 px-8 py-4 rounded-2xl backdrop-blur-sm">
+                    <Users className="mr-3 h-6 w-6" />
+                    Join Our Circle
+                  </Button>
+                </div>
               </div>
-              <h2 className="text-4xl md:text-6xl font-bold text-gray-800 mb-6 leading-tight">
-                Your Caregiving Journey <br />
-                <span className="text-rose-500">Starts Here</span>
-              </h2>
-              <p className="text-xl text-gray-600 mb-8 leading-relaxed">
-                I'm Rosie, your virtual companion sharing personal experiences in senior caregiving. 
-                Find guidance, empathy, and curated resources to support you at every stage of your journey.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Floating Modules Grid */}
+      <FloatingModuleGrid />
+
+      {/* Creative Stories Section */}
+      <CreativeStorySection />
+
+      {/* Interactive Tools Revamped */}
+      <InteractiveToolsRevamped />
+
+      {/* Artistic Community */}
+      <ArtisticCommunitySection />
+
+      {/* Floating Book Section */}
+      <section className="relative z-10 py-20">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="relative">
+              <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 to-orange-500/20 blur-3xl rounded-3xl"></div>
+              <div className="relative bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-12 shadow-2xl">
+                <div className="text-center mb-10">
+                  <div className="inline-flex items-center space-x-3 bg-amber-400/20 rounded-full px-6 py-3 mb-6">
+                    <span className="text-3xl">📖</span>
+                    <span className="text-amber-200 font-bold text-lg">Book Integration</span>
+                  </div>
+                  <h3 className="text-4xl md:text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-300 to-orange-300 mb-6">
+                    Stories that Transform
+                  </h3>
+                </div>
+                
+                <div className="grid md:grid-cols-2 gap-8 items-center">
+                  <div className="space-y-6">
+                    <h4 className="text-2xl font-bold text-white">
+                      Companion to "Experience: Caregiving for Seniors"
+                    </h4>
+                    <p className="text-purple-100 text-lg leading-relaxed">
+                      Dive deeper into Yasmin Shah's transformative book with interactive content, 
+                      expanded resources, and a community of caring souls on similar journeys.
+                    </p>
+                    <Button className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white px-8 py-3 rounded-xl shadow-xl">
+                      <BookOpen className="mr-2 h-5 w-5" />
+                      Explore the Book
+                    </Button>
+                  </div>
+                  <div className="relative">
+                    <div className="bg-gradient-to-br from-amber-400 to-orange-500 rounded-2xl p-8 text-center shadow-2xl transform hover:rotate-3 transition-transform duration-300">
+                      <BookOpen className="h-16 w-16 text-white mx-auto mb-4" />
+                      <p className="text-white font-bold text-lg">Available Now</p>
+                      <p className="text-amber-100">Digital & Print Editions</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Cosmic Footer */}
+      <footer className="relative z-10 bg-black/20 backdrop-blur-md border-t border-white/10 py-16">
+        <div className="container mx-auto px-4">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+            <div className="text-center md:text-left">
+              <div className="flex items-center justify-center md:justify-start space-x-3 mb-6">
+                <Heart className="h-8 w-8 text-pink-400" />
+                <div>
+                  <span className="text-xl font-bold text-white block">Experiences</span>
+                  <span className="text-pink-200 text-sm">of Living</span>
+                </div>
+              </div>
+              <p className="text-purple-200">
+                Illuminating the caregiving journey with compassion and wisdom.
               </p>
             </div>
             
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" className="bg-rose-500 hover:bg-rose-600 text-white px-8">
-                <BookOpen className="mr-2 h-5 w-5" />
-                Explore Stories
-              </Button>
-              <Button size="lg" variant="outline" className="border-rose-200 text-rose-700 hover:bg-rose-50">
-                <Users className="mr-2 h-5 w-5" />
-                Join Community
-              </Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Main Caregiving Modules */}
-      <section className="py-16 bg-white/50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center space-x-2 bg-blue-100 rounded-full px-4 py-2 mb-6">
-              <span className="text-2xl">🧭</span>
-              <span className="text-blue-700 font-medium">Main Caregiving Modules</span>
-            </div>
-            <h3 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-              Navigate Your Caregiving Path
-            </h3>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Nine comprehensive modules addressing every aspect of caregiving, each featuring personal stories, 
-              practical resources, and guided questions.
-            </p>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {caregivingModules.map((module) => (
-              <ModuleCard 
-                key={module.id} 
-                module={module} 
-                isSelected={selectedModule === module.id}
-                onSelect={() => setSelectedModule(selectedModule === module.id ? null : module.id)}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Connect Deeper Section */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center space-x-2 bg-purple-100 rounded-full px-4 py-2 mb-6">
-              <span className="text-2xl">💬</span>
-              <span className="text-purple-700 font-medium">Connect Deeper</span>
-            </div>
-            <h3 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-              Guided Reflection
-            </h3>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Reflective questions designed to foster meaningful conversations between 
-              caregivers and their loved ones, enhancing understanding and strengthening relationships.
-            </p>
-          </div>
-          
-          <div className="max-w-4xl mx-auto">
-            <Card className="bg-gradient-to-r from-purple-50 to-pink-50 border-purple-200">
-              <CardHeader>
-                <CardTitle className="text-purple-800">Sample Reflection Questions</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="bg-white/70 p-4 rounded-lg">
-                    <h4 className="font-semibold text-purple-700 mb-2">For New Caregivers</h4>
-                    <p className="text-gray-600">"What are your biggest concerns about starting this journey?"</p>
-                  </div>
-                  <div className="bg-white/70 p-4 rounded-lg">
-                    <h4 className="font-semibold text-purple-700 mb-2">Managing Conflicts</h4>
-                    <p className="text-gray-600">"How can we better communicate about our different needs?"</p>
-                  </div>
-                </div>
-                <Button className="w-full bg-purple-500 hover:bg-purple-600">
-                  Access All Reflection Questions
-                </Button>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
-
-      {/* Stories & Resources Section */}
-      <section className="py-16 bg-white/50">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center space-x-2 bg-green-100 rounded-full px-4 py-2 mb-6">
-              <span className="text-2xl">📚</span>
-              <span className="text-green-700 font-medium">Explore Stories & Resources</span>
-            </div>
-            <h3 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
-              Real Experiences, Practical Solutions
-            </h3>
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            <StoryCard 
-              category="New to Caregiving"
-              title="Reluctantly"
-              description="Starting the caregiving journey when you're not ready"
-              color="emerald"
-            />
-            <StoryCard 
-              category="Conflicts"
-              title="Money Matters"
-              description="Navigating financial disagreements in caregiving"
-              color="amber"
-            />
-            <StoryCard 
-              category="Housing"
-              title="Not in the Same City"
-              description="Managing care from a distance"
-              color="blue"
-            />
-            <StoryCard 
-              category="Safety"
-              title="Hazard Falls"
-              description="Preventing falls and ensuring home safety"
-              color="red"
-            />
-            <StoryCard 
-              category="Dependence"
-              title="Role Reversal"
-              description="When you become the decision maker"
-              color="purple"
-            />
-            <StoryCard 
-              category="Legal"
-              title="Power of Attorney"
-              description="Understanding legal responsibilities"
-              color="indigo"
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* Interactive Tools */}
-      <InteractiveTools />
-
-      {/* Book Integration */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center space-x-2 bg-amber-100 rounded-full px-4 py-2 mb-6">
-              <span className="text-2xl">📖</span>
-              <span className="text-amber-700 font-medium">Book Integration</span>
-            </div>
-            <h3 className="text-3xl md:text-4xl font-bold text-gray-800 mb-6">
-              Companion to "Experience: Caregiving for Seniors"
-            </h3>
-            <p className="text-lg text-gray-600 mb-8">
-              This website expands on the themes from Yasmin Shah's book, offering additional 
-              resources and interactive content to support caregivers on their journey.
-            </p>
-            <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl p-8 border border-amber-200">
-              <div className="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6">
-                <div className="bg-amber-200 rounded-lg p-4">
-                  <BookOpen className="h-12 w-12 text-amber-700" />
-                </div>
-                <div className="text-left flex-1">
-                  <h4 className="text-xl font-bold text-amber-800 mb-2">
-                    "Stories that Lighten the Journey"
-                  </h4>
-                  <p className="text-amber-700">
-                    Discover how real stories can provide comfort, guidance, and hope during challenging times.
-                  </p>
-                </div>
-                <Button className="bg-amber-500 hover:bg-amber-600 text-white">
-                  Get the Book
-                </Button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Community Section */}
-      <CommunitySection />
-
-      {/* Footer */}
-      <footer className="bg-gray-800 text-white py-12">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div>
-              <div className="flex items-center space-x-2 mb-4">
-                <Heart className="h-6 w-6 text-rose-400" />
-                <span className="text-lg font-bold">Experiences of Living</span>
-              </div>
-              <p className="text-gray-400">
-                Supporting caregivers with stories, resources, and community.
-              </p>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">Resources</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white transition-colors">All Stories</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Resource Library</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Interactive Tools</a></li>
+              <h4 className="font-bold text-white mb-4 text-lg">Discover</h4>
+              <ul className="space-y-3 text-purple-200">
+                <li><a href="#" className="hover:text-pink-300 transition-colors">Stories</a></li>
+                <li><a href="#" className="hover:text-pink-300 transition-colors">Modules</a></li>
+                <li><a href="#" className="hover:text-pink-300 transition-colors">Resources</a></li>
               </ul>
             </div>
+            
             <div>
-              <h4 className="font-semibold mb-4">Community</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white transition-colors">Forum</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Blog</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Support Groups</a></li>
+              <h4 className="font-bold text-white mb-4 text-lg">Connect</h4>
+              <ul className="space-y-3 text-purple-200">
+                <li><a href="#" className="hover:text-pink-300 transition-colors">Community</a></li>
+                <li><a href="#" className="hover:text-pink-300 transition-colors">Forum</a></li>
+                <li><a href="#" className="hover:text-pink-300 transition-colors">Support</a></li>
               </ul>
             </div>
+            
             <div>
-              <h4 className="font-semibold mb-4">About</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li><a href="#" className="hover:text-white transition-colors">About Rosie</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">The Book</a></li>
-                <li><a href="#" className="hover:text-white transition-colors">Contact</a></li>
+              <h4 className="font-bold text-white mb-4 text-lg">About</h4>
+              <ul className="space-y-3 text-purple-200">
+                <li><a href="#" className="hover:text-pink-300 transition-colors">Rosie's Story</a></li>
+                <li><a href="#" className="hover:text-pink-300 transition-colors">The Book</a></li>
+                <li><a href="#" className="hover:text-pink-300 transition-colors">Contact</a></li>
               </ul>
             </div>
           </div>
-          <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 Experiences of Living. Made with ❤️ for caregivers everywhere.</p>
+          
+          <div className="border-t border-white/10 pt-8 text-center">
+            <p className="text-purple-200">
+              &copy; 2024 Experiences of Living. Crafted with ❤️ for caregivers everywhere.
+            </p>
           </div>
         </div>
       </footer>
