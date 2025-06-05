@@ -1,7 +1,9 @@
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Clock, Heart, Star, Sparkles, BookOpen } from "lucide-react";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const stories = [
   {
@@ -55,11 +57,14 @@ const stories = [
 ];
 
 export const CreativeStorySection = () => {
+  const { ref: titleRef, isVisible: titleVisible } = useScrollAnimation();
+  const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation();
+
   return (
     <section className="relative z-10 py-20">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center space-x-3 bg-green-400/20 rounded-full px-6 py-3 mb-8">
+        <div ref={titleRef} className={`text-center mb-16 transition-all duration-1000 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <div className="inline-flex items-center space-x-3 bg-green-400/20 rounded-full px-6 py-3 mb-8 animate-glow">
             <Sparkles className="h-6 w-6 text-green-300" />
             <span className="text-green-200 font-bold text-lg">Story Galaxy</span>
           </div>
@@ -72,18 +77,21 @@ export const CreativeStorySection = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {stories.map((story, index) => (
             <div
               key={story.title}
-              className="group cursor-pointer"
+              className={`group cursor-pointer transition-all duration-700 ${
+                gridVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
+              }`}
               style={{
-                animationDelay: `${index * 0.1}s`
+                transitionDelay: gridVisible ? `${index * 150}ms` : '0ms'
               }}
             >
-              <Card className={`h-full bg-gradient-to-br ${story.gradient} backdrop-blur-md border-0 shadow-2xl hover:shadow-3xl transition-all duration-500 group-hover:scale-105 relative overflow-hidden`}>
-                {/* Gradient Border */}
-                <div className={`absolute inset-0 bg-gradient-to-r ${story.borderGradient} p-0.5 rounded-lg`}>
+              <Card className={`h-full bg-gradient-to-br ${story.gradient} backdrop-blur-md border-0 shadow-2xl hover:shadow-3xl transition-all duration-500 group-hover:scale-105 group-hover:-translate-y-2 relative overflow-hidden animate-float`}
+                style={{ animationDelay: `${index * 0.5}s` }}>
+                {/* Enhanced Gradient Border with glow */}
+                <div className={`absolute inset-0 bg-gradient-to-r ${story.borderGradient} p-0.5 rounded-lg group-hover:animate-glow`}>
                   <div className="bg-black/20 backdrop-blur-md h-full w-full rounded-lg"></div>
                 </div>
                 
@@ -132,9 +140,9 @@ export const CreativeStorySection = () => {
           ))}
         </div>
 
-        {/* Floating Action */}
-        <div className="text-center mt-12">
-          <Button size="lg" className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-8 py-4 rounded-2xl shadow-2xl transform hover:scale-105 transition-all duration-300">
+        {/* Enhanced Floating Action */}
+        <div className="text-center mt-12 animate-fade-in" style={{ animationDelay: '1s' }}>
+          <Button size="lg" className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-8 py-4 rounded-2xl shadow-2xl transform hover:scale-105 transition-all duration-300 animate-glow">
             <BookOpen className="mr-3 h-6 w-6" />
             Explore All Stories
           </Button>

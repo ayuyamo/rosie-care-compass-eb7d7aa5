@@ -1,5 +1,4 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -12,18 +11,42 @@ import { ArtisticCommunitySection } from "@/components/ArtisticCommunitySection"
 
 const Index = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Dynamic background colors based on scroll position
+  const getBackgroundGradient = () => {
+    const sections = [
+      'from-indigo-900 via-purple-900 to-pink-900', // Hero
+      'from-purple-900 via-pink-900 to-red-900',    // Modules
+      'from-pink-900 via-red-900 to-orange-900',    // Stories
+      'from-red-900 via-orange-900 to-yellow-900',  // Tools
+      'from-orange-900 via-yellow-900 to-green-900', // Community
+      'from-yellow-900 via-green-900 to-blue-900'   // Footer
+    ];
+    
+    const sectionIndex = Math.min(Math.floor(scrollY / 800), sections.length - 1);
+    return sections[sectionIndex];
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 relative overflow-hidden">
-      {/* Animated Background Elements */}
+    <div className={`min-h-screen bg-gradient-to-br ${getBackgroundGradient()} relative overflow-hidden transition-all duration-1000 ease-in-out`}>
+      {/* Enhanced Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-blue-400/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute top-40 right-20 w-96 h-96 bg-purple-400/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute bottom-20 left-1/3 w-80 h-80 bg-pink-400/20 rounded-full blur-3xl animate-pulse delay-2000"></div>
+        <div className="absolute top-20 left-10 w-72 h-72 bg-blue-400/30 rounded-full blur-3xl animate-float"></div>
+        <div className="absolute top-40 right-20 w-96 h-96 bg-purple-400/30 rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute bottom-20 left-1/3 w-80 h-80 bg-pink-400/30 rounded-full blur-3xl animate-float" style={{ animationDelay: '4s' }}></div>
+        <div className="absolute top-1/2 right-1/4 w-64 h-64 bg-green-400/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute bottom-1/3 right-10 w-72 h-72 bg-yellow-400/20 rounded-full blur-3xl animate-float" style={{ animationDelay: '3s' }}></div>
       </div>
 
       {/* Floating Navigation */}
-      <header className="relative z-50 p-4">
+      <header className="relative z-50 p-4 animate-fade-in">
         <div className="container mx-auto">
           <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-4 shadow-2xl">
             <div className="flex items-center justify-between">
@@ -59,8 +82,8 @@ const Index = () => {
         </div>
       </header>
 
-      {/* Artistic Hero Section */}
-      <section className="relative z-10 py-20">
+      {/* Enhanced Artistic Hero Section */}
+      <section className="relative z-10 py-20 animate-fade-in" style={{ animationDelay: '0.2s' }}>
         <div className="container mx-auto px-4">
           <div className="text-center max-w-5xl mx-auto">
             <div className="relative mb-12">
@@ -108,25 +131,33 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Floating Modules Grid */}
-      <FloatingModuleGrid />
+      {/* Enhanced Floating Modules Grid */}
+      <div className="animate-slide-up" style={{ animationDelay: '0.4s' }}>
+        <FloatingModuleGrid />
+      </div>
 
-      {/* Creative Stories Section */}
-      <CreativeStorySection />
+      {/* Enhanced Creative Stories Section */}
+      <div className="animate-slide-up" style={{ animationDelay: '0.6s' }}>
+        <CreativeStorySection />
+      </div>
 
-      {/* Interactive Tools Revamped */}
-      <InteractiveToolsRevamped />
+      {/* Enhanced Interactive Tools Revamped */}
+      <div className="animate-slide-up" style={{ animationDelay: '0.8s' }}>
+        <InteractiveToolsRevamped />
+      </div>
 
-      {/* Artistic Community */}
-      <ArtisticCommunitySection />
+      {/* Enhanced Artistic Community */}
+      <div className="animate-slide-up" style={{ animationDelay: '1s' }}>
+        <ArtisticCommunitySection />
+      </div>
 
-      {/* Floating Book Section */}
-      <section className="relative z-10 py-20">
+      {/* Enhanced Floating Book Section */}
+      <section className="relative z-10 py-20 animate-slide-up" style={{ animationDelay: '1.2s' }}>
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto">
             <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-r from-amber-500/20 to-orange-500/20 blur-3xl rounded-3xl"></div>
-              <div className="relative bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-12 shadow-2xl">
+              <div className="absolute inset-0 bg-gradient-to-r from-amber-500/30 to-orange-500/30 blur-3xl rounded-3xl animate-glow"></div>
+              <div className="relative bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-12 shadow-2xl hover:shadow-3xl transition-all duration-500 hover:scale-105">
                 <div className="text-center mb-10">
                   <div className="inline-flex items-center space-x-3 bg-amber-400/20 rounded-full px-6 py-3 mb-6">
                     <span className="text-3xl">📖</span>
@@ -165,8 +196,8 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Cosmic Footer */}
-      <footer className="relative z-10 bg-black/20 backdrop-blur-md border-t border-white/10 py-16">
+      {/* Enhanced Cosmic Footer */}
+      <footer className="relative z-10 bg-black/30 backdrop-blur-md border-t border-white/10 py-16 animate-fade-in" style={{ animationDelay: '1.4s' }}>
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
             <div className="text-center md:text-left">

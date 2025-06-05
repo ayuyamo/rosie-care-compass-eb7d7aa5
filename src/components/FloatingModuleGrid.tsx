@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Compass, MessageCircle, Home, Shield, Heart, Scale, ArrowRight, BookOpen, Sparkles, ChevronDown } from "lucide-react";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const caregivingModules = [
   {
@@ -65,12 +66,14 @@ const caregivingModules = [
 export const FloatingModuleGrid = () => {
   const [selectedModule, setSelectedModule] = useState<string | null>(null);
   const [hoveredModule, setHoveredModule] = useState<string | null>(null);
+  const { ref: titleRef, isVisible: titleVisible } = useScrollAnimation();
+  const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation();
 
   return (
     <section className="relative z-10 py-20">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <div className="inline-flex items-center space-x-3 bg-blue-400/20 rounded-full px-6 py-3 mb-8">
+        <div ref={titleRef} className={`text-center mb-16 transition-all duration-1000 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <div className="inline-flex items-center space-x-3 bg-blue-400/20 rounded-full px-6 py-3 mb-8 animate-glow">
             <Sparkles className="h-6 w-6 text-blue-300" />
             <span className="text-blue-200 font-bold text-lg">Caregiving Cosmos</span>
           </div>
@@ -83,30 +86,33 @@ export const FloatingModuleGrid = () => {
           </p>
         </div>
 
-        <div className="relative h-[800px] max-w-6xl mx-auto">
+        <div ref={gridRef} className="relative h-[800px] max-w-6xl mx-auto">
           {caregivingModules.map((module, index) => {
             const IconComponent = module.icon;
             const isSelected = selectedModule === module.id;
             const isHovered = hoveredModule === module.id;
+            const animationDelay = gridVisible ? index * 200 : 0;
             
             return (
               <div
                 key={module.id}
-                className={`absolute transition-all duration-500 transform ${
-                  isSelected || isHovered ? 'scale-110 z-20' : 'z-10'
-                }`}
+                className={`absolute transition-all duration-700 transform ${
+                  gridVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
+                } ${isSelected || isHovered ? 'scale-110 z-20' : 'z-10'}`}
                 style={{
                   top: `${(index * 15) % 60}%`,
                   left: `${(index * 25) % 80}%`,
-                  transform: `translate(-50%, -50%) ${isSelected ? 'scale(1.1)' : ''}`
+                  transform: `translate(-50%, -50%) ${isSelected ? 'scale(1.1)' : ''}`,
+                  animationDelay: `${animationDelay}ms`
                 }}
                 onMouseEnter={() => setHoveredModule(module.id)}
                 onMouseLeave={() => setHoveredModule(null)}
               >
                 <Card 
-                  className={`w-80 cursor-pointer transition-all duration-500 bg-white/10 backdrop-blur-md border border-white/20 shadow-2xl hover:shadow-3xl ${
-                    isSelected ? 'ring-4 ring-white/30' : ''
+                  className={`w-80 cursor-pointer transition-all duration-500 bg-white/10 backdrop-blur-md border border-white/20 shadow-2xl hover:shadow-3xl animate-float ${
+                    isSelected ? 'ring-4 ring-white/30 animate-glow' : ''
                   }`}
+                  style={{ animationDelay: `${index * 0.5}s` }}
                   onClick={() => setSelectedModule(isSelected ? null : module.id)}
                 >
                   <CardHeader className="pb-4">
