@@ -12,149 +12,124 @@ const caregivingModules = [
     title: "New Beginnings",
     description: "Your first steps into caregiving",
     icon: Compass,
-    gradient: "from-emerald-400 to-teal-500",
+    color: "#dab216",
     stories: ["Reluctantly", "Obligatory", "Overwhelmed"],
-    position: "top-4 left-4"
+    image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=200&h=120&fit=crop"
   },
   {
     id: "conflicts",
     title: "Navigating Tensions",
     description: "Resolving caregiving conflicts with grace",
     icon: MessageCircle,
-    gradient: "from-amber-400 to-orange-500",
+    color: "#679aa3",
     stories: ["Timeliness", "Money Matters", "Family Dynamics"],
-    position: "top-4 right-4"
+    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=200&h=120&fit=crop"
   },
   {
     id: "housing",
     title: "Finding Home",
     description: "Housing decisions that matter",
     icon: Home,
-    gradient: "from-blue-400 to-cyan-500",
+    color: "#2b6cb0",
     stories: ["Not in the Same City", "Shared Housing"],
-    position: "top-1/3 left-1/2 transform -translate-x-1/2"
+    image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=200&h=120&fit=crop"
   },
   {
     id: "safety",
     title: "Guardian Angels",
     description: "Ensuring safety and security",
     icon: Shield,
-    gradient: "from-red-400 to-rose-500",
+    color: "#373618",
     stories: ["Financial Obstacles", "Hazard Falls"],
-    position: "bottom-1/3 left-8"
-  },
-  {
-    id: "dependence",
-    title: "Embracing Change",
-    description: "Growing together through dependence",
-    icon: Heart,
-    gradient: "from-purple-400 to-pink-500",
-    stories: ["Independence vs Safety", "Role Reversal"],
-    position: "bottom-1/3 right-8"
-  },
-  {
-    id: "legal",
-    title: "Legal Compass",
-    description: "Understanding your responsibilities",
-    icon: Scale,
-    gradient: "from-indigo-400 to-purple-500",
-    stories: ["Power of Attorney", "Healthcare Directives"],
-    position: "bottom-4 left-1/4"
+    image: "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=200&h=120&fit=crop"
   }
 ];
 
 export const FloatingModuleGrid = () => {
   const [selectedModule, setSelectedModule] = useState<string | null>(null);
-  const [hoveredModule, setHoveredModule] = useState<string | null>(null);
   const { ref: titleRef, isVisible: titleVisible } = useScrollAnimation();
   const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation();
 
   return (
-    <section className="relative z-10 py-20">
-      <div className="container mx-auto px-4">
-        <div ref={titleRef} className={`text-center mb-16 transition-all duration-1000 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <div className="inline-flex items-center space-x-3 bg-blue-400/20 rounded-full px-6 py-3 mb-8 animate-glow">
-            <Sparkles className="h-6 w-6 text-blue-300" />
-            <span className="text-blue-200 font-bold text-lg">Caregiving Cosmos</span>
+    <section className="relative z-10 py-6">
+      <div className="max-w-md mx-auto px-4">
+        <div ref={titleRef} className={`text-center mb-6 transition-all duration-1000 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+          <div className="inline-flex items-center space-x-2 bg-[#679aa3]/20 rounded-full px-4 py-2 mb-4">
+            <Sparkles className="h-5 w-5 text-[#dab216]" />
+            <span className="text-[#dab216] font-bold text-sm">Care Modules</span>
           </div>
-          <h3 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-purple-300 to-pink-300 mb-6">
-            Explore Your Universe
+          <h3 className="text-2xl font-black text-[#dab216] mb-3">
+            Explore Your Journey
           </h3>
-          <p className="text-xl text-purple-100 max-w-3xl mx-auto">
-            Each floating module represents a different dimension of your caregiving journey. 
-            Click to dive deeper into stories, resources, and wisdom.
+          <p className="text-[#679aa3] text-sm">
+            Discover resources tailored to your caregiving path
           </p>
         </div>
 
-        <div ref={gridRef} className="relative h-[800px] max-w-6xl mx-auto">
+        <div ref={gridRef} className="space-y-4">
           {caregivingModules.map((module, index) => {
             const IconComponent = module.icon;
             const isSelected = selectedModule === module.id;
-            const isHovered = hoveredModule === module.id;
             const animationDelay = gridVisible ? index * 200 : 0;
             
             return (
               <div
                 key={module.id}
-                className={`absolute transition-all duration-700 transform ${
+                className={`transition-all duration-700 transform ${
                   gridVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
-                } ${isSelected || isHovered ? 'scale-110 z-20' : 'z-10'}`}
-                style={{
-                  top: `${(index * 15) % 60}%`,
-                  left: `${(index * 25) % 80}%`,
-                  transform: `translate(-50%, -50%) ${isSelected ? 'scale(1.1)' : ''}`,
-                  animationDelay: `${animationDelay}ms`
-                }}
-                onMouseEnter={() => setHoveredModule(module.id)}
-                onMouseLeave={() => setHoveredModule(null)}
+                }`}
+                style={{ animationDelay: `${animationDelay}ms` }}
               >
                 <Card 
-                  className={`w-80 cursor-pointer transition-all duration-500 bg-white/10 backdrop-blur-md border border-white/20 shadow-2xl hover:shadow-3xl animate-float ${
-                    isSelected ? 'ring-4 ring-white/30 animate-glow' : ''
+                  className={`cursor-pointer transition-all duration-500 bg-[#232323]/60 backdrop-blur-md border border-[#dab216]/30 shadow-xl hover:shadow-2xl overflow-hidden ${
+                    isSelected ? 'ring-2 ring-[#dab216]/50' : ''
                   }`}
-                  style={{ animationDelay: `${index * 0.5}s` }}
                   onClick={() => setSelectedModule(isSelected ? null : module.id)}
                 >
-                  <CardHeader className="pb-4">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className={`p-4 rounded-2xl bg-gradient-to-br ${module.gradient} shadow-xl`}>
-                        <IconComponent className="h-8 w-8 text-white" />
+                  <div className="relative">
+                    <img 
+                      src={module.image} 
+                      alt={module.title}
+                      className="w-full h-32 object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#232323]/80 to-transparent"></div>
+                    <div className="absolute top-3 left-3">
+                      <div className="p-2 rounded-xl" style={{ backgroundColor: module.color }}>
+                        <IconComponent className="h-5 w-5 text-[#232323]" />
                       </div>
-                      <button className="text-white/60 hover:text-white transition-colors">
-                        <ChevronDown className={`h-6 w-6 transition-transform duration-300 ${
-                          isSelected ? 'rotate-180' : ''
-                        }`} />
-                      </button>
                     </div>
-                    <CardTitle className="text-2xl text-white">{module.title}</CardTitle>
-                    <CardDescription className="text-purple-200 text-lg">
+                    <div className="absolute top-3 right-3">
+                      <ChevronDown className={`h-5 w-5 text-[#dab216] transition-transform duration-300 ${
+                        isSelected ? 'rotate-180' : ''
+                      }`} />
+                    </div>
+                  </div>
+                  
+                  <CardHeader className="pb-3">
+                    <CardTitle className="text-lg text-[#dab216]">{module.title}</CardTitle>
+                    <CardDescription className="text-[#679aa3] text-sm">
                       {module.description}
                     </CardDescription>
                   </CardHeader>
                   
                   {isSelected && (
                     <CardContent className="pt-0 animate-fade-in">
-                      <div className="space-y-6">
+                      <div className="space-y-4">
                         <div>
-                          <h4 className="font-bold text-white mb-4 text-lg">Featured Stories:</h4>
-                          <div className="space-y-3">
+                          <h4 className="font-bold text-[#dab216] mb-3 text-sm">Featured Stories:</h4>
+                          <div className="space-y-2">
                             {module.stories.map((story) => (
-                              <div key={story} className="bg-white/10 backdrop-blur-sm p-4 rounded-xl border border-white/20 hover:bg-white/20 transition-colors cursor-pointer">
+                              <div key={story} className="bg-[#232323]/40 backdrop-blur-sm p-3 rounded-xl border border-[#679aa3]/20 hover:bg-[#232323]/60 transition-colors cursor-pointer">
                                 <div className="flex items-center justify-between">
-                                  <span className="text-white font-medium">{story}</span>
-                                  <ArrowRight className="h-5 w-5 text-purple-300" />
+                                  <span className="text-[#dab216] font-medium text-sm">{story}</span>
+                                  <ArrowRight className="h-4 w-4 text-[#679aa3]" />
                                 </div>
                               </div>
                             ))}
                           </div>
                         </div>
-                        <div className="grid grid-cols-3 gap-3">
-                          <Badge className="justify-center bg-white/20 text-white border-white/30">Stories</Badge>
-                          <Badge className="justify-center bg-white/20 text-white border-white/30">Resources</Badge>
-                          <Badge className="justify-center bg-white/20 text-white border-white/30">Wisdom</Badge>
-                        </div>
-                        <Button className={`w-full bg-gradient-to-r ${module.gradient} hover:shadow-xl text-white py-3 rounded-xl transform hover:scale-105 transition-all duration-300`}>
-                          <BookOpen className="mr-2 h-5 w-5" />
+                        <Button className="w-full text-[#232323] font-bold py-3 rounded-xl transform hover:scale-105 transition-all duration-300" style={{ backgroundColor: module.color }}>
+                          <BookOpen className="mr-2 h-4 w-4" />
                           Explore Module
                         </Button>
                       </div>
