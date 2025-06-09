@@ -4,8 +4,17 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Heart, MessageCircle, Users, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
+import BottomNavigation from "@/components/BottomNavigation";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { group } from "console";
+import { title } from "process";
 
 const Community = () => {
+  const { ref: titleRef, isVisible: titleVisible } = useScrollAnimation();
+  const { ref: postsTitleRef, isVisible: postsTitleVisible } = useScrollAnimation();
+  const { ref: postsRef, isVisible: postsVisible } = useScrollAnimation();
+  const { ref: groupRef, isVisible: groupVisible } = useScrollAnimation();
+
   const posts = [
     {
       id: 1,
@@ -46,9 +55,9 @@ const Community = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#f5f2d0] via-[#e8e5e0] to-[#d6e5f0] p-4 pb-24">
+    <div className="min-h-screen bg-[#f8f9fa] p-4 pb-24">
       <div className="max-w-md mx-auto">
-        <header className="flex items-center justify-between mb-6">
+        <header className="flex items-center justify-between mb-6 animate-slide-up">
           <div className="flex items-center">
             <Link to="/" className="mr-4">
               <Button variant="ghost" size="sm" className="text-[#5a7a85]">
@@ -65,13 +74,16 @@ const Community = () => {
 
         {/* Popular Groups */}
         <div className="mb-6">
-          <h2 className="text-lg font-bold text-[#5a7a85] mb-3">Popular Groups</h2>
+          <h2 ref={titleRef} className={`text-lg font-bold text-[#5a7a85] mb-3 transition-all duration-700 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}>Popular Groups</h2>
           <div className="space-y-2">
             {groups.map((group, index) => (
-              <Card key={index} className="bg-white/80 backdrop-blur-md border border-[#c4a91a]/20 p-3">
+              <Card ref={groupRef} key={index} className={`bg-white/80 backdrop-blur-md border border-gray-200 p-3 ${groupVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'} transition-all duration-700`}
+                style={{
+                  transitionDelay: groupVisible ? `${index * 150}ms` : '0ms'
+                }}>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-3">
-                    <div 
+                    <div
                       className="w-10 h-10 rounded-full flex items-center justify-center"
                       style={{ backgroundColor: group.color }}
                     >
@@ -92,23 +104,26 @@ const Community = () => {
         </div>
 
         {/* Recent Posts */}
-        <div>
-          <h2 className="text-lg font-bold text-[#5a7a85] mb-3">Recent Posts</h2>
+        <div ref={postsRef}>
+          <h2 className={`text-lg font-bold text-[#5a7a85] mb-3 transition-all duration-700 ${postsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}>Recent Posts</h2>
           <div className="space-y-4">
-            {posts.map((post) => (
-              <Card key={post.id} className="bg-white/80 backdrop-blur-md border border-[#c4a91a]/20">
+            {posts.map((post, index) => (
+              <Card key={post.id} className={`bg-white/80 backdrop-blur-md border border-gray-200 shadow-md hover:shadow-lg ${postsVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'} transition-all duration-700`}
+                style={{
+                  transitionDelay: postsVisible ? `${index * 200}ms` : '0ms'
+                }}>
                 <CardContent className="p-4">
                   <div className="flex items-center space-x-3 mb-3">
-                    <img 
-                      src={post.avatar} 
+                    <img
+                      src={post.avatar}
                       alt={post.author}
                       className="w-10 h-10 rounded-full border-2 border-[#c4a91a]"
                     />
                     <div className="flex-1">
                       <div className="flex items-center space-x-2">
                         <span className="font-semibold text-[#5a7a85]">{post.author}</span>
-                        <Badge 
-                          variant="outline" 
+                        <Badge
+                          variant="outline"
                           className="text-xs"
                           style={{ borderColor: "#c4a91a", color: "#c4a91a" }}
                         >
@@ -118,9 +133,9 @@ const Community = () => {
                       <p className="text-sm text-[#7a8a90]">{post.time}</p>
                     </div>
                   </div>
-                  
+
                   <p className="text-[#5a7a85] mb-4">{post.content}</p>
-                  
+
                   <div className="flex items-center space-x-4">
                     <button className="flex items-center space-x-1 text-[#c4a91a] hover:text-[#c4a91a]/80">
                       <Heart className="h-4 w-4" />
@@ -137,6 +152,7 @@ const Community = () => {
           </div>
         </div>
       </div>
+      <BottomNavigation />
     </div>
   );
 };

@@ -67,11 +67,11 @@ const Chat = () => {
           {messages.map((msg) => (
             <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
               <div className={`flex items-start space-x-2 max-w-xs ${msg.sender === 'user' ? 'flex-row-reverse space-x-reverse' : ''}`}>
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center ${msg.sender === 'user' ? 'bg-[#5a7a85]' : 'bg-[#c4a91a]'}`}>
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${msg.sender === 'user' ? 'bg-[#5a7a85]' : 'bg-[#c4a91a]'}`}>
                   {msg.sender === 'user' ? <User className="h-4 w-4 text-white" /> : <Bot className="h-4 w-4 text-white" />}
                 </div>
                 <Card className={`p-3 ${msg.sender === 'user' ? 'bg-[#5a7a85] text-white' : 'bg-white/80 text-[#5a7a85]'} border-none shadow-md`}>
-                  <p className="text-sm">{msg.text}</p>
+                  <p className="text-sm break-all">{msg.text}</p>
                   <p className={`text-xs mt-1 opacity-70`}>{msg.timestamp}</p>
                 </Card>
               </div>
@@ -87,7 +87,7 @@ const Chat = () => {
             onChange={(e) => setMessage(e.target.value)}
             placeholder="Type your message..."
             className="flex-1 border-[#c4a91a]/30"
-            onKeyPress={(e) => e.key === 'Enter' && handleSend()}
+            onKeyDown={(e) => e.key === 'Enter' && handleSend()}
           />
           <Button onClick={handleSend} className="bg-[#c4a91a] hover:bg-[#c4a91a]/80 text-white">
             <Send className="h-4 w-4" />
