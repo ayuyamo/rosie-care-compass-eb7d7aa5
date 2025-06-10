@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { BookText, ArrowRight, Sparkles } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { Link } from "react-router-dom";
 
 const PoetryCollectionSection = () => {
   const { ref: titleRef, isVisible: titleVisible } = useScrollAnimation();
@@ -76,10 +77,12 @@ const PoetryCollectionSection = () => {
           ))}
           
           <div className="text-center mt-4">
-            <Button className="bg-[#2b6cb0] text-white">
-              <BookText className="mr-2 h-4 w-4" />
-              View Complete Collection
-            </Button>
+            <Link to="/poems-collection">
+              <Button className="bg-[#2b6cb0] text-white">
+                <BookText className="mr-2 h-4 w-4" />
+                View Complete Collection
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

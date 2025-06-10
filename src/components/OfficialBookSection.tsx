@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { BookOpen, ArrowRight, Heart } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { Link } from "react-router-dom";
 
 const OfficialBookSection = () => {
   const { ref: sectionRef, isVisible: sectionVisible } = useScrollAnimation();
@@ -32,10 +33,12 @@ const OfficialBookSection = () => {
                     <Heart className="h-4 w-4" />
                     <span className="text-xs">Community Favorite</span>
                   </div>
-                  <Button className="bg-[#dab216] text-white text-sm">
-                    Read Now
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
+                  <Link to="/book-details">
+                    <Button className="bg-[#dab216] text-white text-sm">
+                      Read Now
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </div>
