@@ -12,6 +12,8 @@ import { ArtisticCommunitySection } from "@/components/ArtisticCommunitySection"
 import QuickToolsSection from "@/components/QuickToolsSection";
 import FeaturedStories from "@/components/FeaturedStories";
 import CommunityHighlights from "@/components/CommunityHighlights";
+import OfficialBookSection from "@/components/OfficialBookSection";
+import PoetryCollectionSection from "@/components/PoetryCollectionSection";
 
 const Index = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -112,8 +114,18 @@ const Index = () => {
         <FeaturedStories />
       </div>
 
-      {/* Enhanced Floating Modules Grid */}
+      {/* Official Book Section */}
+      <div className="animate-slide-up" style={{ animationDelay: '0.3s' }}>
+        <OfficialBookSection />
+      </div>
+
+      {/* Poetry Collection Section */}
       <div className="animate-slide-up" style={{ animationDelay: '0.4s' }}>
+        <PoetryCollectionSection />
+      </div>
+
+      {/* Enhanced Floating Modules Grid */}
+      <div className="animate-slide-up" style={{ animationDelay: '0.5s' }}>
         <FloatingModuleGrid />
       </div>
 
@@ -123,7 +135,7 @@ const Index = () => {
       </div>
 
       {/* Tools Section */}
-      <div className="animate-slide-up" style={{ animationDelay: '0.2s' }}>
+      <div className="animate-slide-up" style={{ animationDelay: '0.7s' }}>
         <QuickToolsSection />
       </div>
 
