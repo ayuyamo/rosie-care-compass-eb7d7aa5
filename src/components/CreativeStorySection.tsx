@@ -3,6 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Clock, Heart, Sparkles, BookOpen } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { Link } from "react-router-dom";
 
 const stories = [
   {
@@ -125,10 +126,12 @@ export const CreativeStorySection = () => {
         </div>
 
         <div className="text-center mt-6 animate-fade-in" style={{ animationDelay: '1s' }}>
-          <Button className="w-full text-white font-bold py-3 rounded-2xl shadow-xl transform hover:scale-105 transition-all duration-300" style={{ backgroundColor: '#dab216' }}>
-            <BookOpen className="mr-2 h-5 w-5" />
-            Explore All Stories
-          </Button>
+          <Link to="/stories">
+            <Button className="w-full text-white font-bold py-3 rounded-2xl shadow-xl transform hover:scale-105 transition-all duration-300" style={{ backgroundColor: '#dab216' }}>
+              <BookOpen className="mr-2 h-5 w-5" />
+              Explore All Stories
+            </Button>
+          </Link>
         </div>
       </div>
     </section>
