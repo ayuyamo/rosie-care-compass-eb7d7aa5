@@ -9,7 +9,6 @@ import { FloatingModuleGrid } from "@/components/FloatingModuleGrid";
 import { CreativeStorySection } from "@/components/CreativeStorySection";
 import { InteractiveToolsRevamped } from "@/components/InteractiveToolsRevamped";
 import { ArtisticCommunitySection } from "@/components/ArtisticCommunitySection";
-import QuickToolsSection from "@/components/QuickToolsSection";
 import FeaturedStories from "@/components/FeaturedStories";
 import CommunityHighlights from "@/components/CommunityHighlights";
 import OfficialBookSection from "@/components/OfficialBookSection";
@@ -134,13 +133,10 @@ const Index = () => {
         <CreativeStorySection />
       </div>
 
-      {/* Tools Section */}
-      <div className="animate-slide-up" style={{ animationDelay: '0.7s' }}>
-        <QuickToolsSection />
-      </div>
-
       {/* Community Section with Pictures */}
-      <CommunityHighlights />
+      <div className="animate-slide-up" style={{ animationDelay: '0.7s' }}>
+        <CommunityHighlights />
+      </div>
 
       <BottomNavigation />
       {/* Bottom spacing for fixed nav */}
