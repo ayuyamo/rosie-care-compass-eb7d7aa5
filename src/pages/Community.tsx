@@ -11,9 +11,9 @@ import { title } from "process";
 
 const Community = () => {
   const { ref: titleRef, isVisible: titleVisible } = useScrollAnimation();
-  const { ref: postsTitleRef, isVisible: postsTitleVisible } = useScrollAnimation();
   const { ref: postsRef, isVisible: postsVisible } = useScrollAnimation();
   const { ref: groupRef, isVisible: groupVisible } = useScrollAnimation();
+  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
 
   const posts = [
     {
@@ -57,7 +57,7 @@ const Community = () => {
   return (
     <div className="min-h-screen bg-[#f8f9fa] p-4 pb-24">
       <div className="max-w-md mx-auto">
-        <header className="flex items-center justify-between mb-6 animate-slide-up">
+        <header ref={headerRef} className={`flex items-center justify-between mb-6 transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <div className="flex items-center">
             <Link to="/" className="mr-4">
               <Button variant="ghost" size="sm" className="text-[#5a7a85]">

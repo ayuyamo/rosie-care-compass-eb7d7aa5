@@ -35,11 +35,12 @@ const Stories = () => {
   ];
 
   const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation();
+  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
 
   return (
     <div className="min-h-screen bg-[#f8f9fa] p-4 pb-24">
       <div className="max-w-md mx-auto">
-        <header className="flex items-center mb-6 animate-fade-in">
+        <header ref={headerRef} className={`flex items-center mb-6 transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <Link to="/" className="mr-4">
             <Button variant="ghost" size="sm" className="text-[#5a7a85]">
               <ArrowLeft className="h-5 w-5" />
