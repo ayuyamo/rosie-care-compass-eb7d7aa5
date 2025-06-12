@@ -55,7 +55,7 @@ const BookDetails = () => {
           {/* Book Overview Card */}
           <Card className="bg-white/90 backdrop-blur-md shadow-lg p-6 mb-6">
             <div className="text-center mb-6">
-              <div className="w-24 h-32 bg-[#dab216] rounded-lg mx-auto mb-4 flex items-center justify-center">
+              <div className="w-24 h-32 bg-[#ff7f50] rounded-lg mx-auto mb-4 flex items-center justify-center">
                 <BookOpen className="h-12 w-12 text-white" />
               </div>
               <h2 className="text-xl font-bold text-[#232323] mb-2">
@@ -64,7 +64,7 @@ const BookDetails = () => {
               <p className="text-[#373618] text-sm mb-4">
                 A comprehensive guide filled with real stories, practical advice, and emotional support for caregivers. Written by our community, for our community.
               </p>
-              
+
               <div className="flex items-center justify-center space-x-4 mb-4">
                 <div className="flex items-center space-x-1">
                   {[...Array(5)].map((_, i) => (
@@ -75,7 +75,7 @@ const BookDetails = () => {
               </div>
 
               <div className="flex space-x-3">
-                <Button className="flex-1 bg-[#dab216] text-white">
+                <Button className="flex-1 bg-[#ff7f50] text-white">
                   <Download className="mr-2 h-4 w-4" />
                   Download PDF
                 </Button>
@@ -89,7 +89,7 @@ const BookDetails = () => {
           {/* Book Stats */}
           <div className="grid grid-cols-3 gap-3 mb-6">
             <Card className="bg-white/90 backdrop-blur-md p-4 text-center">
-              <div className="font-bold text-lg text-[#dab216]">90</div>
+              <div className="font-bold text-lg text-[#ff7f50]">90</div>
               <div className="text-xs text-[#373618]">Pages</div>
             </Card>
             <Card className="bg-white/90 backdrop-blur-md p-4 text-center">

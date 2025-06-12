@@ -31,7 +31,7 @@ const Index = () => {
         <div className="flex items-center justify-between max-w-md mx-auto">
           <div className="flex items-center space-x-3">
             <div className="relative">
-              <div className="w-10 h-10 bg-[#dab216] rounded-xl flex items-center justify-center">
+              <div className="w-10 h-10 bg-[#ff7f50] rounded-xl flex items-center justify-center">
                 <Heart className="h-6 w-6 text-white" />
               </div>
               <div className="absolute -top-1 -right-1 w-4 h-4 bg-[#679aa3] rounded-full flex items-center justify-center">
@@ -62,7 +62,7 @@ const Index = () => {
             {/* Profile Card */}
             <div className="bg-white/60 backdrop-blur-md border border-gray-200 rounded-3xl p-6 shadow-2xl mb-6">
               <div className="relative mb-4">
-                <div className="w-20 h-20 rounded-full mx-auto border-4 border-[#dab216] bg-[#679aa3] shadow-lg flex items-center justify-center">
+                <div className="w-20 h-20 rounded-full mx-auto border-4 border-[#ff7f50] bg-[#679aa3] shadow-lg flex items-center justify-center">
                   <Heart className="h-10 w-10 text-white" />
                 </div>
                 <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-[#2b6cb0] px-3 py-1 rounded-full">
@@ -78,7 +78,7 @@ const Index = () => {
                 I'm Rosie, your AI companion for caregiving. Let's navigate this path together with stories, wisdom, and support.
               </p>
 
-              <Button className="w-full bg-[#dab216]  text-white font-bold py-3 rounded-2xl mb-3">
+              <Button className="w-full bg-[#ff7f50]  text-white font-bold py-3 rounded-2xl mb-3">
                 <Zap className="mr-2 h-5 w-5" />
                 Start Your Journey
               </Button>
@@ -96,7 +96,7 @@ const Index = () => {
                 <div className="text-xs text-[#373618]">Stories</div>
               </div>
               <div className="backdrop-blur-sm rounded-2xl p-3 bg-[rgba(218,178,22,0.1)]">
-                <div className="font-bold text-lg text-[#dab216]">50k+</div>
+                <div className="font-bold text-lg text-[#ff7f50]">50k+</div>
                 <div className="text-xs text-[#373618]">Members</div>
               </div>
               <div className="backdrop-blur-sm rounded-2xl p-3 bg-[rgba(103,154,163,0.1)]">
