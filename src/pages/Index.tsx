@@ -14,6 +14,7 @@ import CommunityHighlights from "@/components/CommunityHighlights";
 import OfficialBookSection from "@/components/OfficialBookSection";
 import PoetryCollectionSection from "@/components/PoetryCollectionSection";
 import { useElevenLabsBot } from "@/hooks/voice-bot";
+import { injectElevenLabsWidget } from "@/lib/elevenlabsWidget";
 
 const Index = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -21,7 +22,11 @@ const Index = () => {
 
   const agentId = "agent_01jx0jmhrhe94a7h9wgz0dpe9y";
 
-  useElevenLabsBot(agentId); // this loads the script
+  // useElevenLabsBot(agentId); // this loads the script
+
+  useEffect(() => {
+    injectElevenLabsWidget();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
