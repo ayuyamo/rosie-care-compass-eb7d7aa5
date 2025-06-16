@@ -13,10 +13,15 @@ import FeaturedStories from "@/components/FeaturedStories";
 import CommunityHighlights from "@/components/CommunityHighlights";
 import OfficialBookSection from "@/components/OfficialBookSection";
 import PoetryCollectionSection from "@/components/PoetryCollectionSection";
+import { useElevenLabsBot } from "@/hooks/voice-bot";
 
 const Index = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrollY, setScrollY] = useState(0);
+
+  const agentId = "agent_01jx0jmhrhe94a7h9wgz0dpe9y";
+
+  useElevenLabsBot(agentId); // this loads the script
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
@@ -25,13 +30,13 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#f8f9fa] relative overflow-hidden">
+    <div className="min-h-screen bg-[#F7F1EC] relative overflow-hidden">
       {/* Mobile App Header */}
       <header className="relative z-50 p-4 animate-fade-in bg-white/80 backdrop-blur-md border-b border-gray-200/30">
         <div className="flex items-center justify-between max-w-md mx-auto">
           <div className="flex items-center space-x-3">
             <div className="relative">
-              <div className="w-10 h-10 bg-[#ff7f50] rounded-xl flex items-center justify-center">
+              <div className="w-10 h-10 bg-[#93D0A1] rounded-xl flex items-center justify-center">
                 <Heart className="h-6 w-6 text-white" />
               </div>
               <div className="absolute -top-1 -right-1 w-4 h-4 bg-[#679aa3] rounded-full flex items-center justify-center">
@@ -55,6 +60,8 @@ const Index = () => {
         </div>
       </header>
 
+      <elevenlabs-convai agent-id={agentId}></elevenlabs-convai>
+
       {/* Hero Section with Profile Picture */}
       <section className="relative z-10 py-8 animate-fade-in" style={{ animationDelay: '0.2s' }}>
         <div className="max-w-md mx-auto px-4">
@@ -62,10 +69,10 @@ const Index = () => {
             {/* Profile Card */}
             <div className="bg-white/60 backdrop-blur-md border border-gray-200 rounded-3xl p-6 shadow-2xl mb-6">
               <div className="relative mb-4">
-                <div className="w-20 h-20 rounded-full mx-auto border-4 border-[#ff7f50] bg-[#679aa3] shadow-lg flex items-center justify-center">
+                <div className="w-20 h-20 rounded-full mx-auto border-4 border-[#93D0A1] bg-[#679aa3] shadow-lg flex items-center justify-center">
                   <Heart className="h-10 w-10 text-white" />
                 </div>
-                <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-[#2b6cb0] px-3 py-1 rounded-full">
+                <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-[#3B53A4] px-3 py-1 rounded-full">
                   <span className="text-white text-xs font-bold">Online</span>
                 </div>
               </div>
@@ -78,7 +85,7 @@ const Index = () => {
                 I'm Rosie, your AI companion for caregiving. Let's navigate this path together with stories, wisdom, and support.
               </p>
 
-              <Button className="w-full bg-[#ff7f50]  text-white font-bold py-3 rounded-2xl mb-3">
+              <Button className="w-full bg-[#506070]  text-white font-bold py-3 rounded-2xl mb-3">
                 <Zap className="mr-2 h-5 w-5" />
                 Start Your Journey
               </Button>
