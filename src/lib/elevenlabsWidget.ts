@@ -28,7 +28,7 @@ export function injectElevenLabsWidget() {
 
   const widget = document.createElement('elevenlabs-convai');
   widget.id = ID;
-  widget.setAttribute('agent-id', 'the-agent-id');
+  widget.setAttribute('agent-id', 'agent_01jx0jmhrhe94a7h9wgz0dpe9y');
   widget.setAttribute('variant', 'full');
 
   // Set initial colors and variant based on current theme and device
@@ -108,6 +108,25 @@ export function injectElevenLabsWidget() {
   // Attach widget to the DOM
   wrapper.appendChild(widget);
   document.body.appendChild(wrapper);
+
+  const hideBrandingIfMobile = () => {
+    if (window.innerWidth > 768) return; // desktop → keep branding
+    const brandingHost = document.querySelector('elevenlabs-convai') as any;
+    if (!brandingHost?.shadowRoot) return;
+
+    // Get all potential text elements in the Shadow DOM
+    const nodes = brandingHost.shadowRoot.querySelectorAll('span, div, p');
+    for (const node of nodes) {
+      const el = node as HTMLElement;
+      if (el.textContent?.includes('Powered by ElevenLabs')) {
+        el.style.display = 'none';
+        clearInterval(check); // stop the interval once done
+        break;
+      }
+    }
+  };
+
+  const check = setInterval(hideBrandingIfMobile, 500);
 }
 
 if (document.readyState === 'loading') {

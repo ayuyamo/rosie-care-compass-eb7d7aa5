@@ -99,3 +99,9 @@
     @apply bg-background text-foreground;
   }
 }
+
+@media (max-width: 768px) {
+  elevenlabs-convai {
+    bottom: 60px !important; /* Adjust based on your bottom nav */
+  }
+}

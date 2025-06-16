@@ -13,16 +13,11 @@ import FeaturedStories from "@/components/FeaturedStories";
 import CommunityHighlights from "@/components/CommunityHighlights";
 import OfficialBookSection from "@/components/OfficialBookSection";
 import PoetryCollectionSection from "@/components/PoetryCollectionSection";
-import { useElevenLabsBot } from "@/hooks/voice-bot";
 import { injectElevenLabsWidget } from "@/lib/elevenlabsWidget";
 
 const Index = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [scrollY, setScrollY] = useState(0);
-
-  const agentId = "agent_01jx0jmhrhe94a7h9wgz0dpe9y";
-
-  // useElevenLabsBot(agentId); // this loads the script
 
   useEffect(() => {
     injectElevenLabsWidget();
@@ -64,8 +59,6 @@ const Index = () => {
           </div>
         </div>
       </header>
-
-      <elevenlabs-convai agent-id={agentId}></elevenlabs-convai>
 
       {/* Hero Section with Profile Picture */}
       <section className="relative z-10 py-8 animate-fade-in" style={{ animationDelay: '0.2s' }}>
