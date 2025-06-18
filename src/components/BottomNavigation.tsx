@@ -1,13 +1,12 @@
 
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Home, BookOpen, MessageCircle, Users, Layers } from "lucide-react";
+import { Home, BookOpen, Users, Layers } from "lucide-react";
 
 const navItems = [
     { to: "/", label: "Home", icon: Home },
     { to: "/stories", label: "Stories", icon: BookOpen },
     { to: "/resources", label: "Resources", icon: Layers },
-    { to: "/chat", label: "Chat", icon: MessageCircle },
     { to: "/community", label: "Community", icon: Users },
 ];
 
