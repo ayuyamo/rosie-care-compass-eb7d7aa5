@@ -65,7 +65,7 @@ const Index = () => {
         <div className="max-w-md mx-auto px-4">
           <div className="text-center">
             {/* Profile Card */}
-            <div className="bg-white/60 backdrop-blur-md border border-gray-200 rounded-3xl p-6 shadow-2xl mb-6">
+            <div className="bg-white/60 backdrop-blur-md border border-gray-200 rounded-3xl p-6 shadow-2xl">
               <div className="relative mb-4">
                 <div className="w-20 h-20 rounded-full mx-auto border-4 border-[#93D0A1] bg-[#679aa3] shadow-lg flex items-center justify-center">
                   <Heart className="h-10 w-10 text-white" />
@@ -93,30 +93,10 @@ const Index = () => {
                 Join Community
               </Button>
             </div>
-
-            {/* Quick Stats */}
-            <div className="grid grid-cols-3 gap-3 mb-6 animate-fade-in" style={{ animationDelay: '0.2s' }}>
-              <div className="backdrop-blur-sm rounded-2xl p-3 bg-[rgba(43,108,176,0.1)]">
-                <div className="font-bold text-lg text-[#2b6cb0]">120+</div>
-                <div className="text-xs text-[#373618]">Stories</div>
-              </div>
-              <div className="backdrop-blur-sm rounded-2xl p-3 bg-[rgba(218,178,22,0.1)]">
-                <div className="font-bold text-lg text-[#ff7f50]">50k+</div>
-                <div className="text-xs text-[#373618]">Members</div>
-              </div>
-              <div className="backdrop-blur-sm rounded-2xl p-3 bg-[rgba(103,154,163,0.1)]">
-                <div className="font-bold text-lg text-[#679aa3]">24/7</div>
-                <div className="text-xs text-[#373618]">Support</div>
-              </div>
-            </div>
           </div>
         </div>
       </section>
 
-      {/* Featured Stories with Images */}
-      {/* <div className="animate-slide-up" style={{ animationDelay: '0.2s' }}>
-        <FeaturedStories />
-      </div> */}
       {/* Enhanced Creative Stories Section */}
       <div className="animate-slide-up" style={{ animationDelay: '0.6s' }}>
         <CreativeStorySection />
@@ -136,7 +116,6 @@ const Index = () => {
       <div className="animate-slide-up" style={{ animationDelay: '0.5s' }}>
         <FloatingModuleGrid />
       </div>
-
 
       {/* Community Section with Pictures */}
       <div className="animate-slide-up" style={{ animationDelay: '0.7s' }}>
