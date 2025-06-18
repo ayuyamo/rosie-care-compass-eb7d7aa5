@@ -8,56 +8,74 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const modules = [
   {
-    category: "Care Planning",
-    title: "Daily Routines",
-    description: "Organize care schedules and daily activities",
+    category: "Planning",
+    title: "New to Caregiving",
+    description: "Facing new challenges",
     icon: Compass,
-    color: "#5a7a85",
-    bgColor: "bg-white/60",
-    borderColor: "border-gray-200"
-  },
-  {
-    category: "Safety",
-    title: "Home Safety",
-    description: "Create secure environments for loved ones",
-    icon: Shield,
-    color: "#4a90a4",
-    bgColor: "bg-white/60",
-    borderColor: "border-gray-200"
-  },
-  {
-    category: "Legal",
-    title: "Documentation",
-    description: "Navigate important legal requirements",
-    icon: Scale,
-    color: "#7a8a60",
+    color: "#dab216",
     bgColor: "bg-white/60",
     borderColor: "border-gray-200"
   },
   {
     category: "Communication",
-    title: "Family Connect",
-    description: "Improve family and healthcare communication",
+    title: "Conflicts",
+    description: "Resolving caregiving tensions",
     icon: MessageCircle,
-    color: "#5a7a85",
+    color: "#2b6cb0",
+    bgColor: "bg-white/60",
+    borderColor: "border-gray-200"
+  },
+  {
+    category: "Planning",
+    title: "Housing",
+    description: "Navigating housing decisions",
+    icon: Home,
+    color: "#679aa3",
+    bgColor: "bg-white/60",
+    borderColor: "border-gray-200"
+  },
+  {
+    category: "Safety",
+    title: "Safety",
+    description: "Ensuring caregiving safety",
+    icon: Shield,
+    color: "#373618",
     bgColor: "bg-white/60",
     borderColor: "border-gray-200"
   },
   {
     category: "Wellness",
-    title: "Self-Care",
-    description: "Maintain your wellbeing while caregiving",
+    title: "Dependence",
+    description: "Coping with dependence",
     icon: Heart,
+    color: "#5a7a85",
+    bgColor: "bg-white/60",
+    borderColor: "border-gray-200"
+  },
+  {
+    category: "Legal",
+    title: "Legal",
+    description: "Understanding legal responsibilities",
+    icon: Scale,
     color: "#4a90a4",
     bgColor: "bg-white/60",
     borderColor: "border-gray-200"
   },
   {
-    category: "Support",
-    title: "Community",
-    description: "Connect with other caregivers",
+    category: "Transition",
+    title: "Transition",
+    description: "Navigating final transitions",
     icon: Users,
     color: "#7a8a60",
+    bgColor: "bg-white/60",
+    borderColor: "border-gray-200"
+  },
+  {
+    category: "End of Life",
+    title: "End of Life",
+    description: "Embracing life's closure",
+    icon: BookOpen,
+    color: "#5a7a85",
     bgColor: "bg-white/60",
     borderColor: "border-gray-200"
   }
