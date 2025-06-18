@@ -1,5 +1,3 @@
-
-
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -31,15 +29,15 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#F7F1EC] relative overflow-hidden">
+    <div className="min-h-screen bg-[#F9F6F0] relative overflow-hidden">
       {/* Mobile App Header */}
-      <header className="relative z-50 p-4 animate-fade-in bg-white/80 backdrop-blur-md border-b border-gray-200/30">
+      <header className="relative z-50 p-4 animate-fade-in bg-white/90 backdrop-blur-md border-b border-gray-200/30">
         <div className="flex items-center justify-between max-w-md mx-auto">
           <div className="flex items-center space-x-3">
             <div className="relative">
-              <div className="w-10 h-10 bg-[#93D0A1] rounded-xl flex items-center justify-center overflow-hidden">
+              <div className="w-10 h-10 bg-[#B8E6C1] rounded-xl flex items-center justify-center overflow-hidden">
                 <img 
-                  src="/lovable-uploads/14b2e283-b63e-4922-96f2-f22bfd82ab13.png" 
+                  src="/lovable-uploads/fe0b3df9-3769-49f8-8198-98831a293061.png" 
                   alt="Rosie Care Bot" 
                   className="w-8 h-8 object-contain"
                 />
@@ -70,11 +68,11 @@ const Index = () => {
         <div className="max-w-md mx-auto px-4">
           <div className="text-center">
             {/* Profile Card */}
-            <div className="bg-white/60 backdrop-blur-md border border-gray-200 rounded-3xl p-6 shadow-2xl">
+            <div className="bg-white/70 backdrop-blur-md border border-gray-200 rounded-3xl p-6 shadow-2xl">
               <div className="relative mb-4">
-                <div className="w-20 h-20 rounded-full mx-auto border-4 border-[#93D0A1] bg-[#679aa3] shadow-lg flex items-center justify-center overflow-hidden">
+                <div className="w-20 h-20 rounded-full mx-auto border-4 border-[#B8E6C1] bg-[#8DB9A3] shadow-lg flex items-center justify-center overflow-hidden">
                   <img 
-                    src="/lovable-uploads/14b2e283-b63e-4922-96f2-f22bfd82ab13.png" 
+                    src="/lovable-uploads/fe0b3df9-3769-49f8-8198-98831a293061.png" 
                     alt="Rosie Care Bot" 
                     className="w-12 h-12 object-contain"
                   />
@@ -139,4 +137,3 @@ const Index = () => {
 };
 
 export default Index;
-
