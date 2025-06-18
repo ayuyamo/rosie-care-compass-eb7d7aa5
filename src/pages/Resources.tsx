@@ -1,8 +1,7 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Heart, BookOpen, Users, MessageCircle, Compass, Shield, Scale, Star, Clock, ArrowRight } from "lucide-react";
+import { ArrowLeft, Heart, BookOpen, Users, MessageCircle, Compass, Shield, Scale, Star, Clock, ArrowRight, Home } from "lucide-react";
 import { Link } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
@@ -14,8 +13,8 @@ const Resources = () => {
   const modules = [
     {
       id: 1,
-      title: "Daily Care Planning",
-      description: "Organize daily routines and care schedules",
+      title: "New to Caregiving",
+      description: "Facing new challenges",
       icon: Compass,
       color: "#dab216",
       category: "Planning",
@@ -23,35 +22,35 @@ const Resources = () => {
     },
     {
       id: 2,
-      title: "Emergency Preparedness",
-      description: "Be ready for unexpected situations",
-      icon: Shield,
+      title: "Conflicts",
+      description: "Resolving caregiving tensions",
+      icon: MessageCircle,
       color: "#2b6cb0",
-      category: "Safety",
-      duration: "Checklist"
+      category: "Communication",
+      duration: "Guide"
     },
     {
       id: 3,
-      title: "Legal Documentation",
-      description: "Navigate important legal requirements",
-      icon: Scale,
+      title: "Housing",
+      description: "Navigating housing decisions",
+      icon: Home,
       color: "#679aa3",
-      category: "Legal",
+      category: "Planning",
       duration: "Guide"
     },
     {
       id: 4,
-      title: "Communication Tools",
-      description: "Improve family and healthcare communication",
-      icon: MessageCircle,
+      title: "Safety",
+      description: "Ensuring caregiving safety",
+      icon: Shield,
       color: "#373618",
-      category: "Communication",
-      duration: "Templates"
+      category: "Safety",
+      duration: "Checklist"
     },
     {
       id: 5,
-      title: "Self-Care for Caregivers",
-      description: "Maintain your own wellbeing while caring",
+      title: "Dependence",
+      description: "Coping with dependence",
       icon: Heart,
       color: "#5a7a85",
       category: "Wellness",
