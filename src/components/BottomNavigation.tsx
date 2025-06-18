@@ -6,7 +6,7 @@ import { Home, BookOpen, MessageCircle, Users, Layers } from "lucide-react";
 const navItems = [
     { to: "/", label: "Home", icon: Home },
     { to: "/stories", label: "Stories", icon: BookOpen },
-    { to: "/modules", label: "Modules", icon: Layers },
+    { to: "/resources", label: "Resources", icon: Layers },
     { to: "/chat", label: "Chat", icon: MessageCircle },
     { to: "/community", label: "Community", icon: Users },
 ];

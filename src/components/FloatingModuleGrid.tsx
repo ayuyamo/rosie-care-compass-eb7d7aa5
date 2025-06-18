@@ -71,13 +71,13 @@ export const FloatingModuleGrid = () => {
     <section className="relative z-10 py-6">
       <div className="max-w-md mx-auto px-4">
         <h3 ref={titleRef} className={`text-xl font-bold text-[#232323] mb-4 transition-all duration-1000 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          Guided Care Tools
+          Resources
         </h3>
 
         <div ref={gridRef} className={`grid grid-cols-2 gap-4 mb-4 transition-all duration-1000 ${gridVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.2s' }}>
           {modules.map((module, index) => {
             const IconComponent = module.icon;
-            
+
             return (
               <Card key={module.title} className={`${module.bgColor} backdrop-blur-md border ${module.borderColor} p-4 text-center`}>
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-3" style={{ backgroundColor: module.color }}>
@@ -91,9 +91,9 @@ export const FloatingModuleGrid = () => {
         </div>
 
         <div className="text-center">
-          <Link to="/modules">
+          <Link to="/resources">
             <Button className="w-full bg-[#2b6cb0] text-white py-3 rounded-2xl">
-              Explore All Modules
+              Explore Resources
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </Link>

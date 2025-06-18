@@ -2,55 +2,69 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Compass, MessageCircle, Shield, Scale, FileText, Phone, Download, ExternalLink } from "lucide-react";
+import { ArrowLeft, Heart, BookOpen, Users, MessageCircle, Compass, Shield, Scale, Star, Clock, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const Resources = () => {
   const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
-  const { ref: resourcesRef, isVisible: resourcesVisible } = useScrollAnimation();
+  const { ref: modulesRef, isVisible: modulesVisible } = useScrollAnimation();
 
-  const resourceCategories = [
+  const modules = [
     {
-      title: "Care Guides",
+      id: 1,
+      title: "Daily Care Planning",
+      description: "Organize daily routines and care schedules",
       icon: Compass,
       color: "#dab216",
-      resources: [
-        { name: "Daily Care Planning Worksheet", type: "PDF", description: "Step-by-step guidance for organizing daily routines" },
-        { name: "Medication Management Guide", type: "Guide", description: "Safe practices for medication administration" },
-        { name: "Nutrition Planning Templates", type: "Template", description: "Meal planning for special dietary needs" }
-      ]
+      category: "Planning",
+      duration: "Interactive"
     },
     {
-      title: "Safety Resources",
+      id: 2,
+      title: "Emergency Preparedness",
+      description: "Be ready for unexpected situations",
       icon: Shield,
       color: "#2b6cb0",
-      resources: [
-        { name: "Home Safety Checklist", type: "Checklist", description: "Complete assessment for home modifications" },
-        { name: "Emergency Contact Templates", type: "Template", description: "Organize important phone numbers and contacts" },
-        { name: "Fall Prevention Guide", type: "PDF", description: "Strategies to prevent accidents and injuries" }
-      ]
+      category: "Safety",
+      duration: "Checklist"
     },
     {
-      title: "Legal Support",
+      id: 3,
+      title: "Legal Documentation",
+      description: "Navigate important legal requirements",
       icon: Scale,
       color: "#679aa3",
-      resources: [
-        { name: "Power of Attorney Guide", type: "Guide", description: "Understanding legal documentation requirements" },
-        { name: "Healthcare Directive Templates", type: "Template", description: "Advance care planning documents" },
-        { name: "Financial Planning Worksheets", type: "PDF", description: "Organize finances and important documents" }
-      ]
+      category: "Legal",
+      duration: "Guide"
     },
     {
+      id: 4,
       title: "Communication Tools",
+      description: "Improve family and healthcare communication",
       icon: MessageCircle,
       color: "#373618",
-      resources: [
-        { name: "Doctor Visit Preparation Sheet", type: "Template", description: "Questions and information to bring to appointments" },
-        { name: "Family Communication Templates", type: "Template", description: "Facilitate conversations about care decisions" },
-        { name: "Care Team Contact List", type: "Template", description: "Organize all healthcare providers and services" }
-      ]
+      category: "Communication",
+      duration: "Templates"
+    },
+    {
+      id: 5,
+      title: "Self-Care for Caregivers",
+      description: "Maintain your own wellbeing while caring",
+      icon: Heart,
+      color: "#5a7a85",
+      category: "Wellness",
+      duration: "Activities"
+    },
+    {
+      id: 6,
+      title: "Community Connection",
+      description: "Build support networks and find resources",
+      icon: Users,
+      color: "#4a90a4",
+      category: "Support",
+      duration: "Network"
     }
   ];
 
@@ -64,84 +78,74 @@ const Resources = () => {
             </Button>
           </Link>
           <div>
-            <h1 className="text-2xl font-bold text-[#232323]">Resources</h1>
-            <p className="text-[#373618] text-sm">Tools and templates for caregiving</p>
+            <h1 className="text-2xl font-bold text-[#232323]">Care Modules</h1>
+            <p className="text-[#373618] text-sm">Interactive tools and resources</p>
           </div>
         </header>
 
-        <div ref={resourcesRef} className="space-y-6">
-          {resourceCategories.map((category, categoryIndex) => {
-            const IconComponent = category.icon;
+        <div ref={modulesRef} className="space-y-4">
+          {modules.map((module, index) => {
+            const IconComponent = module.icon;
             return (
-              <div 
-                key={category.title}
-                className={`transition-all duration-700 ${resourcesVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}
+              <Card
+                key={module.id}
+                className={`
+                  bg-white/90 backdrop-blur-md shadow-lg overflow-hidden group cursor-pointer transition-all duration-700 hover:shadow-xl
+                  ${modulesVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}
+                `}
                 style={{
-                  transitionDelay: resourcesVisible ? `${categoryIndex * 200}ms` : '0ms'
+                  transitionDelay: modulesVisible ? `${index * 100}ms` : '0ms'
                 }}
               >
-                <div className="flex items-center space-x-3 mb-4">
-                  <div 
-                    className="w-10 h-10 rounded-lg flex items-center justify-center" 
-                    style={{ backgroundColor: category.color }}
-                  >
-                    <IconComponent className="h-5 w-5 text-white" />
-                  </div>
-                  <h2 className="text-lg font-bold text-[#232323]">{category.title}</h2>
-                </div>
-
-                <div className="space-y-3">
-                  {category.resources.map((resource, resourceIndex) => (
-                    <Card 
-                      key={resource.name}
-                      className={`
-                        bg-white/90 backdrop-blur-md border border-gray-200 shadow-lg hover:shadow-xl transition-all duration-500 cursor-pointer
-                        ${resourcesVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}
-                      `}
-                      style={{
-                        transitionDelay: resourcesVisible ? `${(categoryIndex * 200) + (resourceIndex * 100)}ms` : '0ms'
-                      }}
+                <CardContent className="p-6">
+                  <div className="flex items-start space-x-4">
+                    <div
+                      className="w-14 h-14 rounded-xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform duration-300"
+                      style={{ backgroundColor: module.color }}
                     >
-                      <CardContent className="p-4">
-                        <div className="flex items-start justify-between">
-                          <div className="flex-1">
-                            <div className="flex items-center space-x-2 mb-2">
-                              <h3 className="font-bold text-sm text-[#232323]">{resource.name}</h3>
-                              <Badge 
-                                className="text-white text-xs" 
-                                style={{ backgroundColor: category.color }}
-                              >
-                                {resource.type}
-                              </Badge>
-                            </div>
-                            <p className="text-xs text-[#373618] mb-3">{resource.description}</p>
-                            <div className="flex items-center space-x-3">
-                              <Button 
-                                variant="ghost" 
-                                size="sm" 
-                                className="text-xs p-1"
-                                style={{ color: category.color }}
-                              >
-                                <Download className="h-3 w-3 mr-1" />
-                                Download
-                              </Button>
-                              <Button 
-                                variant="ghost" 
-                                size="sm" 
-                                className="text-xs p-1"
-                                style={{ color: category.color }}
-                              >
-                                <ExternalLink className="h-3 w-3 mr-1" />
-                                View
-                              </Button>
-                            </div>
-                          </div>
+                      <IconComponent className="h-7 w-7 text-white" />
+                    </div>
+
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between mb-2">
+                        <Badge
+                          className="text-white border-white/30 text-xs"
+                          style={{ backgroundColor: module.color }}
+                        >
+                          {module.category}
+                        </Badge>
+                        <div className="flex items-center space-x-2 text-gray-500">
+                          <Star className="h-4 w-4" />
+                          <span className="text-xs">{module.duration}</span>
                         </div>
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              </div>
+                      </div>
+
+                      <h3 className="text-lg font-bold mb-2 text-[#232323] group-hover:text-[#2b6cb0] transition-colors">
+                        {module.title}
+                      </h3>
+                      <p className="text-sm mb-4 text-[#373618] leading-relaxed">
+                        {module.description}
+                      </p>
+
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-2 text-[#679aa3]">
+                          <Clock className="h-4 w-4" />
+                          <span className="text-xs">Ready to use</span>
+                        </div>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="group/btn"
+                          style={{ color: module.color }}
+                        >
+                          Start Module
+                          <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+                        </Button>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             );
           })}
         </div>

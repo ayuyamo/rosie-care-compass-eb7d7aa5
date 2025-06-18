@@ -114,8 +114,12 @@ const Index = () => {
       </section>
 
       {/* Featured Stories with Images */}
-      <div className="animate-slide-up" style={{ animationDelay: '0.2s' }}>
+      {/* <div className="animate-slide-up" style={{ animationDelay: '0.2s' }}>
         <FeaturedStories />
+      </div> */}
+      {/* Enhanced Creative Stories Section */}
+      <div className="animate-slide-up" style={{ animationDelay: '0.6s' }}>
+        <CreativeStorySection />
       </div>
 
       {/* Official Book Section */}
@@ -133,10 +137,6 @@ const Index = () => {
         <FloatingModuleGrid />
       </div>
 
-      {/* Enhanced Creative Stories Section */}
-      <div className="animate-slide-up" style={{ animationDelay: '0.6s' }}>
-        <CreativeStorySection />
-      </div>
 
       {/* Community Section with Pictures */}
       <div className="animate-slide-up" style={{ animationDelay: '0.7s' }}>
