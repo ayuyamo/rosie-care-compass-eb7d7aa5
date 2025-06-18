@@ -1,7 +1,8 @@
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Clock, Heart, Sparkles, BookOpen } from "lucide-react";
+import { ArrowRight, Clock, Heart, Sparkles, BookOpen, DollarSign, Home, Shield } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { Link } from "react-router-dom";
 
@@ -14,7 +15,7 @@ const stories = [
     bgColor: "#dab216",
     borderColor: "border-gray-200",
     textColor: "#232323",
-    emoji: "🌱",
+    icon: Heart,
     readTime: "5 min"
   },
   {
@@ -25,7 +26,7 @@ const stories = [
     bgColor: "#2b6cb0",
     borderColor: "border-gray-200",
     textColor: "#232323",
-    emoji: "💰",
+    icon: DollarSign,
     readTime: "7 min"
   },
   {
@@ -36,7 +37,7 @@ const stories = [
     bgColor: "#373618",
     borderColor: "border-gray-200",
     textColor: "#232323",
-    emoji: "🏠",
+    icon: Home,
     readTime: "6 min"
   },
   {
@@ -47,7 +48,7 @@ const stories = [
     bgColor: "#679aa3",
     borderColor: "border-gray-200",
     textColor: "#232323",
-    emoji: "🛡️",
+    icon: Shield,
     readTime: "4 min"
   }
 ];
@@ -73,56 +74,59 @@ export const CreativeStorySection = () => {
         </div>
 
         <div ref={gridRef} className="space-y-4">
-          {stories.map((story, index) => (
-            <div
-              key={story.title}
-              className={`group cursor-pointer transition-all duration-700 ${gridVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
-                }`}
-              style={{
-                transitionDelay: gridVisible ? `${index * 150}ms` : '0ms'
-              }}
-            >
-              <Card className={`bg-white/90 backdrop-blur-md border ${story.borderColor} shadow-xl hover:shadow-2xl transition-all duration-500 group-hover:scale-105`}>
-                <CardContent className="p-6">
-                  <div className="flex items-start space-x-4">
-                    <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: story.color }}>
-                      <span className="text-2xl">{story.emoji}</span>
-                    </div>
-
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center justify-between mb-2">
-                        <Badge className="text-white border-white/30 text-xs" style={{ backgroundColor: story.color }}>
-                          {story.category}
-                        </Badge>
-                        <div className="flex items-center space-x-2 text-gray-500">
-                          <Clock className="h-4 w-4" />
-                          <span className="text-xs">{story.readTime}</span>
-                        </div>
+          {stories.map((story, index) => {
+            const IconComponent = story.icon;
+            return (
+              <div
+                key={story.title}
+                className={`group cursor-pointer transition-all duration-700 ${gridVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
+                  }`}
+                style={{
+                  transitionDelay: gridVisible ? `${index * 150}ms` : '0ms'
+                }}
+              >
+                <Card className={`bg-white/90 backdrop-blur-md border ${story.borderColor} shadow-xl hover:shadow-2xl transition-all duration-500 group-hover:scale-105`}>
+                  <CardContent className="p-6">
+                    <div className="flex items-start space-x-4">
+                      <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: story.color }}>
+                        <IconComponent className="h-6 w-6 text-white" />
                       </div>
 
-                      <h4 className="text-lg font-bold mb-2" style={{ color: '#232323' }}>
-                        {story.title}
-                      </h4>
-                      <p className="text-sm mb-4" style={{ color: '#373618' }}>
-                        {story.description}
-                      </p>
-
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-2" style={{ color: '#679aa3' }}>
-                          <Heart className="h-4 w-4" />
-                          <span className="text-xs">Helpful story</span>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center justify-between mb-2">
+                          <Badge className="text-white border-white/30 text-xs" style={{ backgroundColor: story.color }}>
+                            {story.category}
+                          </Badge>
+                          <div className="flex items-center space-x-2 text-gray-500">
+                            <Clock className="h-4 w-4" />
+                            <span className="text-xs">{story.readTime}</span>
+                          </div>
                         </div>
-                        <Button variant="ghost" size="sm" className="group/btn" style={{ color: story.color }}>
-                          Read Story
-                          <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
-                        </Button>
+
+                        <h4 className="text-lg font-bold mb-2" style={{ color: '#232323' }}>
+                          {story.title}
+                        </h4>
+                        <p className="text-sm mb-4" style={{ color: '#373618' }}>
+                          {story.description}
+                        </p>
+
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center space-x-2" style={{ color: '#679aa3' }}>
+                            <Heart className="h-4 w-4" />
+                            <span className="text-xs">Helpful story</span>
+                          </div>
+                          <Button variant="ghost" size="sm" className="group/btn" style={{ color: story.color }}>
+                            Read Story
+                            <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+                          </Button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          ))}
+                  </CardContent>
+                </Card>
+              </div>
+            );
+          })}
         </div>
 
         <div className="text-center mt-6 animate-fade-in" style={{ animationDelay: '1s' }}>
