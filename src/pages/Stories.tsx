@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -10,27 +11,43 @@ const Stories = () => {
   const stories = [
     {
       id: 1,
-      title: "Finding Strength in Unexpected Places",
-      description: "Sarah's journey of caring for her mother with dementia",
+      title: "New to Caregiving",
+      description: "Facing new challenges",
       readTime: "5 min",
-      category: "Family Care",
+      category: "Planning",
       color: "#dab216"
     },
     {
       id: 2,
-      title: "Building a Support Network",
-      description: "How community helped during the hardest times",
+      title: "Conflicts",
+      description: "Resolving caregiving tensions",
       readTime: "7 min",
-      category: "Community",
-      color: "#679aa3"
+      category: "Communication",
+      color: "#2b6cb0"
     },
     {
       id: 3,
-      title: "Home Safety Transformations",
-      description: "Making spaces safe and comfortable for aging loved ones",
+      title: "Housing",
+      description: "Navigating housing decisions",
       readTime: "4 min",
+      category: "Planning",
+      color: "#679aa3"
+    },
+    {
+      id: 4,
+      title: "Safety",
+      description: "Ensuring caregiving safety",
+      readTime: "6 min",
       category: "Safety",
-      color: "#2b6cb0"
+      color: "#373618"
+    },
+    {
+      id: 5,
+      title: "Dependence",
+      description: "Coping with dependence",
+      readTime: "5 min",
+      category: "Wellness",
+      color: "#5a7a85"
     }
   ];
 

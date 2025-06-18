@@ -2,39 +2,39 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Clock, Heart, Sparkles, BookOpen, DollarSign, Home, Shield } from "lucide-react";
+import { ArrowRight, Clock, Heart, Sparkles, BookOpen, Compass, MessageCircle, Home, Shield } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { Link } from "react-router-dom";
 
 const stories = [
   {
-    category: "New Beginnings",
-    title: "Reluctantly",
-    description: "When caregiving finds you unprepared",
+    category: "Planning",
+    title: "New to Caregiving",
+    description: "Facing new challenges",
     color: "#dab216",
     bgColor: "#dab216",
     borderColor: "border-gray-200",
     textColor: "#232323",
-    icon: Heart,
+    icon: Compass,
     readTime: "5 min"
   },
   {
-    category: "Tensions",
-    title: "Money Matters",
-    description: "Navigating financial conversations",
+    category: "Communication",
+    title: "Conflicts",
+    description: "Resolving caregiving tensions",
     color: "#2b6cb0",
     bgColor: "#2b6cb0",
     borderColor: "border-gray-200",
     textColor: "#232323",
-    icon: DollarSign,
+    icon: MessageCircle,
     readTime: "7 min"
   },
   {
-    category: "Housing",
-    title: "Distance & Care",
-    description: "Love knows no geographical boundaries",
-    color: "#373618",
-    bgColor: "#373618",
+    category: "Planning",
+    title: "Housing",
+    description: "Navigating housing decisions",
+    color: "#679aa3",
+    bgColor: "#679aa3",
     borderColor: "border-gray-200",
     textColor: "#232323",
     icon: Home,
@@ -42,14 +42,25 @@ const stories = [
   },
   {
     category: "Safety",
-    title: "Hazard Falls",
-    description: "Creating safe spaces for loved ones",
-    color: "#679aa3",
-    bgColor: "#679aa3",
+    title: "Safety",
+    description: "Ensuring caregiving safety",
+    color: "#373618",
+    bgColor: "#373618",
     borderColor: "border-gray-200",
     textColor: "#232323",
     icon: Shield,
     readTime: "4 min"
+  },
+  {
+    category: "Wellness",
+    title: "Dependence",
+    description: "Coping with dependence",
+    color: "#5a7a85",
+    bgColor: "#5a7a85",
+    borderColor: "border-gray-200",
+    textColor: "#232323",
+    icon: Heart,
+    readTime: "5 min"
   }
 ];
 
