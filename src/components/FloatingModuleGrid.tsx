@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -48,6 +49,15 @@ const modules = [
     description: "Coping with dependence",
     icon: Heart,
     color: "#5a7a85",
+    bgColor: "bg-white/60",
+    borderColor: "border-gray-200"
+  },
+  {
+    category: "Wellness",
+    title: "Self-Care",
+    description: "Caring for yourself too",
+    icon: Sparkles,
+    color: "#8b5a85",
     bgColor: "bg-white/60",
     borderColor: "border-gray-200"
   }
