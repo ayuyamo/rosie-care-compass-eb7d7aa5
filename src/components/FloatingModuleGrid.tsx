@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -12,7 +11,7 @@ const modules = [
     title: "New to Caregiving",
     description: "Facing new challenges",
     icon: Compass,
-    color: "#dab216",
+    color: "#4a90a4",
     bgColor: "bg-white/60",
     borderColor: "border-gray-200"
   },
