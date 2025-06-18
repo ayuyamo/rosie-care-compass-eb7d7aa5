@@ -1,4 +1,5 @@
 
+
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -38,7 +39,7 @@ const Index = () => {
             <div className="relative">
               <div className="w-10 h-10 bg-[#93D0A1] rounded-xl flex items-center justify-center overflow-hidden">
                 <img 
-                  src="/lovable-uploads/047f61a3-2756-4d29-ba2f-5b3f670c11f4.png" 
+                  src="/lovable-uploads/14b2e283-b63e-4922-96f2-f22bfd82ab13.png" 
                   alt="Rosie Care Bot" 
                   className="w-8 h-8 object-contain"
                 />
@@ -73,7 +74,7 @@ const Index = () => {
               <div className="relative mb-4">
                 <div className="w-20 h-20 rounded-full mx-auto border-4 border-[#93D0A1] bg-[#679aa3] shadow-lg flex items-center justify-center overflow-hidden">
                   <img 
-                    src="/lovable-uploads/047f61a3-2756-4d29-ba2f-5b3f670c11f4.png" 
+                    src="/lovable-uploads/14b2e283-b63e-4922-96f2-f22bfd82ab13.png" 
                     alt="Rosie Care Bot" 
                     className="w-12 h-12 object-contain"
                   />
@@ -138,3 +139,4 @@ const Index = () => {
 };
 
 export default Index;
+
