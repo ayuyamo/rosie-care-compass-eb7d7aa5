@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -48,33 +47,6 @@ const modules = [
     title: "Dependence",
     description: "Coping with dependence",
     icon: Heart,
-    color: "#5a7a85",
-    bgColor: "bg-white/60",
-    borderColor: "border-gray-200"
-  },
-  {
-    category: "Legal",
-    title: "Legal",
-    description: "Understanding legal responsibilities",
-    icon: Scale,
-    color: "#4a90a4",
-    bgColor: "bg-white/60",
-    borderColor: "border-gray-200"
-  },
-  {
-    category: "Transition",
-    title: "Transition",
-    description: "Navigating final transitions",
-    icon: Users,
-    color: "#7a8a60",
-    bgColor: "bg-white/60",
-    borderColor: "border-gray-200"
-  },
-  {
-    category: "End of Life",
-    title: "End of Life",
-    description: "Embracing life's closure",
-    icon: BookOpen,
     color: "#5a7a85",
     bgColor: "bg-white/60",
     borderColor: "border-gray-200"
