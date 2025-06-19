@@ -36,9 +36,9 @@ const Index = () => {
           <div className="flex items-center space-x-3">
             <div className="relative">
               <div className="w-12 h-12 bg-[#B8E6C1] rounded-xl flex items-center justify-center overflow-hidden">
-                <img 
-                  src="/lovable-uploads/fe0b3df9-3769-49f8-8198-98831a293061.png" 
-                  alt="Rosie Care Bot" 
+                <img
+                  src="/lovable-uploads/fe0b3df9-3769-49f8-8198-98831a293061.png"
+                  alt="Rosie Care Bot"
                   className="w-10 h-10 object-contain"
                 />
               </div>
@@ -70,14 +70,14 @@ const Index = () => {
             {/* Profile Card */}
             <div className="bg-white/70 backdrop-blur-md border border-gray-200 rounded-3xl p-6 shadow-2xl">
               <div className="relative mb-4">
-                <div className="w-24 h-24 rounded-full mx-auto border-4 border-[#B8E6C1] bg-[#8DB9A3] shadow-lg flex items-center justify-center overflow-hidden">
-                  <img 
-                    src="/lovable-uploads/fe0b3df9-3769-49f8-8198-98831a293061.png" 
-                    alt="Rosie Care Bot" 
+                <div className="w-24 h-24 rounded-full mx-auto border-4 border-[#76554d94] bg-[#B8E6C1] shadow-lg flex items-center justify-center overflow-hidden">
+                  <img
+                    src="/lovable-uploads/fe0b3df9-3769-49f8-8198-98831a293061.png"
+                    alt="Rosie Care Bot"
                     className="w-16 h-16 object-contain"
                   />
                 </div>
-                <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-[#3B53A4] px-3 py-1 rounded-full">
+                <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-[#4b63b3] px-3 py-1 rounded-full">
                   <span className="text-white text-xs font-bold">Online</span>
                 </div>
               </div>

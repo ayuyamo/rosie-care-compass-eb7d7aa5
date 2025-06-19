@@ -11,8 +11,8 @@ const stories = [
     category: "Planning",
     title: "New to Caregiving",
     description: "Facing new challenges",
-    color: "#dab216",
-    bgColor: "#dab216",
+    color: "#d79a8c",
+    bgColor: "#d79a8c",
     borderColor: "border-gray-200",
     textColor: "#232323",
     icon: Compass,
@@ -142,7 +142,7 @@ export const CreativeStorySection = () => {
 
         <div className="text-center mt-6 animate-fade-in" style={{ animationDelay: '1s' }}>
           <Link to="/stories">
-            <Button className="w-full text-white font-bold py-3 rounded-2xl shadow-xl transform hover:scale-105 transition-all duration-300" style={{ backgroundColor: '#dab216' }}>
+            <Button className="w-full text-white font-bold py-3 rounded-2xl shadow-xl transform hover:scale-105 transition-all duration-300" style={{ backgroundColor: '#679aa3' }}>
               <BookOpen className="mr-2 h-5 w-5" />
               Explore All Stories
             </Button>

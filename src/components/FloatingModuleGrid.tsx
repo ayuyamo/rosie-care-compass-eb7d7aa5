@@ -20,7 +20,7 @@ const modules = [
     title: "Conflicts",
     description: "Resolving caregiving tensions",
     icon: MessageCircle,
-    color: "#2b6cb0",
+    color: "#8F9779",
     bgColor: "bg-white/60",
     borderColor: "border-gray-200"
   },
@@ -38,7 +38,7 @@ const modules = [
     title: "Safety",
     description: "Ensuring caregiving safety",
     icon: Shield,
-    color: "#373618",
+    color: "#49796B",
     bgColor: "bg-white/60",
     borderColor: "border-gray-200"
   },
@@ -56,7 +56,7 @@ const modules = [
     title: "Self-Care",
     description: "Caring for yourself too",
     icon: Sparkles,
-    color: "#8b5a85",
+    color: "#87A96B",
     bgColor: "bg-white/60",
     borderColor: "border-gray-200"
   }
@@ -91,7 +91,7 @@ export const FloatingModuleGrid = () => {
 
         <div className="text-center">
           <Link to="/resources">
-            <Button className="w-full bg-[#2b6cb0] text-white py-3 rounded-2xl">
+            <Button className="w-full bg-[#6C7C59] text-white py-3 rounded-2xl">
               Explore Resources
               <ArrowRight className="ml-2 h-4 w-4" />
             </Button>

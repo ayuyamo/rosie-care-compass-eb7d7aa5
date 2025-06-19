@@ -27,7 +27,7 @@ const PoetryCollectionSection = () => {
       title: "Morning Light",
       preview: "Each new day brings hope, even in the darkest times...",
       category: "Hope",
-      color: "#dab216"
+      color: "#d79a8c"
     }
   ];
 
@@ -37,7 +37,7 @@ const PoetryCollectionSection = () => {
         <h3 ref={titleRef} className={`text-xl font-bold text-[#232323] mb-4 transition-all duration-1000 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           Poetry Collection
         </h3>
-        
+
         <div ref={gridRef} className={`space-y-4 transition-all duration-1000 ${gridVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.2s' }}>
           {poems.map((poem, index) => (
             <Card key={poem.title} className={`
@@ -51,7 +51,7 @@ const PoetryCollectionSection = () => {
                 <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ backgroundColor: poem.color }}>
                   <BookText className="h-5 w-5 text-white" />
                 </div>
-                
+
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center justify-between mb-2">
                     <Badge className="text-white border-white/30 text-xs" style={{ backgroundColor: poem.color }}>
@@ -59,14 +59,14 @@ const PoetryCollectionSection = () => {
                     </Badge>
                     <Sparkles className="h-4 w-4 text-[#dab216]" />
                   </div>
-                  
+
                   <h4 className="text-base font-bold text-[#232323] mb-1">
                     {poem.title}
                   </h4>
                   <p className="text-[#373618] text-sm mb-3 italic">
                     {poem.preview}
                   </p>
-                  
+
                   <Button variant="ghost" size="sm" className="text-xs" style={{ color: poem.color }}>
                     Read Full Poem
                     <ArrowRight className="ml-1 h-3 w-3" />
@@ -75,7 +75,7 @@ const PoetryCollectionSection = () => {
               </div>
             </Card>
           ))}
-          
+
           <div className="text-center mt-4">
             <Link to="/poems-collection">
               <Button className="bg-[#2b6cb0] text-white">
