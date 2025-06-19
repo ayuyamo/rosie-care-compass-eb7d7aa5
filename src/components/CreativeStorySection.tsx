@@ -11,8 +11,8 @@ const stories = [
     category: "Planning",
     title: "New to Caregiving",
     description: "Facing new challenges",
-    color: "#6C7C59",
-    bgColor: "#6C7C59",
+    color: "#d79a8c",
+    bgColor: "#d79a8c",
     borderColor: "border-gray-200",
     textColor: "#232323",
     icon: Compass,
@@ -44,8 +44,8 @@ const stories = [
     category: "Safety",
     title: "Safety",
     description: "Ensuring caregiving safety",
-    color: "#4C516D",
-    bgColor: "#4C516D",
+    color: "#8F9779",
+    bgColor: "#8F9779",
     borderColor: "border-gray-200",
     textColor: "#232323",
     icon: Shield,
@@ -124,9 +124,9 @@ export const CreativeStorySection = () => {
                         <div className="flex items-center justify-between">
                           <div className="flex items-center space-x-2" style={{ color: '#679aa3' }}>
                             <Heart className="h-4 w-4" />
-                            <span className="text-xs">Helpful story</span>
+                            <span className="text-sm">Helpful story</span>
                           </div>
-                          <Button variant="ghost" size="sm" className="group/btn" style={{ color: story.color }}>
+                          <Button variant="ghost" size="sm" className="group/btn text-sm" style={{ color: story.color }}>
                             Read Story
                             <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
                           </Button>

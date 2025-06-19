@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Heart, BookOpen, Users, MessageCircle, Compass, Shield, Home, Scale, ArrowRight, Sparkles } from "lucide-react";
+import { Heart, BookOpen, Users, MessageCircle, Compass, Shield, Home, Scale, ArrowRight, Sparkles, FolderClosed } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
@@ -11,7 +11,7 @@ const modules = [
     title: "New to Caregiving",
     description: "Facing new challenges",
     icon: Compass,
-    color: "#4a90a4",
+    color: "#BDB76B",
     bgColor: "bg-white/60",
     borderColor: "border-gray-200"
   },
@@ -38,7 +38,7 @@ const modules = [
     title: "Safety",
     description: "Ensuring caregiving safety",
     icon: Shield,
-    color: "#49796B",
+    color: "#999999",
     bgColor: "bg-white/60",
     borderColor: "border-gray-200"
   },
@@ -47,7 +47,7 @@ const modules = [
     title: "Dependence",
     description: "Coping with dependence",
     icon: Heart,
-    color: "#5a7a85",
+    color: "#CC9999",
     bgColor: "bg-white/60",
     borderColor: "border-gray-200"
   },
@@ -56,7 +56,7 @@ const modules = [
     title: "Self-Care",
     description: "Caring for yourself too",
     icon: Sparkles,
-    color: "#87A96B",
+    color: "#c3b4a4",
     bgColor: "bg-white/60",
     borderColor: "border-gray-200"
   }
@@ -91,9 +91,9 @@ export const FloatingModuleGrid = () => {
 
         <div className="text-center">
           <Link to="/resources">
-            <Button className="w-full bg-[#6C7C59] text-white py-3 rounded-2xl">
+            <Button className="w-full bg-[#989827a4] text-white text-sm font-bold py-3 rounded-2xl">
+              <FolderClosed className="mr-2 h-5 w-5" />
               Explore Resources
-              <ArrowRight className="ml-2 h-4 w-4" />
             </Button>
           </Link>
         </div>
