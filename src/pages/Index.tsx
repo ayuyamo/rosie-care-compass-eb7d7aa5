@@ -70,16 +70,16 @@ const Index = () => {
             {/* Profile Card */}
             <div className="bg-white/70 backdrop-blur-md border border-gray-200 rounded-3xl p-6 shadow-2xl">
               <div className="relative mb-4">
-                <div className="w-24 h-24 rounded-full mx-auto border-4 border-[#76554d94] bg-[#B8E6C1] shadow-lg flex items-center justify-center overflow-hidden">
+                <div className="w-24 h-24 rounded-full mx-auto border-4 border-[#6C7C59] bg-[#B8E6C1] shadow-lg flex items-center justify-center overflow-hidden">
                   <img
                     src="/lovable-uploads/fe0b3df9-3769-49f8-8198-98831a293061.png"
                     alt="Rosie Care Bot"
                     className="w-16 h-16 object-contain"
                   />
                 </div>
-                <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-[#4b63b3] px-3 py-1 rounded-full">
+                {/* <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-[#4b63b3] px-3 py-1 rounded-full">
                   <span className="text-white text-xs font-bold">Online</span>
-                </div>
+                </div> */}
               </div>
 
               <h2 className="text-2xl font-black text-[#232323] mb-2">
@@ -90,12 +90,12 @@ const Index = () => {
                 I'm Rosie, your AI companion for caregiving. Let's navigate this path together with stories, wisdom, and support.
               </p>
 
-              <Button className="w-full bg-[#506070]  text-white font-bold py-3 rounded-2xl mb-3">
+              <Button className="w-full bg-[#4D5D53]  text-white font-bold py-3 rounded-2xl mb-3">
                 <Zap className="mr-2 h-5 w-5" />
                 Start Your Journey
               </Button>
 
-              <Button variant="outline" className="w-full border-[#2b6cb0]  text-[#2b6cb0] py-3 rounded-2xl">
+              <Button variant="outline" className="w-full border-2 border-[#18453B]  text-[#18453B] py-3 rounded-2xl">
                 <Users className="mr-2 h-5 w-5" />
                 Join Community
               </Button>
