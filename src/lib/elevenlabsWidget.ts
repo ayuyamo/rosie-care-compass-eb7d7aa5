@@ -28,8 +28,9 @@ export function injectElevenLabsWidget() {
 
   const widget = document.createElement('elevenlabs-convai');
   widget.id = ID;
-  widget.setAttribute('agent-id', 'agent_01jx0jmhrhe94a7h9wgz0dpe9y');
-  widget.setAttribute('variant', 'full');
+  widget.setAttribute('agent-id', 'agent_01jy4gwf2wemqr4qqp2jay5t4q');
+  widget.setAttribute('variant', 'compact');
+  widget.setAttribute('avatar-image-url', 'https://i.imgur.com/BtDwzSr.png');
 
   // Set initial colors and variant based on current theme and device
   updateWidgetColors(widget);
@@ -55,7 +56,7 @@ export function injectElevenLabsWidget() {
     if (isMobile) {
       widget.setAttribute('variant', 'expandable');
     } else {
-      widget.setAttribute('variant', 'full');
+      widget.setAttribute('variant', 'compact');
     }
   }
 

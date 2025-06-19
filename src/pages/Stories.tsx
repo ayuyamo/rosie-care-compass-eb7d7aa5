@@ -15,7 +15,7 @@ const Stories = () => {
       description: "Facing new challenges",
       readTime: "5 min",
       category: "Planning",
-      color: "#dab216"
+      color: "#d79a8c"
     },
     {
       id: 2,
@@ -63,7 +63,7 @@ const Stories = () => {
               <ArrowLeft className="h-5 w-5" />
             </Button>
           </Link>
-          <h1 className="text-2xl font-bold text-[#c4a91a]">Stories</h1>
+          <h1 className="text-2xl font-bold text-[#d79a8c]">Stories</h1>
         </header>
 
         <div ref={gridRef} className="space-y-4">

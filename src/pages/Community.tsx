@@ -49,7 +49,7 @@ const Community = () => {
   ];
 
   const groups = [
-    { name: "Dementia Care Support", members: 1250, color: "#ff7f50" },
+    { name: "Dementia Care Support", members: 1250, color: "#679267" },
     { name: "Legal & Financial", members: 890, color: "#5a7a85" },
     { name: "Home Safety Tips", members: 2100, color: "#4a90a4" }
   ];
@@ -64,9 +64,9 @@ const Community = () => {
                 <ArrowLeft className="h-5 w-5" />
               </Button>
             </Link>
-            <h1 className="text-2xl font-bold text-[#ff7f50]">Community</h1>
+            <h1 className="text-2xl font-bold text-[#F08080]">Community</h1>
           </div>
-          <Button className="bg-[#ff7f50] hover:bg-[#ff7f50]/80 text-white">
+          <Button className="bg-[#F08080] hover:bg-[#F08080]/80 text-white">
             <Plus className="h-4 w-4 mr-2" />
             Post
           </Button>
@@ -94,7 +94,7 @@ const Community = () => {
                       <p className="text-sm text-[#7a8a90]">{group.members} members</p>
                     </div>
                   </div>
-                  <Button variant="outline" size="sm" className="border-[#ff7f50] text-[#ff7f50]">
+                  <Button variant="outline" size="sm" className="border-2 border-[#F08080] text-[#F08080] text-md">
                     Join
                   </Button>
                 </div>
@@ -117,7 +117,7 @@ const Community = () => {
                     <img
                       src={post.avatar}
                       alt={post.author}
-                      className="w-10 h-10 rounded-full border-2 border-[#ff7f50]"
+                      className="w-10 h-10 rounded-full border-2 border-[#679267]"
                     />
                     <div className="flex-1">
                       <div className="flex items-center space-x-2">
@@ -125,7 +125,7 @@ const Community = () => {
                         <Badge
                           variant="outline"
                           className="text-xs"
-                          style={{ borderColor: "#ff7f50", color: "#ff7f50" }}
+                          style={{ borderColor: "#F08080", color: "#F08080" }}
                         >
                           {post.category}
                         </Badge>
@@ -137,7 +137,7 @@ const Community = () => {
                   <p className="text-[#5a7a85] mb-4">{post.content}</p>
 
                   <div className="flex items-center space-x-4">
-                    <button className="flex items-center space-x-1 text-[#ff7f50] hover:text-[#ff7f50]/80">
+                    <button className="flex items-center space-x-1 text-[#F08080] hover:text-[#F08080]/80">
                       <Heart className="h-4 w-4" />
                       <span className="text-sm">{post.likes}</span>
                     </button>

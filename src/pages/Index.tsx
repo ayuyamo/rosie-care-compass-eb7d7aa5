@@ -29,7 +29,7 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#F9F6F0] relative overflow-hidden">
+    <div className="min-h-screen bg-white relative overflow-hidden">
       {/* Mobile App Header */}
       <header className="relative z-50 p-4 animate-fade-in bg-white/90 backdrop-blur-md border-b border-gray-200/30">
         <div className="flex items-center justify-between max-w-md mx-auto">
@@ -48,7 +48,7 @@ const Index = () => {
             </div>
             <div>
               <h1 className="text-lg font-bold text-[#232323]">Rosie Care</h1>
-              <p className="text-[#2b6cb0] text-xs">Your Companion</p>
+              <p className="text-[#4B5320] text-sm">Your Companion</p>
             </div>
           </div>
 
@@ -70,7 +70,7 @@ const Index = () => {
             {/* Profile Card */}
             <div className="bg-white/70 backdrop-blur-md border border-gray-200 rounded-3xl p-6 shadow-2xl">
               <div className="relative mb-4">
-                <div className="w-24 h-24 rounded-full mx-auto border-4 border-[#6C7C59] bg-[#B8E6C1] shadow-lg flex items-center justify-center overflow-hidden">
+                <div className="w-24 h-24 rounded-full mx-auto border-4 border-[#537c83a6] bg-[#B8E6C1] shadow-lg flex items-center justify-center overflow-hidden">
                   <img
                     src="/lovable-uploads/fe0b3df9-3769-49f8-8198-98831a293061.png"
                     alt="Rosie Care Bot"
@@ -90,7 +90,7 @@ const Index = () => {
                 I'm Rosie, your AI companion for caregiving. Let's navigate this path together with stories, wisdom, and support.
               </p>
 
-              <Button className="w-full bg-[#4D5D53]  text-white font-bold py-3 rounded-2xl mb-3">
+              <Button className="w-full bg-[#537c83]  text-white font-bold py-3 rounded-2xl mb-3">
                 <Zap className="mr-2 h-5 w-5" />
                 Start Your Journey
               </Button>

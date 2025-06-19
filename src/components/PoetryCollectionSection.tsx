@@ -21,7 +21,7 @@ const PoetryCollectionSection = () => {
       title: "Strength in Silence",
       preview: "When the world feels heavy, we find grace in small acts...",
       category: "Resilience",
-      color: "#2b6cb0"
+      color: "#8DA399"
     },
     {
       title: "Morning Light",
@@ -78,7 +78,7 @@ const PoetryCollectionSection = () => {
 
           <div className="text-center mt-4">
             <Link to="/poems-collection">
-              <Button className="bg-[#2b6cb0] text-white">
+              <Button className="bg-[#5783a1] text-white">
                 <BookText className="mr-2 h-4 w-4" />
                 View Complete Collection
               </Button>

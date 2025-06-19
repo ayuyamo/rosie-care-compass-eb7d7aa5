@@ -16,7 +16,7 @@ const Resources = () => {
       title: "New to Caregiving",
       description: "Facing new challenges",
       icon: Compass,
-      color: "#dab216",
+      color: "#679267",
       category: "Planning",
       duration: "Interactive"
     },
