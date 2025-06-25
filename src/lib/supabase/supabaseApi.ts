@@ -1,10 +1,11 @@
+
 import { supabase } from './supabaseClient';
 
 /** Fetch all topics */
 const fetchTopics = async () => {
   const { data, error } = await supabase
     .from('topics')
-    .select('name, description')
+    .select('id, name, description')
     .order('created_at', { ascending: false });
 
   if (error) throw new Error(`fetchTopics: ${error.message}`);
@@ -14,6 +15,7 @@ const fetchTopics = async () => {
 export const loadStories = async () => {
   const data = await fetchTopics();
   const stories = data.map((topic) => ({
+    id: topic.id,
     name: topic.name,
     description: topic.description || 'No description available.',
   }));
