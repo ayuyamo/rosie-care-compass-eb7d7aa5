@@ -6,35 +6,29 @@ import { ArrowLeft, BookOpen, Heart, Clock, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { loadStories } from "@/lib/supabase/supabaseApi";
+import { loadStories, fetchSectionsByTopicId } from "@/lib/supabase/supabaseApi";
 import { useState, useEffect } from "react";
 
-const Stories = () => {
-  const [stories, setStories] = useState([]);
+const Topics = () => {
+  const [topics, setTopics] = useState([]);
   const [hasLoaded, setHasLoaded] = useState(false);
 
-  // Mock sections data
-  const mockSections = [
-    "Getting Started", "Understanding Basics", "Advanced Techniques", "Real-world Examples", 
-    "Best Practices", "Common Challenges", "Expert Tips", "Case Studies",
-    "Practical Applications", "Next Steps", "Resources", "Community Insights"
-  ];
-
-  const getRandomSections = () => {
-    const shuffled = [...mockSections].sort(() => 0.5 - Math.random());
-    const count = Math.floor(Math.random() * 4) + 2; // 2-5 sections
-    return shuffled.slice(0, count);
-  };
 
   useEffect(() => {
     const fetch = async () => {
       const data = await loadStories();
       // Add mock sections to each story
-      const storiesWithSections = data.map(story => ({
-        ...story,
-        sections: getRandomSections()
-      }));
-      setStories(storiesWithSections);
+      const storiesWithSections = await Promise.all(
+        data.map(async (story) => {
+          const sections = await fetchSectionsByTopicId(story.id);
+          return {
+            ...story,
+            sections: sections.slice(0, 4),
+            remainingCount: sections.length > 4 ? sections.length - 4 : 0,
+          }
+        })
+      );
+      setTopics(storiesWithSections);
       requestAnimationFrame(() => setHasLoaded(true));
     };
     fetch();
@@ -71,7 +65,7 @@ const Stories = () => {
         </header>
 
         <div ref={gridRef} className="space-y-8">
-          {stories.map((story, index) => {
+          {topics.map((story, index) => {
             const randomColor = getConsistentColor(story.name);
             return (
               <div key={story.id}>
@@ -101,19 +95,32 @@ const Stories = () => {
                           <p className="text-xs font-medium text-gray-500 mb-2">Sections:</p>
                           <div className="flex flex-wrap gap-1">
                             {story.sections.map((section, sectionIndex) => (
-                              <Badge 
-                                key={sectionIndex} 
-                                variant="secondary" 
+                              <Badge
+                                key={sectionIndex}
+                                variant="secondary"
                                 className="text-xs px-2 py-1"
-                                style={{ 
-                                  backgroundColor: `${randomColor}20`, 
+                                style={{
+                                  backgroundColor: `${randomColor}20`,
                                   color: randomColor,
                                   border: `1px solid ${randomColor}40`
                                 }}
                               >
-                                {section}
+                                {section.name}
                               </Badge>
                             ))}
+                            {story.remainingCount > 0 && (
+                              <Badge
+                                variant="secondary"
+                                className="text-xs px-2 py-1 font-medium"
+                                style={{
+                                  backgroundColor: `${randomColor}10`,
+                                  color: randomColor,
+                                  border: `1px dashed ${randomColor}50`
+                                }}
+                              >
+                                +{story.remainingCount} more
+                              </Badge>
+                            )}
                           </div>
                         </div>
 
@@ -143,4 +150,4 @@ const Stories = () => {
   );
 };
 
-export default Stories;
+export default Topics;

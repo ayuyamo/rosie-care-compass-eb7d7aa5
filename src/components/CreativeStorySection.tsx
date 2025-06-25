@@ -108,7 +108,7 @@ export const CreativeStorySection = () => {
         </div>
 
         <div className="text-center mt-6 animate-fade-in" style={{ animationDelay: '1s' }}>
-          <Link to="/stories">
+          <Link to="/topics">
             <Button className="w-full text-white font-bold py-3 rounded-2xl shadow-xl transform hover:scale-105 transition-all duration-300" style={{ backgroundColor: '#679aa3' }}>
               <BookOpen className="mr-2 h-5 w-5" />
               Explore All Stories

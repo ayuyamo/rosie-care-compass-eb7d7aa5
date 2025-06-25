@@ -5,7 +5,7 @@ import { Home, BookOpen, Users, Layers } from "lucide-react";
 
 const navItems = [
     { to: "/", label: "Home", icon: Home },
-    { to: "/stories", label: "Stories", icon: BookOpen },
+    { to: "/topics", label: "Stories", icon: BookOpen },
     { to: "/resources", label: "Resources", icon: Layers },
     { to: "/community", label: "Community", icon: Users },
 ];

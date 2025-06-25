@@ -15,58 +15,58 @@ const SectionsList = () => {
 
   // Mock sections data
   const mockSections = [
-    { 
-      id: 1, 
-      title: "Getting Started", 
+    {
+      id: 1,
+      title: "Getting Started",
       description: "Learn the fundamentals and basic concepts to begin your journey.",
       readTime: "5 min read",
       author: "Dr. Sarah Johnson"
     },
-    { 
-      id: 2, 
-      title: "Understanding Basics", 
+    {
+      id: 2,
+      title: "Understanding Basics",
       description: "Deep dive into the core principles and foundational knowledge.",
       readTime: "8 min read",
       author: "Prof. Michael Chen"
     },
-    { 
-      id: 3, 
-      title: "Advanced Techniques", 
+    {
+      id: 3,
+      title: "Advanced Techniques",
       description: "Master advanced strategies and professional-level approaches.",
       readTime: "12 min read",
       author: "Dr. Emily Rodriguez"
     },
-    { 
-      id: 4, 
-      title: "Real-world Examples", 
+    {
+      id: 4,
+      title: "Real-world Examples",
       description: "Explore practical applications and case studies from industry.",
       readTime: "10 min read",
       author: "James Mitchell"
     },
-    { 
-      id: 5, 
-      title: "Best Practices", 
+    {
+      id: 5,
+      title: "Best Practices",
       description: "Discover proven methods and recommended approaches.",
       readTime: "7 min read",
       author: "Dr. Lisa Wang"
     },
-    { 
-      id: 6, 
-      title: "Common Challenges", 
+    {
+      id: 6,
+      title: "Common Challenges",
       description: "Learn how to overcome typical obstacles and difficulties.",
       readTime: "9 min read",
       author: "Robert Taylor"
     },
-    { 
-      id: 7, 
-      title: "Expert Tips", 
+    {
+      id: 7,
+      title: "Expert Tips",
       description: "Insider knowledge and professional secrets revealed.",
       readTime: "6 min read",
       author: "Dr. Amanda Foster"
     },
-    { 
-      id: 8, 
-      title: "Case Studies", 
+    {
+      id: 8,
+      title: "Case Studies",
       description: "Detailed analysis of successful implementations and outcomes.",
       readTime: "15 min read",
       author: "Prof. David Kim"
@@ -105,7 +105,7 @@ const SectionsList = () => {
     <div className="min-h-screen bg-[#f8f9fa] p-4 pb-24">
       <div className="max-w-md mx-auto">
         <header ref={headerRef} className={`flex items-center mb-6 transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <Link to="/stories" className="mr-4">
+          <Link to="/topics" className="mr-4">
             <Button variant="ghost" size="sm" className="text-[#5a7a85]">
               <ArrowLeft className="h-5 w-5" />
             </Button>
