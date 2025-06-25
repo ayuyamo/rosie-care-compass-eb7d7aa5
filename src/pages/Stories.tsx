@@ -6,35 +6,23 @@ import { ArrowLeft, BookOpen, Heart, Clock, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { loadStories } from "@/lib/supabase/supabaseApi";
+import { useState, useEffect } from "react";
+
+// const stories = await loadStories();
 
 const Stories = () => {
-  const stories = [
-    {
-      id: 1,
-      name: "New to Caregiving",
-      description: "Facing new challenges"
-    },
-    {
-      id: 2,
-      name: "Conflicts",
-      description: "Resolving caregiving tensions"
-    },
-    {
-      id: 3,
-      name: "Housing",
-      description: "Navigating housing decisions"
-    },
-    {
-      id: 4,
-      name: "Safety",
-      description: "Ensuring caregiving safety"
-    },
-    {
-      id: 5,
-      name: "Dependence",
-      description: "Coping with dependence"
-    }
-  ];
+  const [stories, setStories] = useState([]);
+  const [hasLoaded, setHasLoaded] = useState(false);
+
+  useEffect(() => {
+    const fetch = async () => {
+      const data = await loadStories();
+      setStories(data);
+      requestAnimationFrame(() => setHasLoaded(true)); // allow DOM to render stories before triggering animation
+    };
+    fetch();
+  }, []);
 
   const colors = [
     "#d79a8c", "#367588", "#49796B", "#8F9779", "#5a7a85",
@@ -68,19 +56,19 @@ const Stories = () => {
               <ArrowLeft className="h-5 w-5" />
             </Button>
           </Link>
-          <h1 className="text-2xl font-bold text-[#d79a8c]">Stories</h1>
+          <h1 className="text-2xl font-bold text-black">Stories</h1>
         </header>
 
         <div ref={gridRef} className="space-y-4">
           {stories.map((story, index) => {
             const randomColor = getConsistentColor(story.name);
             return (
-              <Card key={story.id} className={`
+              <Card key={index} className={`
                   bg-white/90 backdrop-blur-md shadow-lg overflow-hidden group cursor-pointer transition-all duration-700
-                  ${gridVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}
+                  ${gridVisible && hasLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}
                 `}
                 style={{
-                  transitionDelay: gridVisible ? `${index * 150}ms` : '0ms'
+                  transitionDelay: gridVisible && hasLoaded ? `${index * 150}ms` : '0ms'
                 }}>
                 <CardContent className="p-6">
                   <div className="flex items-start space-x-4">

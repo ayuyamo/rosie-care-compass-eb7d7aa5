@@ -5,19 +5,8 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Heart, Sparkles, BookOpen } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { Link } from "react-router-dom";
-import { fetchTopics } from "@/lib/supabase/supabaseApi";
-
-const loadStories = async () => {
-  const data = await fetchTopics();
-  const limitedTopics = data.slice(0, 3); // only first 3
-  const stories = limitedTopics.map(topic => ({
-    name: topic.name,
-    description: topic.description || "No description available."
-  }));
-  return stories;
-};
-
-const stories = await loadStories();
+import { loadStories } from "@/lib/supabase/supabaseApi";
+import { useState, useEffect } from "react";
 
 const colors = [
   "#d79a8c", "#367588", "#49796B", "#8F9779", "#5a7a85",
@@ -40,6 +29,19 @@ const getConsistentColor = (key: string): string => {
 };
 
 export const CreativeStorySection = () => {
+  const [stories, setStories] = useState([]);
+  const [hasLoaded, setHasLoaded] = useState(false);
+
+  useEffect(() => {
+    const fetch = async () => {
+      const data = await loadStories();
+      const limitedStories = data.slice(0, 3);
+      setStories(limitedStories);
+      requestAnimationFrame(() => setHasLoaded(true)); // allow DOM to render stories before triggering animation
+    };
+    fetch();
+  }, []);
+
   const { ref: titleRef, isVisible: titleVisible } = useScrollAnimation();
   const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation();
 
@@ -65,10 +67,10 @@ export const CreativeStorySection = () => {
             return (
               <div
                 key={story.name}
-                className={`group cursor-pointer transition-all duration-700 ${gridVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
+                className={`group cursor-pointer transition-all duration-700 ${gridVisible && hasLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
                   }`}
                 style={{
-                  transitionDelay: gridVisible ? `${index * 150}ms` : '0ms'
+                  transitionDelay: gridVisible && hasLoaded ? `${index * 150}ms` : '0ms'
                 }}
               >
                 <Card className="bg-white/90 backdrop-blur-md border border-gray-200 shadow-xl hover:shadow-2xl transition-all duration-500 group-hover:scale-105">
