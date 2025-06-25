@@ -2,68 +2,42 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Clock, Heart, Sparkles, BookOpen, Compass, MessageCircle, Home, Shield } from "lucide-react";
+import { ArrowRight, Heart, Sparkles, BookOpen } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { Link } from "react-router-dom";
-import { fetchTopics } from "@/lib/supabase/supabaseApi";
 
 const stories = [
   {
-    category: "Planning",
-    title: "New to Caregiving",
-    description: "Facing new challenges",
-    color: "#d79a8c",
-    bgColor: "#d79a8c",
-    borderColor: "border-gray-200",
-    textColor: "#232323",
-    icon: Compass,
-    readTime: "5 min"
+    name: "New to Caregiving",
+    description: "Facing new challenges"
   },
   {
-    category: "Communication",
-    title: "Conflicts",
-    description: "Resolving caregiving tensions",
-    color: "#367588",
-    bgColor: "#367588",
-    borderColor: "border-gray-200",
-    textColor: "#232323",
-    icon: MessageCircle,
-    readTime: "7 min"
+    name: "Conflicts",
+    description: "Resolving caregiving tensions"
   },
   {
-    category: "Planning",
-    title: "Housing",
-    description: "Navigating housing decisions",
-    color: "#49796B",
-    bgColor: "#49796B",
-    borderColor: "border-gray-200",
-    textColor: "#232323",
-    icon: Home,
-    readTime: "6 min"
+    name: "Housing",
+    description: "Navigating housing decisions"
   },
   {
-    category: "Safety",
-    title: "Safety",
-    description: "Ensuring caregiving safety",
-    color: "#8F9779",
-    bgColor: "#8F9779",
-    borderColor: "border-gray-200",
-    textColor: "#232323",
-    icon: Shield,
-    readTime: "4 min"
+    name: "Safety",
+    description: "Ensuring caregiving safety"
   },
   {
-    category: "Wellness",
-    title: "Dependence",
-    description: "Coping with dependence",
-    color: "#5a7a85",
-    bgColor: "#5a7a85",
-    borderColor: "border-gray-200",
-    textColor: "#232323",
-    icon: Heart,
-    readTime: "5 min"
+    name: "Dependence",
+    description: "Coping with dependence"
   }
 ];
+
+// Function to generate random colors
+const generateRandomColor = () => {
+  const colors = [
+    "#d79a8c", "#367588", "#49796B", "#8F9779", "#5a7a85",
+    "#B8860B", "#8B4513", "#556B2F", "#800080", "#008080",
+    "#CD853F", "#4682B4", "#2E8B57", "#9932CC", "#20B2AA"
+  ];
+  return colors[Math.floor(Math.random() * colors.length)];
+};
 
 export const CreativeStorySection = () => {
   const { ref: titleRef, isVisible: titleVisible } = useScrollAnimation();
@@ -87,36 +61,26 @@ export const CreativeStorySection = () => {
 
         <div ref={gridRef} className="space-y-4">
           {stories.map((story, index) => {
-            const IconComponent = story.icon;
+            const randomColor = generateRandomColor();
             return (
               <div
-                key={story.title}
+                key={story.name}
                 className={`group cursor-pointer transition-all duration-700 ${gridVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
                   }`}
                 style={{
                   transitionDelay: gridVisible ? `${index * 150}ms` : '0ms'
                 }}
               >
-                <Card className={`bg-white/90 backdrop-blur-md border ${story.borderColor} shadow-xl hover:shadow-2xl transition-all duration-500 group-hover:scale-105`}>
+                <Card className="bg-white/90 backdrop-blur-md border border-gray-200 shadow-xl hover:shadow-2xl transition-all duration-500 group-hover:scale-105">
                   <CardContent className="p-6">
                     <div className="flex items-start space-x-4">
-                      <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: story.color }}>
-                        <IconComponent className="h-6 w-6 text-white" />
+                      <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: randomColor }}>
+                        <Heart className="h-6 w-6 text-white" />
                       </div>
 
                       <div className="flex-1 min-w-0">
-                        <div className="flex items-center justify-between mb-2">
-                          <Badge className="text-white border-white/30 text-xs" style={{ backgroundColor: story.color }}>
-                            {story.category}
-                          </Badge>
-                          <div className="flex items-center space-x-2 text-gray-500">
-                            <Clock className="h-4 w-4" />
-                            <span className="text-xs">{story.readTime}</span>
-                          </div>
-                        </div>
-
                         <h4 className="text-lg font-bold mb-2" style={{ color: '#232323' }}>
-                          {story.title}
+                          {story.name}
                         </h4>
                         <p className="text-sm mb-4" style={{ color: '#373618' }}>
                           {story.description}
@@ -127,7 +91,7 @@ export const CreativeStorySection = () => {
                             <Heart className="h-4 w-4" />
                             <span className="text-sm">Helpful story</span>
                           </div>
-                          <Button variant="ghost" size="sm" className="group/btn text-sm" style={{ color: story.color }}>
+                          <Button variant="ghost" size="sm" className="group/btn text-sm" style={{ color: randomColor }}>
                             Read Story
                             <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
                           </Button>
