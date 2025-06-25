@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Clock, Heart, Sparkles, BookOpen, Compass, MessageCircle, Home, Shield } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { Link } from "react-router-dom";
+import { fetchTopics } from "@/lib/supabase/supabaseApi";
 
 const stories = [
   {
