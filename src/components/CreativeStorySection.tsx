@@ -29,14 +29,24 @@ const stories = [
   }
 ];
 
-// Function to generate random colors
-const generateRandomColor = () => {
-  const colors = [
-    "#d79a8c", "#367588", "#49796B", "#8F9779", "#5a7a85",
-    "#B8860B", "#8B4513", "#556B2F", "#800080", "#008080",
-    "#CD853F", "#4682B4", "#2E8B57", "#9932CC", "#20B2AA"
-  ];
-  return colors[Math.floor(Math.random() * colors.length)];
+const colors = [
+  "#d79a8c", "#367588", "#49796B", "#8F9779", "#5a7a85",
+  "#B8860B", "#8B4513", "#556B2F", "#800080", "#008080",
+  "#CD853F", "#4682B4", "#2E8B57", "#9932CC", "#20B2AA"
+];
+
+/**
+ * Hash a string to a consistent index for color mapping.
+ * @param key Any string like a name or ID
+ * @returns A hex color string
+ */
+const getConsistentColor = (key: string): string => {
+  let hash = 0;
+  for (let i = 0; i < key.length; i++) {
+    hash = key.charCodeAt(i) + ((hash << 5) - hash); // simple string hash
+  }
+  const index = Math.abs(hash) % colors.length;
+  return colors[index];
 };
 
 export const CreativeStorySection = () => {
@@ -61,7 +71,7 @@ export const CreativeStorySection = () => {
 
         <div ref={gridRef} className="space-y-4">
           {stories.map((story, index) => {
-            const randomColor = generateRandomColor();
+            const randomColor = getConsistentColor(story.name);
             return (
               <div
                 key={story.name}
