@@ -70,11 +70,11 @@ const Stories = () => {
           <h1 className="text-2xl font-bold text-black">Stories</h1>
         </header>
 
-        <div ref={gridRef} className="space-y-6">
+        <div ref={gridRef} className="space-y-8">
           {stories.map((story, index) => {
             const randomColor = getConsistentColor(story.name);
             return (
-              <Link key={story.id} to={`/topic/${story.id}/sections`}>
+              <div key={story.id}>
                 <Card className={`
                     bg-white/90 backdrop-blur-md shadow-lg overflow-hidden group cursor-pointer transition-all duration-700 hover:shadow-xl hover:scale-[1.02]
                     ${gridVisible && hasLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}
@@ -122,16 +122,18 @@ const Stories = () => {
                             <Heart className="h-4 w-4" />
                             <span className="text-xs">Helpful story</span>
                           </div>
-                          <Button variant="ghost" size="sm" className="group/btn" style={{ color: randomColor }}>
-                            View Sections
-                            <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
-                          </Button>
+                          <Link to={`/topic/${story.id}/sections`}>
+                            <Button variant="ghost" size="sm" className="group/btn" style={{ color: randomColor }}>
+                              View Sections
+                              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+                            </Button>
+                          </Link>
                         </div>
                       </div>
                     </div>
                   </CardContent>
                 </Card>
-              </Link>
+              </div>
             );
           })}
         </div>

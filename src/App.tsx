@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Stories from "./pages/Stories";
 import TopicSections from "./pages/TopicSections";
+import SectionsList from "./pages/SectionsList";
 import Chat from "./pages/Chat";
 import Community from "./pages/Community";
 import Resources from "./pages/Resources";
@@ -25,7 +26,7 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/stories" element={<Stories />} />
-          <Route path="/topic/:topicId/sections" element={<TopicSections />} />
+          <Route path="/topic/:topicId/sections" element={<SectionsList />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/community" element={<Community />} />
           <Route path="/resources" element={<Resources />} />
