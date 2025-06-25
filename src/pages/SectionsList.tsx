@@ -2,86 +2,47 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, BookOpen, Clock, User } from "lucide-react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useState, useEffect } from "react";
+import { fetchTopicById, fetchSectionsByTopicId } from "@/lib/supabase/supabaseApi";
 
 const SectionsList = () => {
   const { topicId } = useParams<{ topicId: string }>();
+  const location = useLocation();
+  const passedTopic = location.state?.topic;
   const [sections, setSections] = useState([]);
   const [topicName, setTopicName] = useState("Topic");
   const [hasLoaded, setHasLoaded] = useState(false);
 
-  // Mock sections data
-  const mockSections = [
-    {
-      id: 1,
-      title: "Getting Started",
-      description: "Learn the fundamentals and basic concepts to begin your journey.",
-      readTime: "5 min read",
-      author: "Dr. Sarah Johnson"
-    },
-    {
-      id: 2,
-      title: "Understanding Basics",
-      description: "Deep dive into the core principles and foundational knowledge.",
-      readTime: "8 min read",
-      author: "Prof. Michael Chen"
-    },
-    {
-      id: 3,
-      title: "Advanced Techniques",
-      description: "Master advanced strategies and professional-level approaches.",
-      readTime: "12 min read",
-      author: "Dr. Emily Rodriguez"
-    },
-    {
-      id: 4,
-      title: "Real-world Examples",
-      description: "Explore practical applications and case studies from industry.",
-      readTime: "10 min read",
-      author: "James Mitchell"
-    },
-    {
-      id: 5,
-      title: "Best Practices",
-      description: "Discover proven methods and recommended approaches.",
-      readTime: "7 min read",
-      author: "Dr. Lisa Wang"
-    },
-    {
-      id: 6,
-      title: "Common Challenges",
-      description: "Learn how to overcome typical obstacles and difficulties.",
-      readTime: "9 min read",
-      author: "Robert Taylor"
-    },
-    {
-      id: 7,
-      title: "Expert Tips",
-      description: "Insider knowledge and professional secrets revealed.",
-      readTime: "6 min read",
-      author: "Dr. Amanda Foster"
-    },
-    {
-      id: 8,
-      title: "Case Studies",
-      description: "Detailed analysis of successful implementations and outcomes.",
-      readTime: "15 min read",
-      author: "Prof. David Kim"
-    }
-  ];
-
   useEffect(() => {
-    // Simulate loading sections for the topic
-    const loadSections = () => {
-      setTopicName(`Topic ${topicId}`);
-      setSections(mockSections);
-      requestAnimationFrame(() => setHasLoaded(true));
+    const loadData = async () => {
+      try {
+        if (passedTopic) {
+          console.log("Using passed topic:", passedTopic);
+          setTopicName(passedTopic.name);
+          setSections(passedTopic.sections || []);
+          setTimeout(() => {
+            requestAnimationFrame(() => setHasLoaded(true));
+          }, 0);
+        } else {
+          console.log("Fetching topic by ID:", topicId);
+          const topic = await fetchTopicById(topicId);
+          const fetchedSections = await fetchSectionsByTopicId(topicId);
+          setTopicName(topic.name);
+          setSections(fetchedSections);
+          setTimeout(() => {
+            requestAnimationFrame(() => setHasLoaded(true));
+          }, 0);
+        }
+      } catch (err) {
+        console.error("Failed to load topic or sections:", err);
+      }
     };
-    loadSections();
-  }, [topicId]);
+
+    loadData();
+  }, [topicId, passedTopic]);
 
   const colors = [
     "#d79a8c", "#367588", "#49796B", "#8F9779", "#5a7a85",
@@ -111,14 +72,13 @@ const SectionsList = () => {
             </Button>
           </Link>
           <div>
-            <h1 className="text-2xl font-bold text-black">Sections</h1>
-            <p className="text-sm text-gray-600">{topicName}</p>
+            <h1 className="text-2xl font-bold text-black">{topicName}</h1>
           </div>
         </header>
 
         <div ref={gridRef} className="space-y-6">
           {sections.map((section, index) => {
-            const randomColor = getConsistentColor(section.title);
+            const randomColor = getConsistentColor(section.name);
             return (
               <Card key={section.id} className={`
                   bg-white/90 backdrop-blur-md shadow-lg overflow-hidden group cursor-pointer transition-all duration-700 hover:shadow-xl hover:scale-[1.02]
@@ -135,24 +95,8 @@ const SectionsList = () => {
 
                     <div className="flex-1 min-w-0">
                       <h3 className="text-lg font-bold mb-2" style={{ color: '#232323' }}>
-                        {section.title}
+                        {section.name}
                       </h3>
-                      <p className="text-sm mb-4" style={{ color: '#373618' }}>
-                        {section.description}
-                      </p>
-
-                      <div className="flex items-center justify-between text-xs text-gray-500">
-                        <div className="flex items-center space-x-4">
-                          <div className="flex items-center space-x-1">
-                            <User className="h-3 w-3" />
-                            <span>{section.author}</span>
-                          </div>
-                          <div className="flex items-center space-x-1">
-                            <Clock className="h-3 w-3" />
-                            <span>{section.readTime}</span>
-                          </div>
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </CardContent>

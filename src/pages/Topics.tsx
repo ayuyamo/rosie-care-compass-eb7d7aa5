@@ -23,7 +23,7 @@ const Topics = () => {
           const sections = await fetchSectionsByTopicId(story.id);
           return {
             ...story,
-            sections: sections.slice(0, 4),
+            sections: sections,
             remainingCount: sections.length > 4 ? sections.length - 4 : 0,
           }
         })
@@ -94,7 +94,7 @@ const Topics = () => {
                         <div className="mb-4">
                           <p className="text-xs font-medium text-gray-500 mb-2">Sections:</p>
                           <div className="flex flex-wrap gap-1">
-                            {story.sections.map((section, sectionIndex) => (
+                            {story.sections.slice(0, 4).map((section, sectionIndex) => (
                               <Badge
                                 key={sectionIndex}
                                 variant="secondary"
@@ -108,7 +108,7 @@ const Topics = () => {
                                 {section.name}
                               </Badge>
                             ))}
-                            {story.remainingCount > 0 && (
+                            {story.sections.length > 4 && (
                               <Badge
                                 variant="secondary"
                                 className="text-xs px-2 py-1 font-medium"
@@ -118,7 +118,7 @@ const Topics = () => {
                                   border: `1px dashed ${randomColor}50`
                                 }}
                               >
-                                +{story.remainingCount} more
+                                +{story.sections.length - 4} more
                               </Badge>
                             )}
                           </div>
@@ -129,7 +129,16 @@ const Topics = () => {
                             <Heart className="h-4 w-4" />
                             <span className="text-xs">Helpful story</span>
                           </div>
-                          <Link to={`/topic/${story.id}/sections`}>
+                          <Link to={`/topic/${story.id}/sections`}
+                            state={{
+                              topic: {
+                                id: story.id,
+                                name: story.name,
+                                description: story.description,
+                                sections: story.sections, // ⬅️ already loaded
+                              },
+                            }}
+                          >
                             <Button variant="ghost" size="sm" className="group/btn" style={{ color: randomColor }}>
                               View Sections
                               <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
