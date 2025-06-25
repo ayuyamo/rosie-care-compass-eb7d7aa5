@@ -13,10 +13,28 @@ const Stories = () => {
   const [stories, setStories] = useState([]);
   const [hasLoaded, setHasLoaded] = useState(false);
 
+  // Mock sections data
+  const mockSections = [
+    "Getting Started", "Understanding Basics", "Advanced Techniques", "Real-world Examples", 
+    "Best Practices", "Common Challenges", "Expert Tips", "Case Studies",
+    "Practical Applications", "Next Steps", "Resources", "Community Insights"
+  ];
+
+  const getRandomSections = () => {
+    const shuffled = [...mockSections].sort(() => 0.5 - Math.random());
+    const count = Math.floor(Math.random() * 4) + 2; // 2-5 sections
+    return shuffled.slice(0, count);
+  };
+
   useEffect(() => {
     const fetch = async () => {
       const data = await loadStories();
-      setStories(data);
+      // Add mock sections to each story
+      const storiesWithSections = data.map(story => ({
+        ...story,
+        sections: getRandomSections()
+      }));
+      setStories(storiesWithSections);
       requestAnimationFrame(() => setHasLoaded(true));
     };
     fetch();
@@ -52,7 +70,7 @@ const Stories = () => {
           <h1 className="text-2xl font-bold text-black">Stories</h1>
         </header>
 
-        <div ref={gridRef} className="space-y-4">
+        <div ref={gridRef} className="space-y-6">
           {stories.map((story, index) => {
             const randomColor = getConsistentColor(story.name);
             return (
@@ -77,6 +95,27 @@ const Stories = () => {
                         <p className="text-sm mb-4" style={{ color: '#373618' }}>
                           {story.description}
                         </p>
+
+                        {/* Mock sections */}
+                        <div className="mb-4">
+                          <p className="text-xs font-medium text-gray-500 mb-2">Sections:</p>
+                          <div className="flex flex-wrap gap-1">
+                            {story.sections.map((section, sectionIndex) => (
+                              <Badge 
+                                key={sectionIndex} 
+                                variant="secondary" 
+                                className="text-xs px-2 py-1"
+                                style={{ 
+                                  backgroundColor: `${randomColor}20`, 
+                                  color: randomColor,
+                                  border: `1px solid ${randomColor}40`
+                                }}
+                              >
+                                {section}
+                              </Badge>
+                            ))}
+                          </div>
+                        </div>
 
                         <div className="flex items-center justify-between">
                           <div className="flex items-center space-x-2" style={{ color: '#679aa3' }}>
