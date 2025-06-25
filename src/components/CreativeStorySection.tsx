@@ -5,29 +5,19 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Heart, Sparkles, BookOpen } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { Link } from "react-router-dom";
+import { fetchTopics } from "@/lib/supabase/supabaseApi";
 
-const stories = [
-  {
-    name: "New to Caregiving",
-    description: "Facing new challenges"
-  },
-  {
-    name: "Conflicts",
-    description: "Resolving caregiving tensions"
-  },
-  {
-    name: "Housing",
-    description: "Navigating housing decisions"
-  },
-  {
-    name: "Safety",
-    description: "Ensuring caregiving safety"
-  },
-  {
-    name: "Dependence",
-    description: "Coping with dependence"
-  }
-];
+const loadStories = async () => {
+  const data = await fetchTopics();
+  const limitedTopics = data.slice(0, 3); // only first 3
+  const stories = limitedTopics.map(topic => ({
+    name: topic.name,
+    description: topic.description || "No description available."
+  }));
+  return stories;
+};
+
+const stories = await loadStories();
 
 const colors = [
   "#d79a8c", "#367588", "#49796B", "#8F9779", "#5a7a85",
