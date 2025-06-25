@@ -11,45 +11,50 @@ const Stories = () => {
   const stories = [
     {
       id: 1,
-      title: "New to Caregiving",
-      description: "Facing new challenges",
-      readTime: "5 min",
-      category: "Planning",
-      color: "#d79a8c"
+      name: "New to Caregiving",
+      description: "Facing new challenges"
     },
     {
       id: 2,
-      title: "Conflicts",
-      description: "Resolving caregiving tensions",
-      readTime: "7 min",
-      category: "Communication",
-      color: "#2b6cb0"
+      name: "Conflicts",
+      description: "Resolving caregiving tensions"
     },
     {
       id: 3,
-      title: "Housing",
-      description: "Navigating housing decisions",
-      readTime: "4 min",
-      category: "Planning",
-      color: "#679aa3"
+      name: "Housing",
+      description: "Navigating housing decisions"
     },
     {
       id: 4,
-      title: "Safety",
-      description: "Ensuring caregiving safety",
-      readTime: "6 min",
-      category: "Safety",
-      color: "#373618"
+      name: "Safety",
+      description: "Ensuring caregiving safety"
     },
     {
       id: 5,
-      title: "Dependence",
-      description: "Coping with dependence",
-      readTime: "5 min",
-      category: "Wellness",
-      color: "#5a7a85"
+      name: "Dependence",
+      description: "Coping with dependence"
     }
   ];
+
+  const colors = [
+    "#d79a8c", "#367588", "#49796B", "#8F9779", "#5a7a85",
+    "#B8860B", "#8B4513", "#556B2F", "#800080", "#008080",
+    "#CD853F", "#4682B4", "#2E8B57", "#9932CC", "#20B2AA"
+  ];
+
+  /**
+   * Hash a string to a consistent index for color mapping.
+   * @param key Any string like a name or ID
+   * @returns A hex color string
+   */
+  const getConsistentColor = (key: string): string => {
+    let hash = 0;
+    for (let i = 0; i < key.length; i++) {
+      hash = key.charCodeAt(i) + ((hash << 5) - hash); // simple string hash
+    }
+    const index = Math.abs(hash) % colors.length;
+    return colors[index];
+  };
 
   const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation();
   const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
@@ -67,53 +72,46 @@ const Stories = () => {
         </header>
 
         <div ref={gridRef} className="space-y-4">
-          {stories.map((story, index) => (
-            <Card key={story.id} className={`
-                bg-white/90 backdrop-blur-md shadow-lg overflow-hidden group cursor-pointer transition-all duration-700
-                ${gridVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}
-              `}
-              style={{
-                transitionDelay: gridVisible ? `${index * 150}ms` : '0ms'
-              }}>
-              <CardContent className="p-6">
-                <div className="flex items-start space-x-4">
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: story.color }}>
-                    <BookOpen className="h-6 w-6 text-white" />
-                  </div>
-
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center justify-between mb-2">
-                      <Badge className="text-white border-white/30 text-xs" style={{ backgroundColor: story.color }}>
-                        {story.category}
-                      </Badge>
-                      <div className="flex items-center space-x-2 text-gray-500">
-                        <Clock className="h-4 w-4" />
-                        <span className="text-xs">{story.readTime}</span>
-                      </div>
+          {stories.map((story, index) => {
+            const randomColor = getConsistentColor(story.name);
+            return (
+              <Card key={story.id} className={`
+                  bg-white/90 backdrop-blur-md shadow-lg overflow-hidden group cursor-pointer transition-all duration-700
+                  ${gridVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}
+                `}
+                style={{
+                  transitionDelay: gridVisible ? `${index * 150}ms` : '0ms'
+                }}>
+                <CardContent className="p-6">
+                  <div className="flex items-start space-x-4">
+                    <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: randomColor }}>
+                      <Heart className="h-6 w-6 text-white" />
                     </div>
 
-                    <h3 className="text-lg font-bold mb-2" style={{ color: '#232323' }}>
-                      {story.title}
-                    </h3>
-                    <p className="text-sm mb-4" style={{ color: '#373618' }}>
-                      {story.description}
-                    </p>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-lg font-bold mb-2" style={{ color: '#232323' }}>
+                        {story.name}
+                      </h3>
+                      <p className="text-sm mb-4" style={{ color: '#373618' }}>
+                        {story.description}
+                      </p>
 
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-2" style={{ color: '#679aa3' }}>
-                        <Heart className="h-4 w-4" />
-                        <span className="text-xs">Helpful story</span>
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-2" style={{ color: '#679aa3' }}>
+                          <Heart className="h-4 w-4" />
+                          <span className="text-xs">Helpful story</span>
+                        </div>
+                        <Button variant="ghost" size="sm" className="group/btn" style={{ color: randomColor }}>
+                          Read More
+                          <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+                        </Button>
                       </div>
-                      <Button variant="ghost" size="sm" className="group/btn" style={{ color: story.color }}>
-                        Read More
-                        <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
-                      </Button>
                     </div>
                   </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
       </div>
       <BottomNavigation />
