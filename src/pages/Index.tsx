@@ -15,18 +15,18 @@ import PoetryCollectionSection from "@/components/PoetryCollectionSection";
 import { injectElevenLabsWidget } from "@/lib/elevenlabsWidget";
 
 const Index = () => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [scrollY, setScrollY] = useState(0);
+  // const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  // const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
     injectElevenLabsWidget();
   }, []);
 
-  useEffect(() => {
-    const handleScroll = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  // useEffect(() => {
+  //   const handleScroll = () => setScrollY(window.scrollY);
+  //   window.addEventListener('scroll', handleScroll);
+  //   return () => window.removeEventListener('scroll', handleScroll);
+  // }, []);
 
   return (
     <div className="min-h-screen bg-white relative overflow-hidden">
@@ -64,7 +64,7 @@ const Index = () => {
       </header>
 
       {/* Hero Section with Profile Picture */}
-      <section className="relative z-10 py-8 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+      <section className="relative z-10 py-8 animate-fade-in duration-500">
         <div className="max-w-md mx-auto px-4">
           <div className="text-center">
             {/* Profile Card */}
@@ -105,7 +105,7 @@ const Index = () => {
       </section>
 
       {/* Enhanced Creative Stories Section */}
-      <div className="animate-slide-up" style={{ animationDelay: '0.6s' }}>
+      <div className="animate-slide-up">
         <CreativeStorySection />
       </div>
 
