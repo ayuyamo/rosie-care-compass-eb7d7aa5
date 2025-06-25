@@ -93,10 +93,13 @@ export const CreativeStorySection = () => {
                             <Heart className="h-4 w-4" />
                             <span className="text-sm">Helpful story</span>
                           </div>
-                          <Button variant="ghost" size="sm" className="group/btn text-sm" style={{ color: randomColor }}>
-                            Read Story
-                            <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
-                          </Button>
+                          <Link to={`/topic/${story.id}/sections`}>
+                            <Button variant="ghost" size="sm" className="group/btn text-sm" style={{ color: randomColor }}>
+                              Read More
+                              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+                            </Button>
+                          </Link>
+
                         </div>
                       </div>
                     </div>
