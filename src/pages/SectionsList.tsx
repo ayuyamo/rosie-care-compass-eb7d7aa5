@@ -122,20 +122,23 @@ const SectionsList = () => {
                   transitionDelay: gridVisible && hasLoaded ? `${index * 150}ms` : '0ms'
                 }}>
                 <CardContent className="p-6">
-                  <div className="flex items-start space-x-4">
-                    <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: randomColor }}>
-                      <BookOpen className="h-6 w-6 text-white" />
+                  <div className="space-y-4">
+                    {/* Header section with icon and title */}
+                    <div className="flex items-start space-x-4">
+                      <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: randomColor }}>
+                        <BookOpen className="h-6 w-6 text-white" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-lg font-bold mb-2" style={{ color: '#232323' }}>
+                          {section.name}
+                        </h3>
+                      </div>
                     </div>
 
-                    <div className="flex-1 min-w-0">
-                      <h3 className="text-lg font-bold mb-2" style={{ color: '#232323' }}>
-                        {section.name}
-                      </h3>
-                    </div>
-
-                    <div className="mb-4">
-                      <p className="text-xs font-medium text-gray-500 mb-2">Stories:</p>
-                      <div className="flex flex-wrap gap-1">
+                    {/* Stories section */}
+                    <div className="space-y-2">
+                      <p className="text-xs font-medium text-gray-500">Stories:</p>
+                      <div className="flex flex-wrap gap-2">
                         {section.stories.slice(0, 4).map((story, storyIndex) => (
                           <Badge
                             key={storyIndex}
@@ -166,7 +169,8 @@ const SectionsList = () => {
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between">
+                    {/* Footer section */}
+                    <div className="flex items-center justify-between pt-2">
                       <div className="flex items-center space-x-2" style={{ color: '#679aa3' }}>
                         <Heart className="h-4 w-4" />
                         <span className="text-xs">Helpful story</span>
