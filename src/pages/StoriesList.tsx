@@ -1,7 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, BookOpen, Clock, User, Heart, ArrowRight } from "lucide-react";
+import { ArrowLeft, BookOpen, Clock, User, Heart, ArrowRight, ExternalLink, Share2, Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 import { Link, useParams, useLocation } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
@@ -94,6 +94,28 @@ const StoriesList = () => {
     const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation();
     const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
 
+    const shareStory = (platform: string, storyTitle: string, storyContent: string) => {
+        const url = window.location.href;
+        const text = `Check out this inspiring story: "${storyTitle}"`;
+        
+        switch (platform) {
+            case 'facebook':
+                window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+                break;
+            case 'twitter':
+                window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
+                break;
+            case 'linkedin':
+                window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, '_blank');
+                break;
+            case 'instagram':
+                // Instagram doesn't support direct sharing via URL, so we'll copy to clipboard
+                navigator.clipboard.writeText(`${text}\n\n${url}`);
+                alert('Story link copied to clipboard! You can now paste it on Instagram.');
+                break;
+        }
+    };
+
     return (
         <div className="min-h-screen bg-[#f8f9fa] p-4 pb-24">
             <div className="max-w-2xl mx-auto">
@@ -155,7 +177,7 @@ const StoriesList = () => {
 
                                 {/* Story Footer */}
                                 <div className="px-6 py-4 bg-gray-50 border-t border-gray-100">
-                                    <div className="flex items-center justify-between mb-3">
+                                    <div className="flex items-center justify-between mb-4">
                                         <Badge 
                                             variant="secondary" 
                                             className="text-xs"
@@ -167,16 +189,45 @@ const StoriesList = () => {
                                         >
                                             Story #{index + 1}
                                         </Badge>
-                                        <div className="flex items-center space-x-2 text-xs text-gray-500">
-                                            <span>Share your thoughts</span>
-                                            <Heart className="h-3 w-3" />
+                                        
+                                        {/* Social Sharing */}
+                                        <div className="flex items-center space-x-2">
+                                            <span className="text-xs text-gray-500 mr-2">Share:</span>
+                                            <button
+                                                onClick={() => shareStory('facebook', story.title, story.content)}
+                                                className="p-1.5 rounded-full bg-blue-100 hover:bg-blue-200 transition-colors"
+                                                title="Share on Facebook"
+                                            >
+                                                <Facebook className="h-3.5 w-3.5 text-blue-600" />
+                                            </button>
+                                            <button
+                                                onClick={() => shareStory('twitter', story.title, story.content)}
+                                                className="p-1.5 rounded-full bg-sky-100 hover:bg-sky-200 transition-colors"
+                                                title="Share on Twitter"
+                                            >
+                                                <Twitter className="h-3.5 w-3.5 text-sky-600" />
+                                            </button>
+                                            <button
+                                                onClick={() => shareStory('linkedin', story.title, story.content)}
+                                                className="p-1.5 rounded-full bg-blue-100 hover:bg-blue-200 transition-colors"
+                                                title="Share on LinkedIn"
+                                            >
+                                                <Linkedin className="h-3.5 w-3.5 text-blue-700" />
+                                            </button>
+                                            <button
+                                                onClick={() => shareStory('instagram', story.title, story.content)}
+                                                className="p-1.5 rounded-full bg-pink-100 hover:bg-pink-200 transition-colors"
+                                                title="Share on Instagram"
+                                            >
+                                                <Instagram className="h-3.5 w-3.5 text-pink-600" />
+                                            </button>
                                         </div>
                                     </div>
                                     
                                     {story.resources && story.resources.length > 0 && (
                                         <div className="space-y-3">
                                             <p className="text-sm font-medium text-gray-700 flex items-center">
-                                                <ArrowRight className="h-4 w-4 mr-1" />
+                                                <ExternalLink className="h-4 w-4 mr-2 text-gray-500" />
                                                 Resources:
                                             </p>
                                             <div className="flex flex-wrap gap-3">
@@ -201,7 +252,7 @@ const StoriesList = () => {
                                                             </>
                                                         ) : (
                                                             <>
-                                                                <ArrowRight className="h-4 w-4 flex-shrink-0" />
+                                                                <ExternalLink className="h-4 w-4 flex-shrink-0" />
                                                                 <span className="truncate max-w-32">
                                                                     {new URL(resource.url).hostname}
                                                                 </span>
