@@ -7,7 +7,7 @@ import { Link, useParams, useLocation } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useState, useEffect, useLayoutEffect } from "react";
-import { fetchStoriesBySectionId, fetchSectionNameById } from "@/lib/supabase/supabaseApi";
+import { fetchStoriesBySectionId, fetchSectionNameById, fetchResourcesByStoryId } from "@/lib/supabase/supabaseApi";
 
 const StoriesList = () => {
     const { topicId } = useParams<{ topicId: string }>();
@@ -24,13 +24,42 @@ const StoriesList = () => {
                 if (passedSection) {
                     console.log("Using passed section:", passedSection);
                     setSectionName(passedSection.name);
-                    setStories(passedSection.stories || []);
+                    const storiesWithResources = await Promise.all(
+                        passedSection.stories.map(async (story) => {
+                            const resources = await fetchResourcesByStoryId(story.id);
+                            return {
+                                ...story,
+                                resources: resources.map((r) => {
+                                    return {
+                                        id: r.id,
+                                        url: r.url,
+                                        image: r.image,
+                                    };
+                                }),
+                            };
+                        })
+                    );
+                    setStories(storiesWithResources || []);
                 } else {
                     console.log("Fetching stories by section ID:", sectionId);
                     const stories = await fetchStoriesBySectionId(sectionId);
-
+                    const storiesWithResources = await Promise.all(
+                        stories.map(async (story) => {
+                            const resources = await fetchResourcesByStoryId(story.id);
+                            return {
+                                ...story,
+                                resources: resources.map((r) => {
+                                    return {
+                                        id: r.id,
+                                        url: r.url,
+                                        image: r.image,
+                                    };
+                                }),
+                            };
+                        })
+                    );
                     setSectionName(await fetchSectionNameById(sectionId));
-                    setStories(stories || []);
+                    setStories(storiesWithResources || []);
                 }
             } catch (err) {
                 console.error("Failed to load topic or sections:", err);
@@ -63,7 +92,7 @@ const StoriesList = () => {
         return colors[index];
     };
 
-    const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation();
+    // const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation();
     const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
 
     return (
@@ -81,17 +110,17 @@ const StoriesList = () => {
                     </div>
                 </header>
 
-                <div ref={gridRef} className="space-y-8">
+                <div className="space-y-8">
                     {stories.map((story, index) => {
                         const randomColor = getConsistentColor(story.title);
                         return (
                             <article key={story.id} className={`
                                 bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-700
-                                ${gridVisible && hasLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}
+                                ${hasLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}
                             `}
-                            style={{
-                                transitionDelay: gridVisible && hasLoaded ? `${index * 150}ms` : '0ms'
-                            }}>
+                                style={{
+                                    transitionDelay: hasLoaded ? `${index * 150}ms` : '0ms'
+                                }}>
                                 {/* Story Header */}
                                 <div className="px-6 py-4 border-b border-gray-100">
                                     <div className="flex items-center space-x-3 mb-3">
@@ -128,8 +157,8 @@ const StoriesList = () => {
                                 {/* Story Footer */}
                                 <div className="px-6 py-4 bg-gray-50 border-t border-gray-100">
                                     <div className="flex items-center justify-between">
-                                        <Badge 
-                                            variant="secondary" 
+                                        <Badge
+                                            variant="secondary"
                                             className="text-xs"
                                             style={{
                                                 backgroundColor: `${randomColor}20`,
@@ -143,6 +172,30 @@ const StoriesList = () => {
                                             <span>Share your thoughts</span>
                                             <Heart className="h-3 w-3" />
                                         </div>
+                                    </div>
+                                    <div className="mt-2">
+                                        {story.resources && story.resources.length > 0 && (
+                                            <div className="space-y-2">
+                                                <p className="text-sm font-medium text-gray-600">Resources:</p>
+                                                <div className="flex flex-wrap gap-2">
+                                                    {story.resources.map((resource) => (
+                                                        <a
+                                                            key={resource.id}
+                                                            href={resource.url}
+                                                            target="_blank"
+                                                            rel="noopener noreferrer"
+                                                            className="text-sm text-blue-600 hover:underline"
+                                                        >
+                                                            {resource.image ? (
+                                                                <img src={resource.image} alt={resource.url} className="h-6 w-6 rounded-full" />
+                                                            ) : (
+                                                                <span>{resource.url}</span>
+                                                            )}
+                                                        </a>
+                                                    ))}
+                                                </div>
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             </article>
