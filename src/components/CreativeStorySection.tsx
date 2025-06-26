@@ -6,7 +6,8 @@ import { ArrowRight, Heart, Sparkles, BookOpen } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { Link } from "react-router-dom";
 import { loadStories } from "@/lib/supabase/supabaseApi";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
+import { subscribeToTableChanges } from "@/lib/supabase/supabaseApi";
 
 const colors = [
   "#d79a8c", "#367588", "#49796B", "#8F9779", "#5a7a85",
@@ -37,11 +38,25 @@ export const CreativeStorySection = () => {
       const data = await loadStories();
       const limitedStories = data.slice(0, 3);
       setStories(limitedStories);
-      requestAnimationFrame(() => setHasLoaded(true)); // allow DOM to render stories before triggering animation
     };
     fetch();
+    // Subscribe to changes in the topics table
+    const unsubscribe = subscribeToTableChanges('topics', (newData) => {
+      console.log('🔄 Change received:', newData);
+      fetch(); // refetch stories on change
+    });
+    return () => {
+      unsubscribe(); // Clean up subscription on unmount
+    };
   }, []);
 
+  useLayoutEffect(() => {
+    if (stories.length > 0) {
+      requestAnimationFrame(() => {
+        setHasLoaded(true);
+      });
+    }
+  }, [stories]);
   const { ref: titleRef, isVisible: titleVisible } = useScrollAnimation();
   const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation();
 

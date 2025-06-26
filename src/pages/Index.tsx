@@ -6,9 +6,6 @@ import { Heart, BookOpen, Users, MessageCircle, Compass, Shield, Home, Scale, Ar
 import BottomNavigation from "@/components/BottomNavigation";
 import { FloatingModuleGrid } from "@/components/FloatingModuleGrid";
 import { CreativeStorySection } from "@/components/CreativeStorySection";
-import { InteractiveToolsRevamped } from "@/components/InteractiveToolsRevamped";
-import { ArtisticCommunitySection } from "@/components/ArtisticCommunitySection";
-import FeaturedStories from "@/components/FeaturedStories";
 import CommunityHighlights from "@/components/CommunityHighlights";
 import OfficialBookSection from "@/components/OfficialBookSection";
 import PoetryCollectionSection from "@/components/PoetryCollectionSection";

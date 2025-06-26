@@ -6,16 +6,16 @@ import { ArrowLeft, BookOpen, Heart, Clock, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { loadStories, fetchSectionsByTopicId } from "@/lib/supabase/supabaseApi";
-import { useState, useEffect } from "react";
+import { loadStories, fetchSectionsByTopicId, subscribeToTableChanges } from "@/lib/supabase/supabaseApi";
+import { useState, useEffect, useLayoutEffect } from "react";
 
 const Topics = () => {
   const [topics, setTopics] = useState([]);
   const [hasLoaded, setHasLoaded] = useState(false);
 
-
   useEffect(() => {
-    const fetch = async () => {
+    // Subscribe to changes in the topics table
+    const loadAndSetTopics = async () => {
       const data = await loadStories();
       // Add mock sections to each story
       const storiesWithSections = await Promise.all(
@@ -28,17 +28,24 @@ const Topics = () => {
         })
       );
       setTopics(storiesWithSections);
-
-      // Wait one frame after data is rendered
-      requestAnimationFrame(() => {
-        // Wait another frame to ensure paint
-        requestAnimationFrame(() => {
-          setHasLoaded(true);
-        });
-      });
     };
-    fetch();
+    loadAndSetTopics();
+    const unsubscribe = subscribeToTableChanges('topics', (newData) => {
+      console.log('🔄 Change received:', newData);
+      loadAndSetTopics();
+    });
+    return () => {
+      unsubscribe(); // Clean up subscription on unmount
+    };
   }, []);
+
+  useLayoutEffect(() => {
+    if (topics.length > 0) {
+      requestAnimationFrame(() => {
+        setHasLoaded(true);
+      });
+    }
+  }, [topics]);
 
   const colors = [
     "#d79a8c", "#367588", "#49796B", "#8F9779", "#5a7a85",

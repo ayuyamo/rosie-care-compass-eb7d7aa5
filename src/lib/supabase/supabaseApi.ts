@@ -1,4 +1,3 @@
-
 import { supabase } from './supabaseClient';
 
 /** Fetch all topics */
@@ -68,4 +67,44 @@ export const fetchTopicById = async (topicId: string) => {
 
   if (error) throw new Error(`fetchTopicById: ${error.message}`);
   return data;
+};
+
+export const fetchSectionNameById = async (sectionId: string) => {
+  const { data, error } = await supabase
+    .from('sections')
+    .select('name')
+    .eq('id', sectionId)
+    .single(); // because you're expecting one row
+
+  if (error) {
+    console.error('Error fetching section name:', error);
+    return null;
+  }
+
+  return data?.name;
+};
+
+export const subscribeToTableChanges = (
+  table: string,
+  callback: (payload: any) => void
+) => {
+  const channel = supabase
+    .channel(`realtime:${table}`)
+    .on(
+      'postgres_changes',
+      {
+        event: '*',
+        schema: 'public',
+        table: table,
+      },
+      (payload) => {
+        console.log(`🔔 Change detected on table "${table}":`, payload);
+        callback(payload);
+      }
+    )
+    .subscribe();
+
+  return () => {
+    supabase.removeChannel(channel);
+  };
 };

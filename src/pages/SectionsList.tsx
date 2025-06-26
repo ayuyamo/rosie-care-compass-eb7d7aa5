@@ -1,19 +1,20 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, BookOpen, Clock, User } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { ArrowLeft, BookOpen, Clock, User, Heart, ArrowRight } from "lucide-react";
 import { Link, useParams, useLocation } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { useState, useEffect } from "react";
-import { fetchTopicById, fetchSectionsByTopicId } from "@/lib/supabase/supabaseApi";
+import { useState, useEffect, useLayoutEffect } from "react";
+import { fetchTopicById, fetchSectionsByTopicId, fetchStoriesBySectionId } from "@/lib/supabase/supabaseApi";
 
 const SectionsList = () => {
   const { topicId } = useParams<{ topicId: string }>();
   const location = useLocation();
   const passedTopic = location.state?.topic;
   const [sections, setSections] = useState([]);
-  const [topicName, setTopicName] = useState("Topic");
+  const [topicName, setTopicName] = useState("");
   const [hasLoaded, setHasLoaded] = useState(false);
 
   useEffect(() => {
@@ -22,25 +23,44 @@ const SectionsList = () => {
         if (passedTopic) {
           console.log("Using passed topic:", passedTopic);
           setTopicName(passedTopic.name);
-          setSections(passedTopic.sections || []);
-          requestAnimationFrame(() => {
-            // Wait another frame to ensure paint
-            requestAnimationFrame(() => {
-              setHasLoaded(true);
-            });
-          });
+          // Fetch stories per section
+          const sectionsWithStories = await Promise.all(
+            passedTopic.sections.map(async (section) => {
+              const stories = await fetchStoriesBySectionId(section.id);
+              return {
+                ...section,
+                stories: stories.map((s) => {
+                  return {
+                    id: s.id,
+                    title: s.title,
+                    content: s.content,
+                  };
+                }),
+              };
+            })
+          );
+          setSections(sectionsWithStories);
         } else {
           console.log("Fetching topic by ID:", topicId);
           const topic = await fetchTopicById(topicId);
           const fetchedSections = await fetchSectionsByTopicId(topicId);
+          const sectionsWithStories = await Promise.all(
+            fetchedSections.map(async (section) => {
+              const stories = await fetchStoriesBySectionId(section.id);
+              return {
+                ...section,
+                stories: stories.map((s) => {
+                  return {
+                    id: s.id,
+                    title: s.title,
+                    content: s.content,
+                  };
+                }),
+              };
+            })
+          );
           setTopicName(topic.name);
-          setSections(fetchedSections);
-          requestAnimationFrame(() => {
-            // Wait another frame to ensure paint
-            requestAnimationFrame(() => {
-              setHasLoaded(true);
-            });
-          });
+          setSections(sectionsWithStories);
         }
       } catch (err) {
         console.error("Failed to load topic or sections:", err);
@@ -49,6 +69,14 @@ const SectionsList = () => {
 
     loadData();
   }, [topicId, passedTopic]);
+
+  useLayoutEffect(() => {
+    if (topicName.length > 0 && sections.length > 0) {
+      requestAnimationFrame(() => {
+        setHasLoaded(true);
+      });
+    }
+  }, [sections, topicName]);
 
   const colors = [
     "#d79a8c", "#367588", "#49796B", "#8F9779", "#5a7a85",
@@ -104,6 +132,58 @@ const SectionsList = () => {
                         {section.name}
                       </h3>
                     </div>
+
+                    <div className="mb-4">
+                      <p className="text-xs font-medium text-gray-500 mb-2">Stories:</p>
+                      <div className="flex flex-wrap gap-1">
+                        {section.stories.slice(0, 4).map((story, storyIndex) => (
+                          <Badge
+                            key={storyIndex}
+                            variant="secondary"
+                            className="text-xs px-2 py-1"
+                            style={{
+                              backgroundColor: `${randomColor}20`,
+                              color: randomColor,
+                              border: `1px solid ${randomColor}40`
+                            }}
+                          >
+                            {story.title}
+                          </Badge>
+                        ))}
+                        {section.stories.length > 4 && (
+                          <Badge
+                            variant="secondary"
+                            className="text-xs px-2 py-1 font-medium"
+                            style={{
+                              backgroundColor: `${randomColor}10`,
+                              color: randomColor,
+                              border: `1px dashed ${randomColor}50`
+                            }}
+                          >
+                            +{section.stories.length - 4} more
+                          </Badge>
+                        )}
+                      </div>
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-2" style={{ color: '#679aa3' }}>
+                        <Heart className="h-4 w-4" />
+                        <span className="text-xs">Helpful story</span>
+                      </div>
+                      <Link to={`/topic/${topicId}/sections/${section.id}/stories`}
+                        state={{
+                          section: {
+                            name: section.name,
+                            stories: section.stories,
+                          }
+                        }}>
+                        <Button variant="ghost" size="sm" className="group/btn" style={{ color: randomColor }}>
+                          View Stories
+                          <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+                        </Button>
+                      </Link>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
@@ -112,7 +192,7 @@ const SectionsList = () => {
         </div>
       </div>
       <BottomNavigation />
-    </div>
+    </div >
   );
 };
 
