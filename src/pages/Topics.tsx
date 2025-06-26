@@ -24,14 +24,18 @@ const Topics = () => {
           return {
             ...story,
             sections: sections,
-            remainingCount: sections.length > 4 ? sections.length - 4 : 0,
           }
         })
       );
       setTopics(storiesWithSections);
-      setTimeout(() => {
-        requestAnimationFrame(() => setHasLoaded(true));
-      }, 0);
+
+      // Wait one frame after data is rendered
+      requestAnimationFrame(() => {
+        // Wait another frame to ensure paint
+        requestAnimationFrame(() => {
+          setHasLoaded(true);
+        });
+      });
     };
     fetch();
   }, []);
