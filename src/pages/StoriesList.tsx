@@ -10,6 +10,7 @@ import { useState, useEffect, useLayoutEffect } from "react";
 import { fetchStoriesBySectionId, fetchSectionNameById } from "@/lib/supabase/supabaseApi";
 
 const StoriesList = () => {
+    const { topicId } = useParams<{ topicId: string }>();
     const { sectionId } = useParams<{ sectionId: string }>();
     const location = useLocation();
     const passedSection = location.state?.section;
@@ -69,7 +70,7 @@ const StoriesList = () => {
         <div className="min-h-screen bg-[#f8f9fa] p-4 pb-24">
             <div className="max-w-md mx-auto">
                 <header ref={headerRef} className={`flex items-center mb-6 transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-                    <Link to="/topics" className="mr-4">
+                    <Link to={`/topic/${topicId}/sections`} className="mr-4">
                         <Button variant="ghost" size="sm" className="text-[#5a7a85]">
                             <ArrowLeft className="h-5 w-5" />
                         </Button>
