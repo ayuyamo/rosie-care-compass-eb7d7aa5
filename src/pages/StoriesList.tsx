@@ -1,3 +1,4 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -190,45 +191,44 @@ const StoriesList = () => {
                                             Story #{index + 1}
                                         </Badge>
                                         
-                                        {/* Social Sharing */}
-                                        <div className="flex items-center space-x-2">
-                                            <span className="text-xs text-gray-500 mr-2">Share:</span>
+                                        {/* Social Sharing - Made bigger and more clickable */}
+                                        <div className="flex items-center space-x-3">
+                                            <span className="text-sm text-gray-600 font-medium">Share:</span>
                                             <button
                                                 onClick={() => shareStory('facebook', story.title, story.content)}
-                                                className="p-1.5 rounded-full bg-blue-100 hover:bg-blue-200 transition-colors"
+                                                className="p-2.5 rounded-full bg-blue-100 hover:bg-blue-200 transition-colors active:scale-95"
                                                 title="Share on Facebook"
                                             >
-                                                <Facebook className="h-3.5 w-3.5 text-blue-600" />
+                                                <Facebook className="h-4 w-4 text-blue-600" />
                                             </button>
                                             <button
                                                 onClick={() => shareStory('twitter', story.title, story.content)}
-                                                className="p-1.5 rounded-full bg-sky-100 hover:bg-sky-200 transition-colors"
+                                                className="p-2.5 rounded-full bg-sky-100 hover:bg-sky-200 transition-colors active:scale-95"
                                                 title="Share on Twitter"
                                             >
-                                                <Twitter className="h-3.5 w-3.5 text-sky-600" />
+                                                <Twitter className="h-4 w-4 text-sky-600" />
                                             </button>
                                             <button
                                                 onClick={() => shareStory('linkedin', story.title, story.content)}
-                                                className="p-1.5 rounded-full bg-blue-100 hover:bg-blue-200 transition-colors"
+                                                className="p-2.5 rounded-full bg-blue-100 hover:bg-blue-200 transition-colors active:scale-95"
                                                 title="Share on LinkedIn"
                                             >
-                                                <Linkedin className="h-3.5 w-3.5 text-blue-700" />
+                                                <Linkedin className="h-4 w-4 text-blue-700" />
                                             </button>
                                             <button
                                                 onClick={() => shareStory('instagram', story.title, story.content)}
-                                                className="p-1.5 rounded-full bg-pink-100 hover:bg-pink-200 transition-colors"
+                                                className="p-2.5 rounded-full bg-pink-100 hover:bg-pink-200 transition-colors active:scale-95"
                                                 title="Share on Instagram"
                                             >
-                                                <Instagram className="h-3.5 w-3.5 text-pink-600" />
+                                                <Instagram className="h-4 w-4 text-pink-600" />
                                             </button>
                                         </div>
                                     </div>
                                     
                                     {story.resources && story.resources.length > 0 && (
                                         <div className="space-y-3">
-                                            <p className="text-sm font-medium text-gray-700 flex items-center">
-                                                <ExternalLink className="h-4 w-4 mr-2 text-gray-500" />
-                                                Resources:
+                                            <p className="text-sm font-semibold text-gray-700">
+                                                Resources
                                             </p>
                                             <div className="flex flex-wrap gap-3">
                                                 {story.resources.map((resource) => (
@@ -237,7 +237,7 @@ const StoriesList = () => {
                                                         href={resource.url}
                                                         target="_blank"
                                                         rel="noopener noreferrer"
-                                                        className="flex items-center space-x-2 bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm text-blue-600 hover:bg-blue-50 hover:border-blue-300 transition-all duration-200 shadow-sm hover:shadow-md"
+                                                        className="flex items-center space-x-2 bg-white border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-blue-600 hover:bg-blue-50 hover:border-blue-300 transition-all duration-200 shadow-sm hover:shadow-md group"
                                                     >
                                                         {resource.image ? (
                                                             <>
@@ -246,14 +246,15 @@ const StoriesList = () => {
                                                                     alt={resource.url} 
                                                                     className="h-5 w-5 rounded-full flex-shrink-0" 
                                                                 />
-                                                                <span className="truncate max-w-32">
+                                                                <span className="truncate max-w-32 group-hover:text-blue-700">
                                                                     {new URL(resource.url).hostname}
                                                                 </span>
+                                                                <ExternalLink className="h-3.5 w-3.5 flex-shrink-0 opacity-60 group-hover:opacity-100" />
                                                             </>
                                                         ) : (
                                                             <>
-                                                                <ExternalLink className="h-4 w-4 flex-shrink-0" />
-                                                                <span className="truncate max-w-32">
+                                                                <ExternalLink className="h-4 w-4 flex-shrink-0 text-gray-500 group-hover:text-blue-600" />
+                                                                <span className="truncate max-w-32 group-hover:text-blue-700">
                                                                     {new URL(resource.url).hostname}
                                                                 </span>
                                                             </>
