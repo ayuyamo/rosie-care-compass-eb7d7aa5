@@ -23,18 +23,24 @@ const SectionsList = () => {
           console.log("Using passed topic:", passedTopic);
           setTopicName(passedTopic.name);
           setSections(passedTopic.sections || []);
-          setTimeout(() => {
-            requestAnimationFrame(() => setHasLoaded(true));
-          }, 0);
+          requestAnimationFrame(() => {
+            // Wait another frame to ensure paint
+            requestAnimationFrame(() => {
+              setHasLoaded(true);
+            });
+          });
         } else {
           console.log("Fetching topic by ID:", topicId);
           const topic = await fetchTopicById(topicId);
           const fetchedSections = await fetchSectionsByTopicId(topicId);
           setTopicName(topic.name);
           setSections(fetchedSections);
-          setTimeout(() => {
-            requestAnimationFrame(() => setHasLoaded(true));
-          }, 0);
+          requestAnimationFrame(() => {
+            // Wait another frame to ensure paint
+            requestAnimationFrame(() => {
+              setHasLoaded(true);
+            });
+          });
         }
       } catch (err) {
         console.error("Failed to load topic or sections:", err);
