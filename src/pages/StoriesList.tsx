@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -92,7 +91,7 @@ const StoriesList = () => {
         return colors[index];
     };
 
-    // const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation();
+    const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation();
     const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
 
     return (
@@ -110,17 +109,17 @@ const StoriesList = () => {
                     </div>
                 </header>
 
-                <div className="space-y-8">
+                <div ref={gridRef} className="space-y-8">
                     {stories.map((story, index) => {
                         const randomColor = getConsistentColor(story.title);
                         return (
                             <article key={story.id} className={`
                                 bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-700
-                                ${hasLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}
+                                ${gridVisible && hasLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}
                             `}
-                                style={{
-                                    transitionDelay: hasLoaded ? `${index * 150}ms` : '0ms'
-                                }}>
+                            style={{
+                                transitionDelay: gridVisible && hasLoaded ? `${index * 150}ms` : '0ms'
+                            }}>
                                 {/* Story Header */}
                                 <div className="px-6 py-4 border-b border-gray-100">
                                     <div className="flex items-center space-x-3 mb-3">
@@ -156,9 +155,9 @@ const StoriesList = () => {
 
                                 {/* Story Footer */}
                                 <div className="px-6 py-4 bg-gray-50 border-t border-gray-100">
-                                    <div className="flex items-center justify-between">
-                                        <Badge
-                                            variant="secondary"
+                                    <div className="flex items-center justify-between mb-3">
+                                        <Badge 
+                                            variant="secondary" 
                                             className="text-xs"
                                             style={{
                                                 backgroundColor: `${randomColor}20`,
@@ -173,30 +172,46 @@ const StoriesList = () => {
                                             <Heart className="h-3 w-3" />
                                         </div>
                                     </div>
-                                    <div className="mt-2">
-                                        {story.resources && story.resources.length > 0 && (
-                                            <div className="space-y-2">
-                                                <p className="text-sm font-medium text-gray-600">Resources:</p>
-                                                <div className="flex flex-wrap gap-2">
-                                                    {story.resources.map((resource) => (
-                                                        <a
-                                                            key={resource.id}
-                                                            href={resource.url}
-                                                            target="_blank"
-                                                            rel="noopener noreferrer"
-                                                            className="text-sm text-blue-600 hover:underline"
-                                                        >
-                                                            {resource.image ? (
-                                                                <img src={resource.image} alt={resource.url} className="h-6 w-6 rounded-full" />
-                                                            ) : (
-                                                                <span>{resource.url}</span>
-                                                            )}
-                                                        </a>
-                                                    ))}
-                                                </div>
+                                    
+                                    {story.resources && story.resources.length > 0 && (
+                                        <div className="space-y-3">
+                                            <p className="text-sm font-medium text-gray-700 flex items-center">
+                                                <ArrowRight className="h-4 w-4 mr-1" />
+                                                Resources:
+                                            </p>
+                                            <div className="flex flex-wrap gap-3">
+                                                {story.resources.map((resource) => (
+                                                    <a
+                                                        key={resource.id}
+                                                        href={resource.url}
+                                                        target="_blank"
+                                                        rel="noopener noreferrer"
+                                                        className="flex items-center space-x-2 bg-white border border-gray-200 rounded-lg px-3 py-2 text-sm text-blue-600 hover:bg-blue-50 hover:border-blue-300 transition-all duration-200 shadow-sm hover:shadow-md"
+                                                    >
+                                                        {resource.image ? (
+                                                            <>
+                                                                <img 
+                                                                    src={resource.image} 
+                                                                    alt={resource.url} 
+                                                                    className="h-5 w-5 rounded-full flex-shrink-0" 
+                                                                />
+                                                                <span className="truncate max-w-32">
+                                                                    {new URL(resource.url).hostname}
+                                                                </span>
+                                                            </>
+                                                        ) : (
+                                                            <>
+                                                                <ArrowRight className="h-4 w-4 flex-shrink-0" />
+                                                                <span className="truncate max-w-32">
+                                                                    {new URL(resource.url).hostname}
+                                                                </span>
+                                                            </>
+                                                        )}
+                                                    </a>
+                                                ))}
                                             </div>
-                                        )}
-                                    </div>
+                                        </div>
+                                    )}
                                 </div>
                             </article>
                         );
