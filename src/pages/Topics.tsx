@@ -72,11 +72,12 @@ const Topics = () => {
             return (
               <div key={story.id}>
                 <Card className={`
-                    bg-white/90 backdrop-blur-md shadow-lg overflow-hidden group cursor-pointer transition-all duration-700 hover:shadow-xl hover:scale-[1.02]
+                    bg-white/90 backdrop-blur-md shadow-lg overflow-hidden group cursor-pointer will-change-transform transition-all duration-700 hover:shadow-xl hover:scale-[1.02]
                     ${gridVisible && hasLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}
                   `}
                   style={{
-                    transitionDelay: gridVisible && hasLoaded ? `${index * 150}ms` : '0ms'
+                    transitionDelay: gridVisible && hasLoaded ? `${index * 150}ms` : '0ms',
+                    position: "relative",
                   }}>
                   <CardContent className="p-6">
                     <div className="flex items-start space-x-4">
