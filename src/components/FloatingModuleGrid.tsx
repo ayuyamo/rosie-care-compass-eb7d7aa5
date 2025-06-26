@@ -5,6 +5,8 @@ import { Badge } from "@/components/ui/badge";
 import { Heart, BookOpen, Users, MessageCircle, Compass, Shield, Home, Scale, ArrowRight, Sparkles, FolderClosed } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { useState, useEffect, useLayoutEffect } from "react";
+import { loadStories, fetchSectionsByTopicId, subscribeToTableChanges } from "@/lib/supabase/supabaseApi";
 
 // Default colors for modules
 const colors = [
@@ -63,14 +65,40 @@ const defaultModules = [
   }
 ];
 
-interface FloatingModuleGridProps {
-  modules?: Array<{
-    title: string;
-    description: string;
-  }>;
-}
+const modules = defaultModules.map(module => ({
+  ...module,
+  color: getConsistentColor(module.title),
+  icon: getConsistentIcon(module.title)
+}));
 
-export const FloatingModuleGrid = ({ modules = defaultModules }: FloatingModuleGridProps) => {
+export const FloatingModuleGrid = () => {
+  const [topics, setTopics] = useState([]);
+  const [hasLoaded, setHasLoaded] = useState(false);
+
+  useEffect(() => {
+    // Subscribe to changes in the topics table
+    const loadAndSetTopics = async () => {
+      const topics = await loadStories();
+      setTopics(topics);
+    };
+    loadAndSetTopics();
+    const unsubscribe = subscribeToTableChanges('topics', (newData) => {
+      console.log('🔄 Change received:', newData);
+      loadAndSetTopics();
+    });
+    return () => {
+      unsubscribe(); // Clean up subscription on unmount
+    };
+  }, []);
+
+  useLayoutEffect(() => {
+    if (topics.length > 0) {
+      requestAnimationFrame(() => {
+        setHasLoaded(true);
+      });
+    }
+  }, [topics]);
+
   const { ref: titleRef, isVisible: titleVisible } = useScrollAnimation();
   const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation();
 
@@ -81,18 +109,18 @@ export const FloatingModuleGrid = ({ modules = defaultModules }: FloatingModuleG
           Resources
         </h3>
 
-        <div ref={gridRef} className={`grid grid-cols-2 gap-4 mb-4 transition-all duration-1000 ${gridVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.2s' }}>
-          {modules.map((module, index) => {
-            const color = getConsistentColor(module.title);
-            const IconComponent = getConsistentIcon(module.title);
+        <div ref={gridRef} className={`grid grid-cols-2 gap-4 mb-4 transition-all duration-1000 ${gridVisible && hasLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.2s' }}>
+          {topics.slice(0, 6).map((topic) => {
+            const color = getConsistentColor(topic.name);
+            const IconComponent = getConsistentIcon(topic.name);
 
             return (
-              <Card key={module.title} className="bg-white/60 backdrop-blur-md border border-gray-200 p-4 text-center">
+              <Card key={topic.id} className="bg-white/60 backdrop-blur-md border border-gray-200 p-4 text-center">
                 <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-3" style={{ backgroundColor: color }}>
                   <IconComponent className="h-6 w-6 text-white" />
                 </div>
-                <h4 className="text-[#232323] font-bold text-sm mb-1">{module.title}</h4>
-                <p className="text-[#373618] text-xs">{module.description}</p>
+                <h4 className="text-[#232323] font-bold text-sm mb-1">{topic.name}</h4>
+                <p className="text-[#373618] text-xs">{topic.description}</p>
               </Card>
             );
           })}
