@@ -29,7 +29,9 @@ const Topics = () => {
         })
       );
       setTopics(storiesWithSections);
-      requestAnimationFrame(() => setHasLoaded(true));
+      setTimeout(() => {
+        requestAnimationFrame(() => setHasLoaded(true));
+      }, 0);
     };
     fetch();
   }, []);
