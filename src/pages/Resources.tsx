@@ -165,7 +165,7 @@ const Resources = () => {
                             <Heart className="h-4 w-4" />
                             <span className="text-xs">Helpful story</span>
                           </div>
-                          <Link to={`/topic/${story.id}/resources`}
+                          <Link to={`/topic/${story.id}/resources/detail`}
                             state={{
                               topic: {
                                 id: story.id,
