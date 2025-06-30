@@ -45,15 +45,15 @@ export const fetchStoriesBySectionId = async (sectionId: string) => {
   return data;
 };
 
-/** Fetch all resources for a given story */
-export const fetchResourcesByStoryId = async (storyId: string) => {
+/** Fetch all resources for a given section */
+export const fetchResourcesBySectionId = async (sectionId: string) => {
   const { data, error } = await supabase
     .from('resources')
     .select('*')
-    .eq('story_id', storyId)
+    .eq('section_id', sectionId)
     .order('created_at', { ascending: true });
 
-  if (error) throw new Error(`fetchResourcesByStoryId: ${error.message}`);
+  if (error) throw new Error(`fetchResourcesBySectionId: ${error.message}`);
   return data;
 };
 

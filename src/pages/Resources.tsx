@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useState, useEffect, useLayoutEffect } from "react";
-import { loadStories, fetchSectionsByTopicId, subscribeToTableChanges, fetchStoriesBySectionId, fetchResourcesByStoryId } from "@/lib/supabase/supabaseApi";
+import { loadStories, fetchSectionsByTopicId, subscribeToTableChanges, fetchStoriesBySectionId, fetchResourcesBySectionId } from "@/lib/supabase/supabaseApi";
 
 const Resources = () => {
   const [topics, setTopics] = useState([]);
@@ -23,21 +23,11 @@ const Resources = () => {
 
           const sectionsWithStories = await Promise.all(
             sections.map(async (section) => {
-              const stories = await fetchStoriesBySectionId(section.id);
-
-              const storiesWithResources = await Promise.all(
-                stories.map(async (story) => {
-                  const resources = await fetchResourcesByStoryId(story.id);
-                  return {
-                    ...story,
-                    resources,
-                  };
-                })
-              );
+              const resources = await fetchResourcesBySectionId(section.id);
 
               return {
                 ...section,
-                stories: storiesWithResources,
+                resources: resources,
               };
             })
           );
@@ -100,10 +90,10 @@ const Resources = () => {
         </header>
 
         <div ref={gridRef} className="space-y-8">
-          {topics.map((story, index) => {
-            const randomColor = getConsistentColor(story.name);
+          {topics.map((topic, index) => {
+            const randomColor = getConsistentColor(topic.name);
             return (
-              <div key={story.id}>
+              <div key={topic.id}>
                 <Card className={`
                     bg-white/90 backdrop-blur-md shadow-lg overflow-hidden group cursor-pointer will-change-transform transition-all duration-700 hover:shadow-xl hover:scale-[1.02]
                     ${gridVisible && hasLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}
@@ -120,19 +110,19 @@ const Resources = () => {
 
                       <div className="flex-1 min-w-0">
                         <h3 className="text-lg font-bold mb-2" style={{ color: '#232323' }}>
-                          {story.name}
+                          {topic.name}
                         </h3>
                         <p className="text-sm mb-4" style={{ color: '#373618' }}>
-                          {story.description}
+                          {topic.description}
                         </p>
 
                         {/* Mock sections */}
                         <div className="mb-4">
                           <p className="text-xs font-medium text-gray-500 mb-2">Sections:</p>
                           <div className="flex flex-wrap gap-1">
-                            {story.sections.slice(0, 4).map((section, sectionIndex) => (
+                            {topic.sections.slice(0, 4).map((section, index) => (
                               <Badge
-                                key={sectionIndex}
+                                key={index}
                                 variant="secondary"
                                 className="text-xs px-2 py-1"
                                 style={{
@@ -144,7 +134,7 @@ const Resources = () => {
                                 {section.name}
                               </Badge>
                             ))}
-                            {story.sections.length > 4 && (
+                            {topic.sections.length > 4 && (
                               <Badge
                                 variant="secondary"
                                 className="text-xs px-2 py-1 font-medium"
@@ -154,7 +144,7 @@ const Resources = () => {
                                   border: `1px dashed ${randomColor}50`
                                 }}
                               >
-                                +{story.sections.length - 4} more
+                                +{topic.sections.length - 4} more
                               </Badge>
                             )}
                           </div>
@@ -165,14 +155,9 @@ const Resources = () => {
                             <Heart className="h-4 w-4" />
                             <span className="text-xs">Helpful story</span>
                           </div>
-                          <Link to={`/topic/${story.id}/resources/detail`}
+                          <Link to={`/topic/${topic.id}/resources/detail`}
                             state={{
-                              topic: {
-                                id: story.id,
-                                name: story.name,
-                                description: story.description,
-                                sections: story.sections, // ⬅️ already loaded
-                              },
+                              topic: topic,
                             }}
                           >
                             <Button variant="ghost" size="sm" className="group/btn" style={{ color: randomColor }}>

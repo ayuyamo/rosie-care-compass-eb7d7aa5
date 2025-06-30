@@ -144,14 +144,7 @@ const Topics = () => {
                             <span className="text-xs">Helpful story</span>
                           </div>
                           <Link to={`/topic/${story.id}/sections`}
-                            state={{
-                              topic: {
-                                id: story.id,
-                                name: story.name,
-                                description: story.description,
-                                sections: story.sections, // ⬅️ already loaded
-                              },
-                            }}
+                            state={{ topic: story }}
                           >
                             <Button variant="ghost" size="sm" className="group/btn" style={{ color: randomColor }}>
                               View Sections

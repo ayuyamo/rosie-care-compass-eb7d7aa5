@@ -7,7 +7,7 @@ import { Link, useParams, useLocation } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useState, useEffect, useLayoutEffect } from "react";
-import { fetchSectionsByTopicId, fetchStoriesBySectionId, fetchResourcesByStoryId, fetchTopicById } from "@/lib/supabase/supabaseApi";
+import { fetchSectionsByTopicId, fetchStoriesBySectionId, fetchResourcesBySectionId, fetchTopicById } from "@/lib/supabase/supabaseApi";
 import { subscribeToTableChanges } from "@/lib/supabase/supabaseApi";
 const ResourcesDetail = () => {
   const { topicId } = useParams<{ topicId: string }>();
@@ -24,21 +24,11 @@ const ResourcesDetail = () => {
 
       const sectionsWithStories = await Promise.all(
         sections.map(async (section) => {
-          const stories = await fetchStoriesBySectionId(section.id);
-
-          const storiesWithResources = await Promise.all(
-            stories.map(async (story) => {
-              const resources = await fetchResourcesByStoryId(story.id);
-              return {
-                ...story,
-                resources,
-              };
-            })
-          );
+          const resources = await fetchResourcesBySectionId(section.id);
 
           return {
             ...section,
-            stories: storiesWithResources,
+            resources: resources,
           };
         })
       );
@@ -126,37 +116,31 @@ const ResourcesDetail = () => {
                         </h3>
                       </div>
                     </div>
-
-                    {/* Resources by Type */}
-                    {section.stories.map((story) => {
-                      const resourceList = story.resources;
-                      if (!resourceList || resourceList.length === 0) return null;
-
-                      return (
-                        <div key={story.id} className="space-y-2">
-                          <div className="flex items-center space-x-2">
-                            <p className="text-sm font-medium capitalize" style={{ color: randomColor }}>
-                              {story.title}
-                            </p>
-                          </div>
-                          <div className="space-y-2 ml-6">
-                            {resourceList.map((resource, resourceIndex) => (
-                              <div key={resourceIndex} className="flex items-center justify-between p-2 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors">
-                                <a
-                                  href={resource.url}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  className="flex items-center space-x-1 text-xs hover:underline"
-                                >
-                                  <span className="break-all text-blue-600">{resource.url}</span>
-                                  <ExternalLink className="h-3 w-3" />
-                                </a>
-                              </div>
-                            ))}
-                          </div>
+                    {section.resources?.length > 0 && (
+                      <div className="space-y-2">
+                        <div className="flex items-center space-x-2">
                         </div>
-                      );
-                    })}
+                        <div className="space-y-2 ml-6">
+                          {section.resources.map((resource, resourceIndex) => (
+                            <div
+                              key={resourceIndex}
+                              className="flex items-center justify-between p-2 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors"
+                            >
+                              <a
+                                href={resource.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="flex items-center space-x-1 text-xs hover:underline"
+                              >
+                                <span className="break-all text-blue-600">{resource.url}</span>
+                                <ExternalLink className="h-3 w-3" />
+                              </a>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
 
                   </div>
                 </CardContent>

@@ -7,7 +7,7 @@ import { Link, useParams, useLocation } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useState, useEffect, useLayoutEffect } from "react";
-import { fetchTopicById, fetchSectionsByTopicId, fetchStoriesBySectionId } from "@/lib/supabase/supabaseApi";
+import { fetchTopicById, fetchSectionsByTopicId, fetchStoriesBySectionId, fetchResourcesBySectionId } from "@/lib/supabase/supabaseApi";
 
 const SectionsList = () => {
   const { topicId } = useParams<{ topicId: string }>();
@@ -27,15 +27,11 @@ const SectionsList = () => {
           const sectionsWithStories = await Promise.all(
             passedTopic.sections.map(async (section) => {
               const stories = await fetchStoriesBySectionId(section.id);
+              const resources = await fetchResourcesBySectionId(section.id);
               return {
                 ...section,
-                stories: stories.map((s) => {
-                  return {
-                    id: s.id,
-                    title: s.title,
-                    content: s.content,
-                  };
-                }),
+                stories: stories,
+                resources: resources
               };
             })
           );
@@ -47,15 +43,11 @@ const SectionsList = () => {
           const sectionsWithStories = await Promise.all(
             fetchedSections.map(async (section) => {
               const stories = await fetchStoriesBySectionId(section.id);
+              const resources = await fetchResourcesBySectionId(section.id);
               return {
                 ...section,
-                stories: stories.map((s) => {
-                  return {
-                    id: s.id,
-                    title: s.title,
-                    content: s.content,
-                  };
-                }),
+                stories: stories,
+                resources: resources
               };
             })
           );
@@ -177,10 +169,7 @@ const SectionsList = () => {
                       </div>
                       <Link to={`/topic/${topicId}/sections/${section.id}/stories`}
                         state={{
-                          section: {
-                            name: section.name,
-                            stories: section.stories,
-                          }
+                          section: section,
                         }}>
                         <Button variant="ghost" size="sm" className="group/btn" style={{ color: randomColor }}>
                           View Stories
