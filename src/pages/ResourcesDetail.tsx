@@ -7,7 +7,7 @@ import { Link, useParams, useLocation } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useState, useEffect, useLayoutEffect } from "react";
-import { fetchSectionsByTopicId, fetchStoriesBySectionId, fetchResourcesByStoryId } from "@/lib/supabase/supabaseApi";
+import { fetchSectionsByTopicId, fetchStoriesBySectionId, fetchResourcesByStoryId, fetchTopicById } from "@/lib/supabase/supabaseApi";
 import { subscribeToTableChanges } from "@/lib/supabase/supabaseApi";
 const ResourcesDetail = () => {
   const { topicId } = useParams<{ topicId: string }>();
@@ -42,7 +42,8 @@ const ResourcesDetail = () => {
           };
         })
       );
-
+      const topic = await fetchTopicById(topicId);
+      setTopicName(topic.name);
       setSections(sectionsWithStories);
     }
     if (passedData) {

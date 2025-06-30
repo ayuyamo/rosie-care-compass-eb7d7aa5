@@ -5,7 +5,7 @@ const fetchTopics = async () => {
   const { data, error } = await supabase
     .from('topics')
     .select('id, name, description')
-    .order('created_at', { ascending: false });
+    .order('created_at', { ascending: true });
 
   if (error) throw new Error(`fetchTopics: ${error.message}`);
   return data;
