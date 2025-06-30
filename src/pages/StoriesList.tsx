@@ -163,11 +163,11 @@ const StoriesList = () => {
                                         </div>
                                     </div>
 
-                                    {/* Story Content Preview (always visible) */}
+                                    {/* Story Content */}
                                     <div className="px-6 py-4">
                                         <div className="prose prose-gray max-w-none">
                                             <div className="text-gray-800 leading-relaxed whitespace-pre-wrap text-base">
-                                                {storyPreview}
+                                                {isOpen ? story.content : storyPreview}
                                             </div>
                                         </div>
                                         {story.content.length > 200 && !isOpen && (
@@ -178,19 +178,6 @@ const StoriesList = () => {
                                             </CollapsibleTrigger>
                                         )}
                                     </div>
-
-                                    {/* Collapsible Full Content */}
-                                    <CollapsibleContent>
-                                        {story.content.length > 200 && (
-                                            <div className="px-6 pb-4">
-                                                <div className="prose prose-gray max-w-none">
-                                                    <div className="text-gray-800 leading-relaxed whitespace-pre-wrap text-base">
-                                                        {story.content.substring(200)}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        )}
-                                    </CollapsibleContent>
 
                                     {/* Story Footer */}
                                     <div className="px-6 py-4 bg-gray-50 border-t border-gray-100">
