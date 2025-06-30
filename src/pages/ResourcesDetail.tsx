@@ -7,55 +7,58 @@ import { Link, useParams, useLocation } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useState, useEffect, useLayoutEffect } from "react";
-
+import { fetchSectionsByTopicId, fetchStoriesBySectionId, fetchResourcesByStoryId } from "@/lib/supabase/supabaseApi";
+import { subscribeToTableChanges } from "@/lib/supabase/supabaseApi";
 const ResourcesDetail = () => {
   const { topicId } = useParams<{ topicId: string }>();
   const location = useLocation();
-  const passedTopic = location.state?.topic;
+  const passedData = location.state?.topic;
   const [topicName, setTopicName] = useState("");
   const [sections, setSections] = useState([]);
   const [hasLoaded, setHasLoaded] = useState(false);
 
-  // Mock resource data by type
-  const mockResources = {
-    articles: [
-      { title: "Understanding the Basics", url: "https://example.com/article1" },
-      { title: "Advanced Techniques", url: "https://example.com/article2" },
-      { title: "Best Practices Guide", url: "https://example.com/article3" }
-    ],
-    videos: [
-      { title: "Introduction Video", url: "https://youtube.com/watch?v=example1" },
-      { title: "Tutorial Series", url: "https://youtube.com/watch?v=example2" },
-      { title: "Expert Interview", url: "https://youtube.com/watch?v=example3" }
-    ],
-    documents: [
-      { title: "Reference Manual", url: "https://example.com/manual.pdf" },
-      { title: "Quick Start Guide", url: "https://example.com/guide.pdf" },
-      { title: "Templates Collection", url: "https://example.com/templates.zip" }
-    ],
-    websites: [
-      { title: "Official Documentation", url: "https://docs.example.com" },
-      { title: "Community Forum", url: "https://forum.example.com" },
-      { title: "Resource Hub", url: "https://resources.example.com" }
-    ]
-  };
-
   useEffect(() => {
-    if (passedTopic) {
-      setTopicName(passedTopic.name);
-      // Create mock sections with resources
-      const mockSections = passedTopic.sections.map((section, index) => ({
-        ...section,
-        resources: {
-          articles: mockResources.articles.slice(0, Math.ceil(Math.random() * 3) + 1),
-          videos: mockResources.videos.slice(0, Math.ceil(Math.random() * 2) + 1),
-          documents: mockResources.documents.slice(0, Math.ceil(Math.random() * 2) + 1),
-          websites: mockResources.websites.slice(0, Math.ceil(Math.random() * 2) + 1)
-        }
-      }));
-      setSections(mockSections);
+    const loadAndSetResources = async () => {
+      if (!topicId) return;
+      const sections = await fetchSectionsByTopicId(topicId);
+
+      const sectionsWithStories = await Promise.all(
+        sections.map(async (section) => {
+          const stories = await fetchStoriesBySectionId(section.id);
+
+          const storiesWithResources = await Promise.all(
+            stories.map(async (story) => {
+              const resources = await fetchResourcesByStoryId(story.id);
+              return {
+                ...story,
+                resources,
+              };
+            })
+          );
+
+          return {
+            ...section,
+            stories: storiesWithResources,
+          };
+        })
+      );
+
+      setSections(sectionsWithStories);
     }
-  }, [passedTopic]);
+    if (passedData) {
+      setTopicName(passedData.name);
+      setSections(passedData.sections);
+    } else {
+      loadAndSetResources();
+    }
+    const unsubscribe = subscribeToTableChanges('topics', (newData) => {
+      console.log('🔄 Change received:', newData);
+      loadAndSetResources();
+    });
+    return () => {
+      unsubscribe(); // Clean up subscription on unmount
+    };
+  }, []);
 
   useLayoutEffect(() => {
     if (topicName.length > 0 && sections.length > 0) {
@@ -78,21 +81,6 @@ const ResourcesDetail = () => {
     }
     const index = Math.abs(hash) % colors.length;
     return colors[index];
-  };
-
-  const getResourceIcon = (type: string) => {
-    switch (type) {
-      case 'articles':
-        return FileText;
-      case 'videos':
-        return Video;
-      case 'documents':
-        return BookOpen;
-      case 'websites':
-        return Globe;
-      default:
-        return ExternalLink;
-    }
   };
 
   const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation();
@@ -139,31 +127,27 @@ const ResourcesDetail = () => {
                     </div>
 
                     {/* Resources by Type */}
-                    {Object.entries(section.resources).map(([resourceType, resourceList]) => {
-                      if (resourceList.length === 0) return null;
-                      
-                      const ResourceIcon = getResourceIcon(resourceType);
-                      
+                    {section.stories.map((story) => {
+                      const resourceList = story.resources;
+                      if (!resourceList || resourceList.length === 0) return null;
+
                       return (
-                        <div key={resourceType} className="space-y-2">
+                        <div key={story.id} className="space-y-2">
                           <div className="flex items-center space-x-2">
-                            <ResourceIcon className="h-4 w-4" style={{ color: randomColor }} />
                             <p className="text-sm font-medium capitalize" style={{ color: randomColor }}>
-                              {resourceType}
+                              {story.title}
                             </p>
                           </div>
                           <div className="space-y-2 ml-6">
                             {resourceList.map((resource, resourceIndex) => (
                               <div key={resourceIndex} className="flex items-center justify-between p-2 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors">
-                                <span className="text-sm text-gray-700">{resource.title}</span>
-                                <a 
-                                  href={resource.url} 
-                                  target="_blank" 
+                                <a
+                                  href={resource.url}
+                                  target="_blank"
                                   rel="noopener noreferrer"
                                   className="flex items-center space-x-1 text-xs hover:underline"
-                                  style={{ color: randomColor }}
                                 >
-                                  <span>Open</span>
+                                  <span className="break-all text-blue-600">{resource.url}</span>
                                   <ExternalLink className="h-3 w-3" />
                                 </a>
                               </div>
@@ -172,6 +156,7 @@ const ResourcesDetail = () => {
                         </div>
                       );
                     })}
+
                   </div>
                 </CardContent>
               </Card>
