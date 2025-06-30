@@ -1,8 +1,8 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, BookOpen, Clock, User, Heart, ArrowRight, ExternalLink, Share2, Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { ArrowLeft, BookOpen, Clock, User, Heart, ArrowRight, ExternalLink, Share2, Facebook, Instagram, Linkedin, Twitter, ChevronDown } from "lucide-react";
 import { Link, useParams, useLocation } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
@@ -18,6 +18,20 @@ const StoriesList = () => {
     const [stories, setStories] = useState([]);
     const [resources, setResources] = useState([]);
     const [hasLoaded, setHasLoaded] = useState(false);
+    const [openStories, setOpenStories] = useState<string[]>([]);
+
+    const toggleStory = (storyId: string) => {
+        setOpenStories(prev => 
+            prev.includes(storyId) 
+                ? prev.filter(id => id !== storyId)
+                : [...prev, storyId]
+        );
+    };
+
+    const getStoryPreview = (content: string, maxLength: number = 200) => {
+        if (content.length <= maxLength) return content;
+        return content.substring(0, maxLength).trim() + "...";
+    };
 
     useEffect(() => {
         const loadData = async () => {
@@ -84,7 +98,6 @@ const StoriesList = () => {
                 window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, '_blank');
                 break;
             case 'instagram':
-                // Instagram doesn't support direct sharing via URL, so we'll copy to clipboard
                 navigator.clipboard.writeText(`${text}\n\n${url}`);
                 alert('Story link copied to clipboard! You can now paste it on Instagram.');
                 break;
@@ -109,97 +122,127 @@ const StoriesList = () => {
                 <div ref={gridRef} className="space-y-8">
                     {stories.map((story, index) => {
                         const randomColor = getConsistentColor(story.title);
+                        const isOpen = openStories.includes(story.id);
+                        const storyPreview = getStoryPreview(story.content);
+                        
                         return (
-                            <article key={story.id} className={`
-                                bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-700
-                                ${gridVisible && hasLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}
-                            `}
-                                style={{
-                                    transitionDelay: gridVisible && hasLoaded ? `${index * 150}ms` : '0ms'
-                                }}>
-                                {/* Story Header */}
-                                <div className="px-6 py-4 border-b border-gray-100">
-                                    <div className="flex items-center space-x-3 mb-3">
-                                        <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ backgroundColor: randomColor }}>
-                                            <BookOpen className="h-5 w-5 text-white" />
+                            <Collapsible key={story.id} open={isOpen} onOpenChange={() => toggleStory(story.id)}>
+                                <article className={`
+                                    bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-700
+                                    ${gridVisible && hasLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}
+                                `}
+                                    style={{
+                                        transitionDelay: gridVisible && hasLoaded ? `${index * 150}ms` : '0ms'
+                                    }}>
+                                    {/* Story Header */}
+                                    <div className="px-6 py-4 border-b border-gray-100">
+                                        <div className="flex items-center space-x-3 mb-3">
+                                            <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ backgroundColor: randomColor }}>
+                                                <BookOpen className="h-5 w-5 text-white" />
+                                            </div>
+                                            <div className="flex-1">
+                                                <h2 className="text-xl font-bold text-[#232323]">
+                                                    {story.title}
+                                                </h2>
+                                                <div className="flex items-center space-x-4 text-sm text-gray-500 mt-1">
+                                                    <div className="flex items-center space-x-1">
+                                                        <Clock className="h-4 w-4" />
+                                                        <span>{Math.ceil(story.content.split(' ').length / 200)} min read</span>
+                                                    </div>
+                                                    <div className="flex items-center space-x-1">
+                                                        <Heart className="h-4 w-4" />
+                                                        <span>Inspiring</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <CollapsibleTrigger asChild>
+                                                <Button variant="ghost" size="sm" className="ml-auto">
+                                                    <ChevronDown className={`h-4 w-4 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+                                                </Button>
+                                            </CollapsibleTrigger>
                                         </div>
-                                        <div>
-                                            <h2 className="text-xl font-bold text-[#232323]">
-                                                {story.title}
-                                            </h2>
-                                            <div className="flex items-center space-x-4 text-sm text-gray-500 mt-1">
-                                                <div className="flex items-center space-x-1">
-                                                    <Clock className="h-4 w-4" />
-                                                    <span>{Math.ceil(story.content.split(' ').length / 200)} min read</span>
+                                    </div>
+
+                                    {/* Story Content Preview (always visible) */}
+                                    <div className="px-6 py-4">
+                                        <div className="prose prose-gray max-w-none">
+                                            <div className="text-gray-800 leading-relaxed whitespace-pre-wrap text-base">
+                                                {storyPreview}
+                                            </div>
+                                        </div>
+                                        {story.content.length > 200 && !isOpen && (
+                                            <CollapsibleTrigger asChild>
+                                                <Button variant="link" className="mt-2 p-0 h-auto text-sm" style={{ color: randomColor }}>
+                                                    Read more
+                                                </Button>
+                                            </CollapsibleTrigger>
+                                        )}
+                                    </div>
+
+                                    {/* Collapsible Full Content */}
+                                    <CollapsibleContent>
+                                        {story.content.length > 200 && (
+                                            <div className="px-6 pb-4">
+                                                <div className="prose prose-gray max-w-none">
+                                                    <div className="text-gray-800 leading-relaxed whitespace-pre-wrap text-base">
+                                                        {story.content.substring(200)}
+                                                    </div>
                                                 </div>
-                                                <div className="flex items-center space-x-1">
-                                                    <Heart className="h-4 w-4" />
-                                                    <span>Inspiring</span>
-                                                </div>
+                                            </div>
+                                        )}
+                                    </CollapsibleContent>
+
+                                    {/* Story Footer */}
+                                    <div className="px-6 py-4 bg-gray-50 border-t border-gray-100">
+                                        <div className="flex items-center justify-between mb-4">
+                                            <Badge
+                                                variant="secondary"
+                                                className="text-xs"
+                                                style={{
+                                                    backgroundColor: `${randomColor}20`,
+                                                    color: randomColor,
+                                                    border: `1px solid ${randomColor}40`
+                                                }}
+                                            >
+                                                Story #{index + 1}
+                                            </Badge>
+
+                                            {/* Social Sharing */}
+                                            <div className="flex items-center space-x-3">
+                                                <span className="text-sm text-gray-600 font-medium">Share:</span>
+                                                <button
+                                                    onClick={() => shareStory('facebook', story.title, story.content)}
+                                                    className="p-2.5 rounded-full bg-blue-100 hover:bg-blue-200 transition-colors active:scale-95"
+                                                    title="Share on Facebook"
+                                                >
+                                                    <Facebook className="h-4 w-4 text-blue-600" />
+                                                </button>
+                                                <button
+                                                    onClick={() => shareStory('twitter', story.title, story.content)}
+                                                    className="p-2.5 rounded-full bg-sky-100 hover:bg-sky-200 transition-colors active:scale-95"
+                                                    title="Share on Twitter"
+                                                >
+                                                    <Twitter className="h-4 w-4 text-sky-600" />
+                                                </button>
+                                                <button
+                                                    onClick={() => shareStory('linkedin', story.title, story.content)}
+                                                    className="p-2.5 rounded-full bg-blue-100 hover:bg-blue-200 transition-colors active:scale-95"
+                                                    title="Share on LinkedIn"
+                                                >
+                                                    <Linkedin className="h-4 w-4 text-blue-700" />
+                                                </button>
+                                                <button
+                                                    onClick={() => shareStory('instagram', story.title, story.content)}
+                                                    className="p-2.5 rounded-full bg-pink-100 hover:bg-pink-200 transition-colors active:scale-95"
+                                                    title="Share on Instagram"
+                                                >
+                                                    <Instagram className="h-4 w-4 text-pink-600" />
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-
-                                {/* Story Content */}
-                                <div className="px-6 py-6">
-                                    <div className="prose prose-gray max-w-none">
-                                        <div className="text-gray-800 leading-relaxed whitespace-pre-wrap text-base">
-                                            {story.content}
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* Story Footer */}
-                                <div className="px-6 py-4 bg-gray-50 border-t border-gray-100">
-                                    <div className="flex items-center justify-between mb-4">
-                                        <Badge
-                                            variant="secondary"
-                                            className="text-xs"
-                                            style={{
-                                                backgroundColor: `${randomColor}20`,
-                                                color: randomColor,
-                                                border: `1px solid ${randomColor}40`
-                                            }}
-                                        >
-                                            Story #{index + 1}
-                                        </Badge>
-
-                                        {/* Social Sharing - Made bigger and more clickable */}
-                                        <div className="flex items-center space-x-3">
-                                            <span className="text-sm text-gray-600 font-medium">Share:</span>
-                                            <button
-                                                onClick={() => shareStory('facebook', story.title, story.content)}
-                                                className="p-2.5 rounded-full bg-blue-100 hover:bg-blue-200 transition-colors active:scale-95"
-                                                title="Share on Facebook"
-                                            >
-                                                <Facebook className="h-4 w-4 text-blue-600" />
-                                            </button>
-                                            <button
-                                                onClick={() => shareStory('twitter', story.title, story.content)}
-                                                className="p-2.5 rounded-full bg-sky-100 hover:bg-sky-200 transition-colors active:scale-95"
-                                                title="Share on Twitter"
-                                            >
-                                                <Twitter className="h-4 w-4 text-sky-600" />
-                                            </button>
-                                            <button
-                                                onClick={() => shareStory('linkedin', story.title, story.content)}
-                                                className="p-2.5 rounded-full bg-blue-100 hover:bg-blue-200 transition-colors active:scale-95"
-                                                title="Share on LinkedIn"
-                                            >
-                                                <Linkedin className="h-4 w-4 text-blue-700" />
-                                            </button>
-                                            <button
-                                                onClick={() => shareStory('instagram', story.title, story.content)}
-                                                className="p-2.5 rounded-full bg-pink-100 hover:bg-pink-200 transition-colors active:scale-95"
-                                                title="Share on Instagram"
-                                            >
-                                                <Instagram className="h-4 w-4 text-pink-600" />
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </article>
+                                </article>
+                            </Collapsible>
                         );
                     })}
 
