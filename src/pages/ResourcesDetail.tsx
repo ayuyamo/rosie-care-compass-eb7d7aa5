@@ -126,19 +126,21 @@ const ResourcesDetail = () => {
                         </div>
                         <div className="flex-1 min-w-0">
                           <CollapsibleTrigger asChild>
-                            <Button variant="ghost" className="w-full justify-between p-0 h-auto text-left items-start">
-                              <div className="flex flex-col items-start flex-1 min-w-0 pr-2">
-                                <h3 className="text-lg font-bold break-words w-full" style={{ color: '#232323' }}>
-                                  {section.name}
-                                </h3>
-                                {/* Show resource count when collapsed, positioned closer to title */}
-                                {!isOpen && section.resources?.length > 0 && (
-                                  <Badge variant="secondary" className="text-xs mt-1">
-                                    {section.resources.length} resource{section.resources.length !== 1 ? 's' : ''}
-                                  </Badge>
-                                )}
+                            <Button variant="ghost" className="w-full p-0 h-auto text-left">
+                              <div className="flex justify-between items-start w-full gap-2">
+                                <div className="flex flex-col items-start flex-1 min-w-0">
+                                  <h3 className="text-lg font-bold text-left leading-tight" style={{ color: '#232323', wordWrap: 'break-word', hyphens: 'auto' }}>
+                                    {section.name}
+                                  </h3>
+                                  {/* Show resource count when collapsed, positioned closer to title */}
+                                  {!isOpen && section.resources?.length > 0 && (
+                                    <Badge variant="secondary" className="text-xs mt-1">
+                                      {section.resources.length} resource{section.resources.length !== 1 ? 's' : ''}
+                                    </Badge>
+                                  )}
+                                </div>
+                                <ChevronDown className={`h-5 w-5 transition-transform duration-300 flex-shrink-0 mt-0.5 ${isOpen ? 'rotate-180' : ''}`} />
                               </div>
-                              <ChevronDown className={`h-5 w-5 transition-transform duration-300 flex-shrink-0 ${isOpen ? 'rotate-180' : ''}`} />
                             </Button>
                           </CollapsibleTrigger>
                         </div>
