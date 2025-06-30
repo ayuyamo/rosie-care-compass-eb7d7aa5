@@ -14,6 +14,7 @@ import BookDetails from "./pages/BookDetails";
 import PoemsCollection from "./pages/PoemsCollection";
 import NotFound from "./pages/NotFound";
 import StoriesList from "./pages/StoriesList";
+import ResourcesList from "./pages/ResourcesList";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="/" element={<Index />} />
           <Route path="/topics" element={<Topics />} />
           <Route path="/topic/:topicId/sections" element={<SectionsList />} />
+          <Route path="/topic/:topicId/resources" element={<ResourcesList />} />
           <Route path="/topic/:topicId/sections/:sectionId/stories" element={<StoriesList />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/community" element={<Community />} />
