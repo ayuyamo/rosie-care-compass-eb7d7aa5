@@ -1,3 +1,4 @@
+
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -125,28 +126,27 @@ const ResourcesDetail = () => {
                         <div className="flex-1 min-w-0">
                           <CollapsibleTrigger asChild>
                             <Button variant="ghost" className="w-full justify-between p-0 h-auto text-left">
-                              <h3 className="text-lg font-bold" style={{ color: '#232323' }}>
-                                {section.name}
-                              </h3>
-                              <ChevronDown className={`h-5 w-5 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`} />
+                              <div className="flex flex-col items-start">
+                                <h3 className="text-lg font-bold" style={{ color: '#232323' }}>
+                                  {section.name}
+                                </h3>
+                                {/* Show resource count when collapsed, positioned closer to title */}
+                                {!isOpen && section.resources?.length > 0 && (
+                                  <Badge variant="secondary" className="text-xs mt-1">
+                                    {section.resources.length} resource{section.resources.length !== 1 ? 's' : ''}
+                                  </Badge>
+                                )}
+                              </div>
+                              <ChevronDown className={`h-5 w-5 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
                             </Button>
                           </CollapsibleTrigger>
                         </div>
                       </div>
 
-                      {/* Show resource count when collapsed */}
-                      {!isOpen && section.resources?.length > 0 && (
-                        <div className="ml-16">
-                          <Badge variant="secondary" className="text-xs">
-                            {section.resources.length} resource{section.resources.length !== 1 ? 's' : ''}
-                          </Badge>
-                        </div>
-                      )}
-
-                      {/* Collapsible Resources Content */}
-                      <CollapsibleContent>
+                      {/* Collapsible Resources Content with smooth transitions */}
+                      <CollapsibleContent className="overflow-hidden transition-all duration-300 ease-in-out data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down">
                         {section.resources?.length > 0 && (
-                          <div className="space-y-2 ml-16">
+                          <div className="space-y-2 ml-16 animate-fade-in">
                             {section.resources.map((resource, resourceIndex) => (
                               <div
                                 key={resourceIndex}
