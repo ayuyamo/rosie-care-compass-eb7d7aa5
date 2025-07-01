@@ -33,6 +33,26 @@ const StoriesList = () => {
         return content.substring(0, maxLength).trim() + "...";
     };
 
+    // Placeholder images for stories
+    const placeholderImages = [
+        "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=400&h=200&fit=crop",
+        "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=200&fit=crop",
+        "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=200&fit=crop",
+        "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&h=200&fit=crop",
+        "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=400&h=200&fit=crop",
+        "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?w=400&h=200&fit=crop",
+        "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=400&h=200&fit=crop"
+    ];
+
+    const getStoryImage = (storyId: string) => {
+        let hash = 0;
+        for (let i = 0; i < storyId.length; i++) {
+            hash = storyId.charCodeAt(i) + ((hash << 5) - hash);
+        }
+        const index = Math.abs(hash) % placeholderImages.length;
+        return placeholderImages[index];
+    };
+
     useEffect(() => {
         const loadData = async () => {
             try {
@@ -124,6 +144,7 @@ const StoriesList = () => {
                         const randomColor = getConsistentColor(story.title);
                         const isOpen = openStories.includes(story.id);
                         const storyPreview = getStoryPreview(story.content);
+                        const storyImage = getStoryImage(story.id);
                         
                         return (
                             <Collapsible key={story.id} open={isOpen} onOpenChange={() => toggleStory(story.id)}>
@@ -134,6 +155,17 @@ const StoriesList = () => {
                                     style={{
                                         transitionDelay: gridVisible && hasLoaded ? `${index * 150}ms` : '0ms'
                                     }}>
+                                    
+                                    {/* Story Image - Top Half */}
+                                    <div className="relative h-48 overflow-hidden">
+                                        <img 
+                                            src={storyImage} 
+                                            alt={story.title}
+                                            className="w-full h-full object-cover"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                                    </div>
+
                                     {/* Story Header */}
                                     <div className="px-6 py-4 border-b border-gray-100">
                                         <div className="flex items-center space-x-3 mb-3">
