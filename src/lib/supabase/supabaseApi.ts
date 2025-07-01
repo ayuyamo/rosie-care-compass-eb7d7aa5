@@ -1,10 +1,10 @@
 import { supabase } from './supabaseClient';
 
 /** Fetch all topics */
-const fetchTopics = async () => {
+export const fetchTopics = async () => {
   const { data, error } = await supabase
     .from('topics')
-    .select('id, name, description')
+    .select('id, name, description, image_url')
     .order('created_at', { ascending: true });
 
   if (error) throw new Error(`fetchTopics: ${error.message}`);

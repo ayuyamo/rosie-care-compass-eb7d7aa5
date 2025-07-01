@@ -5,7 +5,7 @@ import { ArrowLeft, BookOpen, Heart, Clock, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { loadStories, fetchSectionsByTopicId, subscribeToTableChanges } from "@/lib/supabase/supabaseApi";
+import { loadStories, fetchSectionsByTopicId, subscribeToTableChanges, fetchTopics } from "@/lib/supabase/supabaseApi";
 import { useState, useEffect, useLayoutEffect } from "react";
 
 const Topics = () => {
@@ -38,7 +38,7 @@ const Topics = () => {
   useEffect(() => {
     // Subscribe to changes in the topics table
     const loadAndSetTopics = async () => {
-      const data = await loadStories();
+      const data = await fetchTopics();
       // Add mock sections to each story
       const storiesWithSections = await Promise.all(
         data.map(async (story) => {
@@ -102,7 +102,7 @@ const Topics = () => {
         <div ref={gridRef} className="space-y-8">
           {topics.map((story, index) => {
             const randomColor = getConsistentColor(story.name);
-            const topicImage = getTopicImage(story.id);
+            const topicImage = story.image_url;
             return (
               <div key={story.id}>
                 <Card className={`
@@ -113,11 +113,11 @@ const Topics = () => {
                     transitionDelay: gridVisible && hasLoaded ? `${index * 150}ms` : '0ms',
                     position: "relative",
                   }}>
-                  
+
                   {/* Topic Image - Top Half */}
                   <div className="relative h-48 overflow-hidden">
-                    <img 
-                      src={topicImage} 
+                    <img
+                      src={topicImage}
                       alt={story.name}
                       className="w-full h-full object-cover"
                     />

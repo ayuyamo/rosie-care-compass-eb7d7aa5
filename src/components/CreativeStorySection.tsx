@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { loadStories } from "@/lib/supabase/supabaseApi";
 import { useState, useEffect, useLayoutEffect } from "react";
 import { subscribeToTableChanges } from "@/lib/supabase/supabaseApi";
+import { fetchTopics } from "@/lib/supabase/supabaseApi";
 
 const colors = [
   "#d79a8c", "#367588", "#49796B", "#8F9779", "#5a7a85",
@@ -35,7 +36,7 @@ export const CreativeStorySection = () => {
 
   useEffect(() => {
     const fetch = async () => {
-      const data = await loadStories();
+      const data = await fetchTopics();
       const limitedStories = data.slice(0, 3);
       setStories(limitedStories);
     };

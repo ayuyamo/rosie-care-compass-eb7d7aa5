@@ -127,7 +127,7 @@ const SectionsList = () => {
         <div ref={gridRef} className="space-y-6">
           {sections.map((section, index) => {
             const randomColor = getConsistentColor(section.name);
-            const sectionImage = getSectionImage(section.id);
+            const sectionImage = section.image_url || getSectionImage(section.id);
             return (
               <Card key={section.id} className={`
                   bg-white/90 backdrop-blur-md shadow-lg overflow-hidden group cursor-pointer transition-all duration-700 hover:shadow-xl hover:scale-[1.02]
@@ -136,11 +136,11 @@ const SectionsList = () => {
                 style={{
                   transitionDelay: gridVisible && hasLoaded ? `${index * 150}ms` : '0ms'
                 }}>
-                
+
                 {/* Section Image - Top Half */}
                 <div className="relative h-48 overflow-hidden">
-                  <img 
-                    src={sectionImage} 
+                  <img
+                    src={sectionImage}
                     alt={section.name}
                     className="w-full h-full object-cover"
                   />
