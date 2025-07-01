@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -16,6 +15,29 @@ const SectionsList = () => {
   const [sections, setSections] = useState([]);
   const [topicName, setTopicName] = useState("");
   const [hasLoaded, setHasLoaded] = useState(false);
+
+  // Placeholder images for sections
+  const placeholderImages = [
+    "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=400&h=200&fit=crop",
+    "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=200&fit=crop",
+    "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=200&fit=crop",
+    "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&h=200&fit=crop",
+    "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=400&h=200&fit=crop",
+    "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?w=400&h=200&fit=crop",
+    "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=400&h=200&fit=crop",
+    "https://images.unsplash.com/photo-1472396961693-142e6e269027?w=400&h=200&fit=crop",
+    "https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=400&h=200&fit=crop",
+    "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=400&h=200&fit=crop"
+  ];
+
+  const getSectionImage = (sectionId: string) => {
+    let hash = 0;
+    for (let i = 0; i < sectionId.length; i++) {
+      hash = sectionId.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const index = Math.abs(hash) % placeholderImages.length;
+    return placeholderImages[index];
+  };
 
   useEffect(() => {
     const loadData = async () => {
@@ -105,6 +127,7 @@ const SectionsList = () => {
         <div ref={gridRef} className="space-y-6">
           {sections.map((section, index) => {
             const randomColor = getConsistentColor(section.name);
+            const sectionImage = getSectionImage(section.id);
             return (
               <Card key={section.id} className={`
                   bg-white/90 backdrop-blur-md shadow-lg overflow-hidden group cursor-pointer transition-all duration-700 hover:shadow-xl hover:scale-[1.02]
@@ -113,18 +136,24 @@ const SectionsList = () => {
                 style={{
                   transitionDelay: gridVisible && hasLoaded ? `${index * 150}ms` : '0ms'
                 }}>
+                
+                {/* Section Image - Top Half */}
+                <div className="relative h-48 overflow-hidden">
+                  <img 
+                    src={sectionImage} 
+                    alt={section.name}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                </div>
+
                 <CardContent className="p-6">
                   <div className="space-y-4">
-                    {/* Header section with icon and title */}
-                    <div className="flex items-start space-x-4">
-                      <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: randomColor }}>
-                        <BookOpen className="h-6 w-6 text-white" />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <h3 className="text-lg font-bold mb-2" style={{ color: '#232323' }}>
-                          {section.name}
-                        </h3>
-                      </div>
+                    {/* Header section with title */}
+                    <div>
+                      <h3 className="text-lg font-bold mb-2" style={{ color: '#232323' }}>
+                        {section.name}
+                      </h3>
                     </div>
 
                     {/* Stories section */}
