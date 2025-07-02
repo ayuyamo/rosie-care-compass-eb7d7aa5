@@ -34,7 +34,7 @@ const StoriesList = () => {
     };
 
     // Background image for header
-    const headerBackgroundImage = "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&h=300&fit=crop";
+    const headerBackgroundImage = passedSection?.image_url || "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&h=300&fit=crop";
 
     useEffect(() => {
         const loadData = async () => {
@@ -138,8 +138,8 @@ const StoriesList = () => {
     return (
         <div className="min-h-screen bg-[#f8f9fa] p-4 pb-24">
             <div className="max-w-2xl mx-auto">
-                <header 
-                    ref={headerRef} 
+                <header
+                    ref={headerRef}
                     className={`relative flex items-center mb-6 p-6 rounded-lg overflow-hidden transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
                     style={{
                         backgroundImage: `url(${headerBackgroundImage})`,
@@ -149,7 +149,7 @@ const StoriesList = () => {
                 >
                     {/* Half-saturated overlay */}
                     <div className="absolute inset-0 bg-white/60 backdrop-blur-sm"></div>
-                    
+
                     {/* Content */}
                     <div className="relative z-10 flex items-center w-full">
                         <Link to={`/topic/${topicId}/sections`} className="mr-4">
@@ -187,7 +187,7 @@ const StoriesList = () => {
                                                 <h2 className="text-xl font-bold text-[#232323] mb-2">
                                                     {story.title}
                                                 </h2>
-                                                
+
                                                 {/* Featured People Section */}
                                                 {story.people && story.people.length > 0 && (
                                                     <div className="mb-3">
