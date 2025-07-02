@@ -1,10 +1,8 @@
-
 import { useState, useEffect, useLayoutEffect } from "react";
 import { useParams, useLocation } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { fetchStoriesBySectionId, fetchSectionNameById, fetchResourcesBySectionId, subscribeToTableChanges } from "@/lib/supabase/supabaseApi";
-import { HeroSection } from "@/components/stories/HeroSection";
 import { SectionHeader } from "@/components/stories/SectionHeader";
 import { StoryCardAlt } from "@/components/stories/StoryCardAlt";
 import { ResourcesSection } from "@/components/stories/ResourcesSection";
@@ -86,14 +84,13 @@ const StoriesPageAlt = () => {
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
-            <HeroSection heroImage={heroImage} />
-            
             <SectionHeader 
                 sectionName={sectionName}
                 storiesCount={stories.length}
                 isVisible={headerVisible}
                 headerRef={headerRef}
                 topicId={topicId!}
+                heroImage={heroImage}
             />
 
             <div className="max-w-4xl mx-auto p-6 pb-24">

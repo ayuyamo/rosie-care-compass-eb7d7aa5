@@ -9,12 +9,22 @@ interface SectionHeaderProps {
   isVisible: boolean;
   headerRef: React.RefObject<HTMLDivElement>;
   topicId: string;
+  heroImage: string;
 }
 
-export const SectionHeader = ({ sectionName, storiesCount, isVisible, headerRef, topicId }: SectionHeaderProps) => {
+export const SectionHeader = ({ sectionName, storiesCount, isVisible, headerRef, topicId, heroImage }: SectionHeaderProps) => {
   return (
-    <div className="bg-white border-b border-gray-100">
-      <div className="max-w-4xl mx-auto px-6 py-8">
+    <div className="relative bg-white border-b border-gray-100 overflow-hidden">
+      {/* Creative background image placement */}
+      <div className="absolute right-0 top-0 w-64 h-full opacity-10">
+        <img
+          src={heroImage}
+          alt="Section background"
+          className="w-full h-full object-cover"
+        />
+      </div>
+      
+      <div className="relative max-w-4xl mx-auto px-6 py-6">
         <div ref={headerRef} className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <div className="flex items-center gap-4 mb-2">
             <Link to={`/topic/${topicId}/sections`}>
@@ -22,9 +32,9 @@ export const SectionHeader = ({ sectionName, storiesCount, isVisible, headerRef,
                 <ArrowLeft className="h-4 w-4" />
               </Button>
             </Link>
-            <h1 className="text-4xl font-bold text-gray-900">{sectionName}</h1>
+            <h1 className="text-2xl font-bold text-gray-900">{sectionName}</h1>
           </div>
-          <p className="text-gray-600 text-lg">{storiesCount} inspiring stories to discover</p>
+          <p className="text-gray-600 text-base">{storiesCount} inspiring stories to discover</p>
         </div>
       </div>
     </div>
