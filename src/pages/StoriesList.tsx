@@ -187,6 +187,24 @@ const StoriesList = () => {
                                                 <h2 className="text-xl font-bold text-[#232323] mb-2">
                                                     {story.title}
                                                 </h2>
+                                                
+                                                {/* Featured People Section */}
+                                                {story.people && story.people.length > 0 && (
+                                                    <div className="mb-3">
+                                                        <p className="text-sm font-medium text-gray-600 mb-2">Featured People:</p>
+                                                        <div className="flex flex-wrap gap-2">
+                                                            {story.people.map((person, personIndex) => (
+                                                                <Badge
+                                                                    key={personIndex}
+                                                                    variant="outline"
+                                                                    className="text-xs px-2 py-1 bg-gray-50 text-gray-700 border-gray-200"
+                                                                >
+                                                                    {person}
+                                                                </Badge>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                )}
                                             </div>
                                             <CollapsibleTrigger asChild>
                                                 <Button variant="ghost" size="sm" className="ml-auto">
