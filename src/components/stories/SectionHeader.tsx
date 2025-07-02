@@ -25,7 +25,7 @@ export const SectionHeader = ({ sectionName, storiesCount, isVisible, headerRef,
             </Link>
             <h1 className="text-4xl font-bold text-gray-900">{sectionName}</h1>
           </div>
-          <p className="text-gray-600 text-lg ml-32">{storiesCount} inspiring stories to discover</p>
+          <p className="text-gray-600 text-lg">{storiesCount} inspiring stories to discover</p>
         </div>
       </div>
     </div>
