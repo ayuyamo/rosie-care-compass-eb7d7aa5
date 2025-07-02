@@ -41,13 +41,14 @@ export const StoryCardAlt = ({
     <Collapsible open={isOpen} onOpenChange={() => onToggle(story.id)}>
       <Card className={`
         overflow-hidden transition-all duration-700 hover:shadow-xl hover:scale-[1.02] group
+        ${isOpen ? 'h-auto' : 'h-80'} flex flex-col
         ${isVisible && hasLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}
       `}
         style={{
           transitionDelay: isVisible && hasLoaded ? `${index * 100}ms` : '0ms'
         }}>
         
-        <CardContent className="p-6">
+        <CardContent className="p-6 flex flex-col flex-1">
           <div className="flex items-start justify-between mb-4">
             <div className="flex-1">
               <h2 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2">
@@ -61,20 +62,22 @@ export const StoryCardAlt = ({
             </CollapsibleTrigger>
           </div>
 
-          <div className="mb-4">
-            <p className="text-gray-700 leading-relaxed whitespace-pre-wrap">
+          <div className={`mb-4 ${isOpen ? '' : 'flex-1 flex flex-col'}`}>
+            <p className={`text-gray-700 leading-relaxed whitespace-pre-wrap ${isOpen ? '' : 'flex-1 overflow-hidden'}`}>
               {isOpen ? story.content : storyPreview}
             </p>
             {story.content.length > 150 && !isOpen && (
               <CollapsibleTrigger asChild>
-                <Button variant="link" className="mt-2 p-0 h-auto text-sm font-medium" style={{ color: storyColor }}>
+                <Button variant="link" className="mt-2 p-0 h-auto text-sm font-medium self-start" style={{ color: storyColor }}>
                   Read full story
                 </Button>
               </CollapsibleTrigger>
             )}
           </div>
 
-          <SocialShareButtons storyTitle={story.title} />
+          <div className="mt-auto">
+            <SocialShareButtons storyTitle={story.title} />
+          </div>
         </CardContent>
       </Card>
     </Collapsible>
