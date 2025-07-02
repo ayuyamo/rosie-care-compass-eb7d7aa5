@@ -14,6 +14,7 @@ import BookDetails from "./pages/BookDetails";
 import PoemsCollection from "./pages/PoemsCollection";
 import NotFound from "./pages/NotFound";
 import StoriesPage from "./pages/StoriesPage";
+import StoriesPageAlt from "./pages/StoriesPageAlt";
 import ResourcesDetail from "./pages/ResourcesDetail";
 
 const queryClient = new QueryClient();
