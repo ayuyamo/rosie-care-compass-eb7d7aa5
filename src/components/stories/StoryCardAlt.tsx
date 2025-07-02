@@ -30,7 +30,7 @@ export const StoryCardAlt = ({
   hasLoaded, 
   storyColor 
 }: StoryCardAltProps) => {
-  const getStoryPreview = (content: string, maxLength: number = 150) => {
+  const getStoryPreview = (content: string, maxLength: number = 100) => {
     if (content.length <= maxLength) return content;
     return content.substring(0, maxLength).trim() + "...";
   };
@@ -48,10 +48,10 @@ export const StoryCardAlt = ({
           transitionDelay: isVisible && hasLoaded ? `${index * 100}ms` : '0ms'
         }}>
         
-        <CardContent className="p-6 flex flex-col flex-1">
-          <div className="flex items-start justify-between mb-4">
+        <CardContent className="p-4 flex flex-col h-full">
+          <div className="flex items-start justify-between mb-3">
             <div className="flex-1">
-              <h2 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2">
+              <h2 className="text-lg font-bold text-gray-900 mb-2 line-clamp-2">
                 {story.title}
               </h2>
             </div>
@@ -62,13 +62,13 @@ export const StoryCardAlt = ({
             </CollapsibleTrigger>
           </div>
 
-          <div className={`mb-4 ${isOpen ? '' : 'flex-1 flex flex-col'}`}>
-            <p className={`text-gray-700 leading-relaxed whitespace-pre-wrap ${isOpen ? '' : 'flex-1 overflow-hidden'}`}>
+          <div className={`${isOpen ? 'mb-4' : 'flex-1 flex flex-col mb-3'}`}>
+            <p className={`text-gray-700 text-sm leading-relaxed whitespace-pre-wrap ${isOpen ? '' : 'flex-1 overflow-hidden'}`}>
               {isOpen ? story.content : storyPreview}
             </p>
-            {story.content.length > 150 && !isOpen && (
+            {story.content.length > 100 && !isOpen && (
               <CollapsibleTrigger asChild>
-                <Button variant="link" className="mt-2 p-0 h-auto text-sm font-medium self-start" style={{ color: storyColor }}>
+                <Button variant="link" className="mt-2 p-0 h-auto text-xs font-medium self-start" style={{ color: storyColor }}>
                   Read full story
                 </Button>
               </CollapsibleTrigger>
@@ -76,7 +76,15 @@ export const StoryCardAlt = ({
           </div>
 
           <div className="mt-auto">
-            <SocialShareButtons storyTitle={story.title} />
+            <div className="pt-2 border-t border-gray-100">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-medium text-gray-600">Share:</span>
+                <div className="flex items-center space-x-1">
+                  {/* Simplified share buttons for better fit */}
+                  <SocialShareButtons storyTitle={story.title} />
+                </div>
+              </div>
+            </div>
           </div>
         </CardContent>
       </Card>
