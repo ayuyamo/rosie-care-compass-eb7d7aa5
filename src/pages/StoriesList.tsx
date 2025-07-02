@@ -2,7 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { ArrowLeft, BookOpen, Clock, User, Heart, ArrowRight, ExternalLink, Share2, Facebook, Instagram, Linkedin, Twitter, ChevronDown } from "lucide-react";
+import { ArrowLeft, BookOpen, ExternalLink, Share2, Facebook, Instagram, Linkedin, Twitter, ChevronDown } from "lucide-react";
 import { Link, useParams, useLocation } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
@@ -33,25 +33,8 @@ const StoriesList = () => {
         return content.substring(0, maxLength).trim() + "...";
     };
 
-    // Placeholder images for stories
-    const placeholderImages = [
-        "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=400&h=200&fit=crop",
-        "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=200&fit=crop",
-        "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=200&fit=crop",
-        "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&h=200&fit=crop",
-        "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=400&h=200&fit=crop",
-        "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?w=400&h=200&fit=crop",
-        "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=400&h=200&fit=crop"
-    ];
-
-    const getStoryImage = (storyId: string) => {
-        let hash = 0;
-        for (let i = 0; i < storyId.length; i++) {
-            hash = storyId.charCodeAt(i) + ((hash << 5) - hash);
-        }
-        const index = Math.abs(hash) % placeholderImages.length;
-        return placeholderImages[index];
-    };
+    // Background image for header
+    const headerBackgroundImage = "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&h=300&fit=crop";
 
     useEffect(() => {
         const loadData = async () => {
@@ -155,15 +138,29 @@ const StoriesList = () => {
     return (
         <div className="min-h-screen bg-[#f8f9fa] p-4 pb-24">
             <div className="max-w-2xl mx-auto">
-                <header ref={headerRef} className={`flex items-center mb-6 transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-                    <Link to={`/topic/${topicId}/sections`} className="mr-4">
-                        <Button variant="ghost" size="sm" className="text-[#5a7a85]">
-                            <ArrowLeft className="h-5 w-5" />
-                        </Button>
-                    </Link>
-                    <div>
-                        <h1 className="text-2xl font-bold text-black">{sectionName}</h1>
-                        <p className="text-sm text-gray-600 mt-1">{stories.length} stories</p>
+                <header 
+                    ref={headerRef} 
+                    className={`relative flex items-center mb-6 p-6 rounded-lg overflow-hidden transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+                    style={{
+                        backgroundImage: `url(${headerBackgroundImage})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center'
+                    }}
+                >
+                    {/* Half-saturated overlay */}
+                    <div className="absolute inset-0 bg-white/60 backdrop-blur-sm"></div>
+                    
+                    {/* Content */}
+                    <div className="relative z-10 flex items-center w-full">
+                        <Link to={`/topic/${topicId}/sections`} className="mr-4">
+                            <Button variant="ghost" size="sm" className="text-[#5a7a85] hover:bg-white/20">
+                                <ArrowLeft className="h-5 w-5" />
+                            </Button>
+                        </Link>
+                        <div>
+                            <h1 className="text-2xl font-bold text-black">{sectionName}</h1>
+                            <p className="text-sm text-gray-700 mt-1">{stories.length} stories</p>
+                        </div>
                     </div>
                 </header>
 
@@ -172,7 +169,6 @@ const StoriesList = () => {
                         const randomColor = getConsistentColor(story.title);
                         const isOpen = openStories.includes(story.id);
                         const storyPreview = getStoryPreview(story.content);
-                        const storyImage = story.image_url || getStoryImage(story.id);
 
                         return (
                             <Collapsible key={story.id} open={isOpen} onOpenChange={() => toggleStory(story.id)}>
@@ -184,36 +180,13 @@ const StoriesList = () => {
                                         transitionDelay: gridVisible && hasLoaded ? `${index * 150}ms` : '0ms'
                                     }}>
 
-                                    {/* Story Image - Top Half */}
-                                    <div className="relative h-48 overflow-hidden">
-                                        <img
-                                            src={storyImage}
-                                            alt={story.title}
-                                            className="w-full h-full object-cover"
-                                        />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-                                    </div>
-
                                     {/* Story Header */}
                                     <div className="px-6 py-4 border-b border-gray-100">
-                                        <div className="flex items-center space-x-3 mb-3">
-                                            <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ backgroundColor: randomColor }}>
-                                                <BookOpen className="h-5 w-5 text-white" />
-                                            </div>
+                                        <div className="flex items-center justify-between">
                                             <div className="flex-1">
-                                                <h2 className="text-xl font-bold text-[#232323]">
+                                                <h2 className="text-xl font-bold text-[#232323] mb-2">
                                                     {story.title}
                                                 </h2>
-                                                <div className="flex items-center space-x-4 text-sm text-gray-500 mt-1">
-                                                    <div className="flex items-center space-x-1">
-                                                        <Clock className="h-4 w-4" />
-                                                        <span>{Math.ceil(story.content.split(' ').length / 200)} min read</span>
-                                                    </div>
-                                                    <div className="flex items-center space-x-1">
-                                                        <Heart className="h-4 w-4" />
-                                                        <span>Inspiring</span>
-                                                    </div>
-                                                </div>
                                             </div>
                                             <CollapsibleTrigger asChild>
                                                 <Button variant="ghost" size="sm" className="ml-auto">
@@ -241,19 +214,7 @@ const StoriesList = () => {
 
                                     {/* Story Footer */}
                                     <div className="px-6 py-4 bg-gray-50 border-t border-gray-100">
-                                        <div className="flex items-center justify-between mb-4">
-                                            <Badge
-                                                variant="secondary"
-                                                className="text-xs"
-                                                style={{
-                                                    backgroundColor: `${randomColor}20`,
-                                                    color: randomColor,
-                                                    border: `1px solid ${randomColor}40`
-                                                }}
-                                            >
-                                                Story #{index + 1}
-                                            </Badge>
-
+                                        <div className="flex items-center justify-end">
                                             {/* Social Sharing */}
                                             <div className="flex items-center space-x-3">
                                                 <span className="text-sm text-gray-600 font-medium">Share:</span>
