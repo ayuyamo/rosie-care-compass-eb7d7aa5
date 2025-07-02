@@ -19,8 +19,7 @@ export const SectionHeader = ({ sectionName, storiesCount, isVisible, headerRef,
           <div className="flex items-center gap-4 mb-2">
             <Link to={`/topic/${topicId}/sections`}>
               <Button variant="ghost" size="sm" className="text-gray-600 hover:bg-gray-100">
-                <ArrowLeft className="h-4 w-4 mr-2" />
-                Back to Sections
+                <ArrowLeft className="h-4 w-4" />
               </Button>
             </Link>
             <h1 className="text-4xl font-bold text-gray-900">{sectionName}</h1>
