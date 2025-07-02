@@ -15,8 +15,8 @@ interface SectionHeaderProps {
 export const SectionHeader = ({ sectionName, storiesCount, isVisible, headerRef, topicId, heroImage }: SectionHeaderProps) => {
   return (
     <div className="relative bg-white border-b border-gray-100 overflow-hidden">
-      {/* Creative background image placement */}
-      <div className="absolute right-0 top-0 w-64 h-full opacity-10">
+      {/* Full background image */}
+      <div className="absolute inset-0 opacity-10">
         <img
           src={heroImage}
           alt="Section background"
