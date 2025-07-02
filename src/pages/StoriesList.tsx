@@ -221,13 +221,22 @@ const StoriesList = () => {
                                                 {isOpen ? story.content : storyPreview}
                                             </div>
                                         </div>
-                                        {story.content.length > 200 && !isOpen && (
-                                            <CollapsibleTrigger asChild>
-                                                <Button variant="link" className="mt-2 p-0 h-auto text-sm" style={{ color: randomColor }}>
-                                                    Read more
-                                                </Button>
-                                            </CollapsibleTrigger>
-                                        )}
+                                        <div className="mt-2 flex gap-2">
+                                            {story.content.length > 200 && !isOpen && (
+                                                <CollapsibleTrigger asChild>
+                                                    <Button variant="link" className="p-0 h-auto text-sm" style={{ color: randomColor }}>
+                                                        Read more
+                                                    </Button>
+                                                </CollapsibleTrigger>
+                                            )}
+                                            {isOpen && story.content.length > 200 && (
+                                                <CollapsibleTrigger asChild>
+                                                    <Button variant="link" className="p-0 h-auto text-sm" style={{ color: randomColor }}>
+                                                        Show less
+                                                    </Button>
+                                                </CollapsibleTrigger>
+                                            )}
+                                        </div>
                                     </div>
 
                                     {/* Story Footer */}
