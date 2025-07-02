@@ -2,7 +2,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Clock, Heart } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 interface StoryCardProps {
   category: string;
@@ -28,21 +28,13 @@ export const StoryCard = ({ category, title, description, color }: StoryCardProp
           <Badge variant="secondary" className="text-xs">
             {category}
           </Badge>
-          <div className="flex items-center space-x-1 text-xs text-gray-500">
-            <Clock className="h-3 w-3" />
-            <span>5 min read</span>
-          </div>
         </div>
         <CardTitle className="text-lg">{title}</CardTitle>
         <CardDescription className="text-sm">{description}</CardDescription>
       </CardHeader>
       
       <CardContent className="pt-0">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-2 text-xs text-gray-500">
-            <Heart className="h-3 w-3" />
-            <span>Helpful for many</span>
-          </div>
+        <div className="flex items-center justify-end">
           <Button variant="ghost" size="sm" className="group">
             Read Story
             <ArrowRight className="ml-1 h-3 w-3 transition-transform group-hover:translate-x-1" />
