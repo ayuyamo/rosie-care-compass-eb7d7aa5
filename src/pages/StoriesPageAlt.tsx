@@ -1,4 +1,3 @@
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -114,7 +113,7 @@ const StoriesPageAlt = () => {
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-50 to-white">
             {/* Hero Image Section */}
-            <div className="relative h-80 overflow-hidden">
+            <div className="relative h-64 overflow-hidden">
                 <img
                     src={heroImage}
                     alt="Stories Collection"
@@ -122,17 +121,23 @@ const StoriesPageAlt = () => {
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
                 
-                {/* Header Content Overlay */}
-                <div className="absolute inset-0 flex flex-col justify-end p-6">
+                {/* Back Button - Positioned in top left */}
+                <div className="absolute top-4 left-4">
+                    <Link to={`/topic/${topicId}/sections`}>
+                        <Button variant="ghost" size="sm" className="text-white hover:bg-white/20 backdrop-blur-sm">
+                            <ArrowLeft className="h-5 w-5 mr-2" />
+                            Back to Sections
+                        </Button>
+                    </Link>
+                </div>
+            </div>
+
+            {/* Section Title - Separate section with proper spacing */}
+            <div className="bg-white border-b border-gray-100">
+                <div className="max-w-4xl mx-auto px-6 py-8">
                     <div ref={headerRef} className={`transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-                        <Link to={`/topic/${topicId}/sections`} className="inline-block mb-4">
-                            <Button variant="ghost" size="sm" className="text-white hover:bg-white/20 backdrop-blur-sm">
-                                <ArrowLeft className="h-5 w-5 mr-2" />
-                                Back to Sections
-                            </Button>
-                        </Link>
-                        <h1 className="text-4xl font-bold text-white mb-2">{sectionName}</h1>
-                        <p className="text-white/90 text-lg">{stories.length} inspiring stories to discover</p>
+                        <h1 className="text-4xl font-bold text-gray-900 mb-2">{sectionName}</h1>
+                        <p className="text-gray-600 text-lg">{stories.length} inspiring stories to discover</p>
                     </div>
                 </div>
             </div>
