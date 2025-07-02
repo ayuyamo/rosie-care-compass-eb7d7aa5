@@ -5,7 +5,7 @@ import { ArrowLeft, BookOpen, Heart, Clock, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { loadStories, fetchSectionsByTopicId, subscribeToTableChanges, fetchTopics } from "@/lib/supabase/supabaseApi";
+import { fetchSectionsByTopicId, subscribeToTableChanges, fetchTopics } from "@/lib/supabase/supabaseApi";
 import { useState, useEffect, useLayoutEffect } from "react";
 
 const Topics = () => {

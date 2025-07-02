@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useState, useEffect, useLayoutEffect } from "react";
-import { loadStories, fetchSectionsByTopicId, subscribeToTableChanges, fetchStoriesBySectionId, fetchResourcesBySectionId } from "@/lib/supabase/supabaseApi";
+import { fetchSectionsByTopicId, subscribeToTableChanges, fetchStoriesBySectionId, fetchResourcesBySectionId, fetchTopics } from "@/lib/supabase/supabaseApi";
 
 const Resources = () => {
   const [topics, setTopics] = useState([]);
@@ -15,7 +15,7 @@ const Resources = () => {
   useEffect(() => {
     // Subscribe to changes in the topics table
     const loadAndSetTopics = async () => {
-      const data = await loadStories(); // assuming this returns topics
+      const data = await fetchTopics(); // assuming this returns topics
 
       const topicsWithSections = await Promise.all(
         data.map(async (topic) => {

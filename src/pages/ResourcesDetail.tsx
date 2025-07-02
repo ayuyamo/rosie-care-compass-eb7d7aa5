@@ -42,7 +42,7 @@ const ResourcesDetail = () => {
     } else {
       loadAndSetResources();
     }
-    const unsubscribe = subscribeToTableChanges('topics', (newData) => {
+    const unsubscribe = subscribeToTableChanges('resources', (newData) => {
       console.log('🔄 Change received:', newData);
       loadAndSetResources();
     });

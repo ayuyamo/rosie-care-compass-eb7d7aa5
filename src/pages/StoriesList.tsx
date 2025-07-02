@@ -7,7 +7,7 @@ import { Link, useParams, useLocation } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useState, useEffect, useLayoutEffect } from "react";
-import { fetchStoriesBySectionId, fetchSectionNameById, fetchResourcesBySectionId } from "@/lib/supabase/supabaseApi";
+import { fetchStoriesBySectionId, fetchSectionNameById, fetchResourcesBySectionId, subscribeToTableChanges } from "@/lib/supabase/supabaseApi";
 
 const StoriesList = () => {
     const { topicId } = useParams<{ topicId: string }>();
@@ -21,8 +21,8 @@ const StoriesList = () => {
     const [openStories, setOpenStories] = useState<string[]>([]);
 
     const toggleStory = (storyId: string) => {
-        setOpenStories(prev => 
-            prev.includes(storyId) 
+        setOpenStories(prev =>
+            prev.includes(storyId)
                 ? prev.filter(id => id !== storyId)
                 : [...prev, storyId]
         );
@@ -75,7 +75,35 @@ const StoriesList = () => {
         };
 
         loadData();
-    }, [sectionId, passedSection]);
+        const unsubscribe = subscribeToTableChanges('stories', (payload) => {
+            const { eventType, new: newStory, old: oldStory } = payload;
+
+            // Only respond to changes that affect the current section
+            const relevantSectionId = eventType === 'DELETE' ? oldStory.section_id : newStory.section_id;
+            if (relevantSectionId !== sectionId) return;
+
+            setStories((prevStories) => {
+                if (eventType === 'INSERT') {
+                    return [...prevStories, newStory];
+                }
+
+                if (eventType === 'UPDATE') {
+                    return prevStories.map((story) =>
+                        story.id === newStory.id ? { ...story, ...newStory } : story
+                    );
+                }
+
+                if (eventType === 'DELETE') {
+                    return prevStories.filter((story) => story.id !== oldStory.id);
+                }
+
+                return prevStories;
+            });
+        });
+        return () => {
+            unsubscribe();
+        };
+    }, []);
 
     useLayoutEffect(() => {
         if (sectionName.length > 0 && stories.length > 0 && resources.length > 0) {
@@ -144,8 +172,8 @@ const StoriesList = () => {
                         const randomColor = getConsistentColor(story.title);
                         const isOpen = openStories.includes(story.id);
                         const storyPreview = getStoryPreview(story.content);
-                        const storyImage = getStoryImage(story.id);
-                        
+                        const storyImage = story.image_url || getStoryImage(story.id);
+
                         return (
                             <Collapsible key={story.id} open={isOpen} onOpenChange={() => toggleStory(story.id)}>
                                 <article className={`
@@ -155,11 +183,11 @@ const StoriesList = () => {
                                     style={{
                                         transitionDelay: gridVisible && hasLoaded ? `${index * 150}ms` : '0ms'
                                     }}>
-                                    
+
                                     {/* Story Image - Top Half */}
                                     <div className="relative h-48 overflow-hidden">
-                                        <img 
-                                            src={storyImage} 
+                                        <img
+                                            src={storyImage}
                                             alt={story.title}
                                             className="w-full h-full object-cover"
                                         />

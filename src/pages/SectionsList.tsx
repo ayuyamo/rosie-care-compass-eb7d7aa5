@@ -6,7 +6,7 @@ import { Link, useParams, useLocation } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useState, useEffect, useLayoutEffect } from "react";
-import { fetchTopicById, fetchSectionsByTopicId, fetchStoriesBySectionId, fetchResourcesBySectionId } from "@/lib/supabase/supabaseApi";
+import { fetchTopicById, fetchSectionsByTopicId, fetchStoriesBySectionId, fetchResourcesBySectionId, subscribeToTableChanges } from "@/lib/supabase/supabaseApi";
 
 const SectionsList = () => {
   const { topicId } = useParams<{ topicId: string }>();
@@ -82,7 +82,42 @@ const SectionsList = () => {
     };
 
     loadData();
-  }, [topicId, passedTopic]);
+    const unsubscribe = subscribeToTableChanges('sections', async (payload) => {
+      const { eventType, new: newSection, old: oldSection } = payload;
+
+      setSections((prevSections) => {
+        if (eventType === 'INSERT') {
+          return [...prevSections, { ...newSection, stories: [], resources: [] }];
+        }
+
+        if (eventType === 'UPDATE') {
+          return prevSections.map((section) =>
+            section.id === newSection.id ? { ...section, ...newSection } : section
+          );
+        }
+
+        if (eventType === 'DELETE') {
+          return prevSections.filter((section) => section.id !== oldSection.id);
+        }
+
+        return prevSections;
+      });
+
+      // Optional: fetch stories/resources for insert/update
+      if (eventType === 'INSERT' || eventType === 'UPDATE') {
+        const stories = await fetchStoriesBySectionId(newSection.id);
+        const resources = await fetchResourcesBySectionId(newSection.id);
+        setSections((prevSections) =>
+          prevSections.map((section) =>
+            section.id === newSection.id ? { ...section, stories, resources } : section
+          )
+        );
+      }
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, []);
 
   useLayoutEffect(() => {
     if (topicName.length > 0 && sections.length > 0) {

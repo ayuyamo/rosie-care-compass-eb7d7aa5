@@ -11,16 +11,6 @@ export const fetchTopics = async () => {
   return data;
 };
 
-export const loadStories = async () => {
-  const data = await fetchTopics();
-  const stories = data.map((topic) => ({
-    id: topic.id,
-    name: topic.name,
-    description: topic.description || 'No description available.',
-  }));
-  return stories;
-};
-
 /** Fetch all sections for a given topic */
 export const fetchSectionsByTopicId = async (topicId: string) => {
   const { data, error } = await supabase

@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, Heart, Sparkles, BookOpen } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { Link } from "react-router-dom";
-import { loadStories } from "@/lib/supabase/supabaseApi";
 import { useState, useEffect, useLayoutEffect } from "react";
 import { subscribeToTableChanges } from "@/lib/supabase/supabaseApi";
 import { fetchTopics } from "@/lib/supabase/supabaseApi";
