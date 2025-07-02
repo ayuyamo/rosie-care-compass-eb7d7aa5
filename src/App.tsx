@@ -29,7 +29,7 @@ const App = () => (
           <Route path="/topics" element={<Topics />} />
           <Route path="/topic/:topicId/sections" element={<SectionsList />} />
           <Route path="/topic/:topicId/resources/detail" element={<ResourcesDetail />} />
-          <Route path="/topic/:topicId/sections/:sectionId/stories" element={<StoriesPage />} />
+          <Route path="/topic/:topicId/sections/:sectionId/stories" element={<StoriesPageAlt />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/community" element={<Community />} />
           <Route path="/resources" element={<Resources />} />
