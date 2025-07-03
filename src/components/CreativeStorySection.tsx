@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -87,9 +88,10 @@ export const CreativeStorySection = () => {
             const randomColor = getConsistentColor(story.name);
             const mockImage = story.image_url || mockImages[index % mockImages.length];
             return (
-              <div
+              <Link
                 key={story.name}
-                className={`group cursor-pointer transition-all duration-700 ${gridVisible && hasLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
+                to={`/topic/${story.id}/sections`}
+                className={`block group cursor-pointer transition-all duration-700 ${gridVisible && hasLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
                   }`}
                 style={{
                   transitionDelay: gridVisible && hasLoaded ? `${index * 150}ms` : '0ms'
@@ -113,22 +115,14 @@ export const CreativeStorySection = () => {
                         <h4 className="text-lg font-bold mb-2 text-[#232323] line-clamp-1">
                           {story.name}
                         </h4>
-                        <div className="flex items-start justify-between">
-                          <p className="text-sm text-[#373618] line-clamp-2 leading-relaxed flex-1 mr-3">
-                            {story.description}
-                          </p>
-                          <Link to={`/topic/${story.id}/sections`}>
-                            <Button variant="ghost" size="sm" className="group/btn text-sm font-semibold p-2 h-auto hover:bg-gray-100/50 shrink-0" style={{ color: randomColor }}>
-                              Read More
-                              <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
-                            </Button>
-                          </Link>
-                        </div>
+                        <p className="text-sm text-[#373618] line-clamp-2 leading-relaxed">
+                          {story.description}
+                        </p>
                       </div>
                     </div>
                   </div>
                 </Card>
-              </div>
+              </Link>
             );
           })}
         </div>
