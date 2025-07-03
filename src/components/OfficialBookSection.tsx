@@ -19,7 +19,7 @@ const OfficialBookSection = () => {
               <div className="absolute inset-0 bg-[url('https://villagecore.org/wp-content/uploads/2024/09/91UyCtrS8ZL._SL1500_.jpg')] bg-cover bg-center opacity-70 scale-110"></div>
 
               {/* Optional white overlay to soften further */}
-              <div className="absolute inset-0 bg-white/70 backdrop-blur-sm backdrop-saturate-150"></div>
+              <div className="absolute inset-0 bg-white/70 backdrop-saturate-150"></div>
 
               {/* Foreground content */}
               <div className="relative z-10 flex items-start space-x-4">

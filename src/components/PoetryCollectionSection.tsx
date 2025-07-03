@@ -57,7 +57,7 @@ const PoetryCollectionSection = () => {
               }}
             >
               {/* White overlay for contrast */}
-              <div className="absolute inset-0 bg-white/70 backdrop-blur-md z-0"></div>
+              <div className="absolute inset-0 bg-white/70 z-0"></div>
 
               {/* Foreground content */}
               <div className="relative z-10 flex items-center justify-between space-x-4">

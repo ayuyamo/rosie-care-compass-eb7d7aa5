@@ -79,7 +79,7 @@ const Index = () => {
                 className="relative w-full text-[#18453B] font-bold py-4 px-6 rounded-2xl mb-3 shadow-2xl transform hover:scale-[1.02] transition-all duration-300 bg-[url('/ChatGPT-rosie.png')] bg-cover bg-center border-0 overflow-hidden"
               >
                 {/* White transparent overlay */}
-                <div className="absolute inset-0 bg-white/60 rounded-2xl backdrop-blur-sm pointer-events-none" />
+                <div className="absolute inset-0 bg-white/60 rounded-2xl backdrop-blur-lg pointer-events-none" />
 
                 {/* Content on top */}
                 <div className="relative z-10 flex items-center justify-center">

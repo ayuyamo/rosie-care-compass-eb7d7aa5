@@ -105,7 +105,7 @@ export const CreativeStorySection = () => {
                   ></div>
 
                   {/* Optional soft white overlay for readability */}
-                  <div className="absolute inset-0 bg-white/30 backdrop-blur-sm"></div>
+                  <div className="absolute inset-0 bg-white/30"></div>
 
                   {/* Foreground content */}
                   <div className="relative z-10 p-5 h-36 flex items-center justify-between w-full">
