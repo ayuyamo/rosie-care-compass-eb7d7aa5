@@ -113,21 +113,17 @@ export const CreativeStorySection = () => {
                         <h4 className="text-lg font-bold mb-2 text-[#232323] line-clamp-1">
                           {story.name}
                         </h4>
-                        <p className="text-sm mb-3 text-[#373618] line-clamp-2 leading-relaxed">
-                          {story.description}
-                        </p>
-                      </div>
-
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-1 text-[#679aa3]">
-                          <span className="text-sm font-medium">Helpful story</span>
+                        <div className="flex items-start justify-between">
+                          <p className="text-sm text-[#373618] line-clamp-2 leading-relaxed flex-1 mr-3">
+                            {story.description}
+                          </p>
+                          <Link to={`/topic/${story.id}/sections`}>
+                            <Button variant="ghost" size="sm" className="group/btn text-sm font-semibold p-2 h-auto hover:bg-gray-100/50 shrink-0" style={{ color: randomColor }}>
+                              Read More
+                              <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+                            </Button>
+                          </Link>
                         </div>
-                        <Link to={`/topic/${story.id}/sections`}>
-                          <Button variant="ghost" size="sm" className="group/btn text-sm font-semibold p-2 h-auto hover:bg-gray-100/50" style={{ color: randomColor }}>
-                            Read More
-                            <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
-                          </Button>
-                        </Link>
                       </div>
                     </div>
                   </div>

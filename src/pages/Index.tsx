@@ -81,9 +81,9 @@ const Index = () => {
                 <span className="text-base">Start Your Journey</span>
               </Button>
 
-              <Button className="w-full font-bold py-4 px-6 rounded-2xl shadow-lg transform hover:scale-[1.02] transition-all duration-300 bg-gradient-to-r from-white to-gray-50 hover:from-gray-50 to-gray-100 text-[#18453B] border-2 border-[#18453B]">
+              <Button className="w-full font-bold py-4 px-6 rounded-2xl shadow-2xl transform hover:scale-[1.02] transition-all duration-300 bg-gradient-to-r from-[#8B4513] to-[#654321] hover:from-[#654321] to-[#4A2C17] text-white border-0">
                 <Users className="mr-3 h-5 w-5" />
-                <span className="text-base">Join Community</span>
+                <span className="text-base">Join the Conversation</span>
               </Button>
             </div>
           </div>
