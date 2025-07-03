@@ -81,7 +81,15 @@ const Index = () => {
                 <span className="text-base">Start Your Journey</span>
               </Button>
 
-              <Button className="w-full font-bold py-4 px-6 rounded-2xl shadow-2xl transform hover:scale-[1.02] transition-all duration-300 bg-gradient-to-r from-[#8B4513] to-[#654321] hover:from-[#654321] to-[#4A2C17] text-white border-0">
+              <Button 
+                className="w-full font-bold py-4 px-6 rounded-2xl shadow-2xl transform hover:scale-[1.02] transition-all duration-300 text-white border-0 relative overflow-hidden"
+                style={{
+                  backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=400&h=300&fit=crop')`,
+                  backgroundSize: 'cover',
+                  backgroundPosition: 'center',
+                  filter: 'saturate(0.5)'
+                }}
+              >
                 <Users className="mr-3 h-5 w-5" />
                 <span className="text-base">Join the Conversation</span>
               </Button>
