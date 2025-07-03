@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -97,42 +96,46 @@ export const CreativeStorySection = () => {
                 }}
               >
                 <Card className="bg-white/90 backdrop-blur-md border border-gray-200 shadow-xl hover:shadow-2xl transition-all duration-500 group-hover:scale-105 overflow-hidden">
-                  <div className="relative">
-                    <div className="w-full h-40 overflow-hidden">
+                  <div className="flex h-32">
+                    {/* Left side - Image (30% width) */}
+                    <div className="w-[30%] relative overflow-hidden">
                       <img
                         src={mockImage}
                         alt={story.name}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+                      <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/20"></div>
+                      <div className="absolute top-2 right-2">
+                        <div className="bg-white/90 backdrop-blur-sm rounded-full p-1.5 shadow-lg">
+                          <Heart className="h-3 w-3 text-[#679aa3]" />
+                        </div>
+                      </div>
                     </div>
-                    <div className="absolute top-3 right-3">
-                      <div className="bg-white/90 backdrop-blur-sm rounded-full p-2 shadow-lg">
-                        <Heart className="h-4 w-4 text-[#679aa3]" />
+                    
+                    {/* Right side - Content (70% width) */}
+                    <div className="w-[70%] p-4 flex flex-col justify-between">
+                      <div>
+                        <h4 className="text-base font-bold mb-2 text-[#232323] line-clamp-1">
+                          {story.name}
+                        </h4>
+                        <p className="text-xs mb-3 text-[#373618] line-clamp-2 leading-relaxed">
+                          {story.description}
+                        </p>
+                      </div>
+
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-1 text-[#679aa3]">
+                          <span className="text-xs">Helpful story</span>
+                        </div>
+                        <Link to={`/topic/${story.id}/sections`}>
+                          <Button variant="ghost" size="sm" className="group/btn text-xs font-semibold p-2 h-auto" style={{ color: randomColor }}>
+                            Read More
+                            <ArrowRight className="ml-1 h-3 w-3 transition-transform group-hover/btn:translate-x-1" />
+                          </Button>
+                        </Link>
                       </div>
                     </div>
                   </div>
-                  
-                  <CardContent className="p-6">
-                    <h4 className="text-lg font-bold mb-2 text-[#232323]">
-                      {story.name}
-                    </h4>
-                    <p className="text-sm mb-4 text-[#373618] line-clamp-2">
-                      {story.description}
-                    </p>
-
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-2 text-[#679aa3]">
-                        <span className="text-sm">Helpful story</span>
-                      </div>
-                      <Link to={`/topic/${story.id}/sections`}>
-                        <Button variant="ghost" size="sm" className="group/btn text-sm font-semibold" style={{ color: randomColor }}>
-                          Read More
-                          <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
-                        </Button>
-                      </Link>
-                    </div>
-                  </CardContent>
                 </Card>
               </div>
             );
