@@ -1,3 +1,4 @@
+
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -16,9 +17,9 @@ const colors = [
 
 // Mock images for story cards
 const mockImages = [
-  "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=200&h=200&fit=crop",
-  "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=200&h=200&fit=crop",
-  "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=200&h=200&fit=crop"
+  "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=400&h=300&fit=crop",
+  "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=300&fit=crop",
+  "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=300&fit=crop"
 ];
 
 /**
@@ -95,39 +96,41 @@ export const CreativeStorySection = () => {
                   transitionDelay: gridVisible && hasLoaded ? `${index * 150}ms` : '0ms'
                 }}
               >
-                <Card className="bg-white/90 backdrop-blur-md border border-gray-200 shadow-xl hover:shadow-2xl transition-all duration-500 group-hover:scale-105">
+                <Card className="bg-white/90 backdrop-blur-md border border-gray-200 shadow-xl hover:shadow-2xl transition-all duration-500 group-hover:scale-105 overflow-hidden">
+                  <div className="relative">
+                    <div className="w-full h-40 overflow-hidden">
+                      <img
+                        src={mockImage}
+                        alt={story.name}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+                    </div>
+                    <div className="absolute top-3 right-3">
+                      <div className="bg-white/90 backdrop-blur-sm rounded-full p-2 shadow-lg">
+                        <Heart className="h-4 w-4 text-[#679aa3]" />
+                      </div>
+                    </div>
+                  </div>
+                  
                   <CardContent className="p-6">
-                    <div className="flex items-start space-x-4">
-                      <div className="w-12 h-12 rounded-xl flex-shrink-0 overflow-hidden">
-                        <img
-                          src={mockImage}
-                          alt={story.name}
-                          className="w-full h-full object-cover"
-                        />
+                    <h4 className="text-lg font-bold mb-2 text-[#232323]">
+                      {story.name}
+                    </h4>
+                    <p className="text-sm mb-4 text-[#373618] line-clamp-2">
+                      {story.description}
+                    </p>
+
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center space-x-2 text-[#679aa3]">
+                        <span className="text-sm">Helpful story</span>
                       </div>
-
-                      <div className="flex-1 min-w-0">
-                        <h4 className="text-lg font-bold mb-2" style={{ color: '#232323' }}>
-                          {story.name}
-                        </h4>
-                        <p className="text-sm mb-4" style={{ color: '#373618' }}>
-                          {story.description}
-                        </p>
-
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center space-x-2" style={{ color: '#679aa3' }}>
-                            <Heart className="h-4 w-4" />
-                            <span className="text-sm">Helpful story</span>
-                          </div>
-                          <Link to={`/topic/${story.id}/sections`}>
-                            <Button variant="ghost" size="sm" className="group/btn text-sm" style={{ color: randomColor }}>
-                              Read More
-                              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
-                            </Button>
-                          </Link>
-
-                        </div>
-                      </div>
+                      <Link to={`/topic/${story.id}/sections`}>
+                        <Button variant="ghost" size="sm" className="group/btn text-sm font-semibold" style={{ color: randomColor }}>
+                          Read More
+                          <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+                        </Button>
+                      </Link>
                     </div>
                   </CardContent>
                 </Card>
