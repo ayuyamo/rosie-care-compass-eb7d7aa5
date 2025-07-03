@@ -1,13 +1,9 @@
 
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BookOpen, ArrowRight, Heart } from "lucide-react";
+import { BookOpen, ArrowRight, Sparkles } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { Link } from "react-router-dom";
-
-// https://villagecore.org/wp-content/uploads/2025/04/3D-Book-and-Kindle-image-1.png
-
-// https://villagecore.org/wp-content/uploads/2024/09/91UyCtrS8ZL._SL1500_.jpg
 
 const OfficialBookSection = () => {
   const { ref: sectionRef, isVisible: sectionVisible } = useScrollAnimation();
@@ -33,12 +29,12 @@ const OfficialBookSection = () => {
 
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2 text-[#679aa3]">
-                    <Heart className="h-4 w-4" />
-                    <span className="text-xs">Community Favorite</span>
+                    <Sparkles className="h-4 w-4" />
+                    <span className="text-sm font-medium">Community Favorite</span>
                   </div>
                   <Link to="/book-details">
-                    <Button className="bg-[#f96c5d] text-white text-sm">
-                      Read Now
+                    <Button className="bg-gradient-to-r from-[#f96c5d] to-[#e5533f] hover:from-[#e5533f] to-[#d64426] text-white text-sm font-semibold px-4 py-2 rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300 border-0">
+                      <span>Read Now</span>
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
                   </Link>

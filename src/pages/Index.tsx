@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -12,18 +13,9 @@ import PoetryCollectionSection from "@/components/PoetryCollectionSection";
 import { injectElevenLabsWidget } from "@/lib/elevenlabsWidget";
 
 const Index = () => {
-  // const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  // const [scrollY, setScrollY] = useState(0);
-
   useEffect(() => {
     injectElevenLabsWidget();
   }, []);
-
-  // useEffect(() => {
-  //   const handleScroll = () => setScrollY(window.scrollY);
-  //   window.addEventListener('scroll', handleScroll);
-  //   return () => window.removeEventListener('scroll', handleScroll);
-  // }, []);
 
   return (
     <div className="min-h-screen bg-white relative overflow-hidden">
@@ -74,9 +66,6 @@ const Index = () => {
                     className="w-full h-full object-cover rounded-full"
                   />
                 </div>
-                {/* <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-[#4b63b3] px-3 py-1 rounded-full">
-                  <span className="text-white text-xs font-bold">Online</span>
-                </div> */}
               </div>
 
               <h2 className="text-2xl font-black text-[#232323] mb-2">
@@ -87,14 +76,14 @@ const Index = () => {
                 I'm Rosie, your AI companion for caregiving. Let's navigate this path together with stories, wisdom, and support.
               </p>
 
-              <Button className="w-full bg-[#4e5d2cbe]  text-white font-bold py-3 rounded-2xl mb-3">
-                <Zap className="mr-2 h-5 w-5" />
-                Start Your Journey
+              <Button className="w-full text-white font-bold py-4 px-6 rounded-2xl mb-3 shadow-2xl transform hover:scale-[1.02] transition-all duration-300 bg-gradient-to-r from-[#4e5d2c] to-[#3d4a21] hover:from-[#3d4a21] to-[#2c3618] border-0">
+                <Zap className="mr-3 h-5 w-5" />
+                <span className="text-base">Start Your Journey</span>
               </Button>
 
-              <Button variant="outline" className="w-full border-2 border-[#18453B]  text-[#18453B] py-3 rounded-2xl">
-                <Users className="mr-2 h-5 w-5" />
-                Join Community
+              <Button className="w-full font-bold py-4 px-6 rounded-2xl shadow-lg transform hover:scale-[1.02] transition-all duration-300 bg-gradient-to-r from-white to-gray-50 hover:from-gray-50 to-gray-100 text-[#18453B] border-2 border-[#18453B]">
+                <Users className="mr-3 h-5 w-5" />
+                <span className="text-base">Join Community</span>
               </Button>
             </div>
           </div>

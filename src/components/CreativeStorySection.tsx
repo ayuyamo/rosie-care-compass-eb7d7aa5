@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Heart, Sparkles, BookOpen } from "lucide-react";
+import { ArrowRight, Sparkles, BookOpen } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { Link } from "react-router-dom";
 import { useState, useEffect, useLayoutEffect } from "react";
@@ -96,7 +96,7 @@ export const CreativeStorySection = () => {
                 }}
               >
                 <Card className="bg-white/90 backdrop-blur-md border border-gray-200 shadow-xl hover:shadow-2xl transition-all duration-500 group-hover:scale-105 overflow-hidden">
-                  <div className="flex h-32">
+                  <div className="flex h-36">
                     {/* Left side - Image (30% width) */}
                     <div className="w-[30%] relative overflow-hidden">
                       <img
@@ -105,32 +105,27 @@ export const CreativeStorySection = () => {
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                       />
                       <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/20"></div>
-                      <div className="absolute top-2 right-2">
-                        <div className="bg-white/90 backdrop-blur-sm rounded-full p-1.5 shadow-lg">
-                          <Heart className="h-3 w-3 text-[#679aa3]" />
-                        </div>
-                      </div>
                     </div>
                     
                     {/* Right side - Content (70% width) */}
-                    <div className="w-[70%] p-4 flex flex-col justify-between">
+                    <div className="w-[70%] p-5 flex flex-col justify-between">
                       <div>
-                        <h4 className="text-base font-bold mb-2 text-[#232323] line-clamp-1">
+                        <h4 className="text-lg font-bold mb-2 text-[#232323] line-clamp-1">
                           {story.name}
                         </h4>
-                        <p className="text-xs mb-3 text-[#373618] line-clamp-2 leading-relaxed">
+                        <p className="text-sm mb-3 text-[#373618] line-clamp-2 leading-relaxed">
                           {story.description}
                         </p>
                       </div>
 
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-1 text-[#679aa3]">
-                          <span className="text-xs">Helpful story</span>
+                          <span className="text-sm font-medium">Helpful story</span>
                         </div>
                         <Link to={`/topic/${story.id}/sections`}>
-                          <Button variant="ghost" size="sm" className="group/btn text-xs font-semibold p-2 h-auto" style={{ color: randomColor }}>
+                          <Button variant="ghost" size="sm" className="group/btn text-sm font-semibold p-2 h-auto hover:bg-gray-100/50" style={{ color: randomColor }}>
                             Read More
-                            <ArrowRight className="ml-1 h-3 w-3 transition-transform group-hover/btn:translate-x-1" />
+                            <ArrowRight className="ml-1 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
                           </Button>
                         </Link>
                       </div>
@@ -144,9 +139,9 @@ export const CreativeStorySection = () => {
 
         <div className="text-center mt-6 animate-fade-in" style={{ animationDelay: '1s' }}>
           <Link to="/topics">
-            <Button className="w-full text-white font-bold py-3 rounded-2xl shadow-xl transform hover:scale-105 transition-all duration-300" style={{ backgroundColor: '#679aa3' }}>
-              <BookOpen className="mr-2 h-5 w-5" />
-              Explore All Stories
+            <Button className="w-full text-white font-bold py-4 px-6 rounded-2xl shadow-2xl transform hover:scale-[1.02] transition-all duration-300 bg-gradient-to-r from-[#679aa3] to-[#5a8791] hover:from-[#5a8791] to-[#4a737e] border-0">
+              <BookOpen className="mr-3 h-5 w-5" />
+              <span className="text-base">Explore All Stories</span>
             </Button>
           </Link>
         </div>

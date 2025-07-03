@@ -67,7 +67,7 @@ const PoetryCollectionSection = () => {
                     {poem.preview}
                   </p>
 
-                  <Button variant="ghost" size="sm" className="text-sm font-medium" style={{ color: poem.color }}>
+                  <Button variant="ghost" size="sm" className="text-sm font-medium hover:bg-gray-100/50" style={{ color: poem.color }}>
                     Read Full Poem
                     <ArrowRight className="ml-1 h-3 w-3" />
                   </Button>
@@ -78,9 +78,9 @@ const PoetryCollectionSection = () => {
 
           <div className="text-center mt-4">
             <Link to="/poems-collection">
-              <Button className="w-full bg-[#a45a52ad] text-white font-bold py-3 rounded-2xl shadow-xl transform hover:scale-105 transition-all duration-300">
-                <BookText className="mr-2 h-5 w-5" />
-                View Complete Collection
+              <Button className="w-full text-white font-bold py-4 px-6 rounded-2xl shadow-2xl transform hover:scale-[1.02] transition-all duration-300 bg-gradient-to-r from-[#a45a52] to-[#8f443c] hover:from-[#8f443c] to-[#7a3329] border-0">
+                <BookText className="mr-3 h-5 w-5" />
+                <span className="text-base">View Complete Collection</span>
               </Button>
             </Link>
           </div>
