@@ -97,42 +97,51 @@ export const CreativeStorySection = () => {
                   transitionDelay: gridVisible && hasLoaded ? `${index * 150}ms` : '0ms'
                 }}
               >
-                <Card className="relative overflow-hidden bg-white/50 backdrop-blur-md border border-gray-200 shadow-xl hover:shadow-2xl transition-all duration-500 group-hover:scale-105 rounded-xl">
-                  {/* Background image layer */}
-                  <div
-                    className="absolute inset-0 bg-cover bg-center opacity-40 blur-xs scale-110"
-                    style={{ backgroundImage: `url(${mockImage})` }}
-                  ></div>
+                <Card className={`
+                    bg-white/90 backdrop-blur-md shadow-lg overflow-hidden group cursor-pointer will-change-transform transition-all duration-700 hover:shadow-xl hover:scale-[1.02]
+                    ${gridVisible && hasLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}
+                  `}
+                  style={{
+                    transitionDelay: gridVisible && hasLoaded ? `${index * 150}ms` : '0ms',
+                    position: "relative",
+                  }}>
 
-                  {/* Optional soft white overlay for readability */}
-                  <div className="absolute inset-0 bg-white/30"></div>
-
-                  {/* Foreground content */}
-                  <div className="relative z-10 p-5 h-36 flex items-center justify-between w-full">
-                    {/* Left: Title + Description */}
-                    <div>
-                      <h4 className="text-lg font-bold mb-2 text-[#444c38] line-clamp-1">
-                        {story.name}
-                      </h4>
-                      <p className="text-sm text-[#444c38] line-clamp-2 leading-relaxed">
-                        {story.description}
-                      </p>
-                    </div>
-
-                    {/* Right: "View Sections →" */}
-                    <div className="flex items-center space-x-2 text-[#444c38] font-medium text-sm">
-                      <span>View Sections</span>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-4 w-4"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </div>
+                  {/* Topic Image - Top Half */}
+                  <div className="relative h-48 overflow-hidden">
+                    <img
+                      src={mockImage}
+                      alt={story.name}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
                   </div>
+                  <CardContent className="p-6">
+                    <div className="flex items-center justify-between space-x-4">
+                      {/* Left: Title and Description */}
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-lg font-bold text-[#232323] mb-1 truncate">
+                          {story.name}
+                        </h3>
+                        <p className="text-sm text-[#373618] truncate">
+                          {story.description}
+                        </p>
+                      </div>
+
+                      {/* Right: View Sections CTA */}
+                      <div className="flex items-center text-sm font-medium text-[#18453B] hover:underline shrink-0">
+                        <span>View Sections</span>
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="ml-1 h-4 w-4"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                      </div>
+                    </div>
+                  </CardContent>
                 </Card>
               </Link>
             );
