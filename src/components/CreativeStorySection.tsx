@@ -97,28 +97,40 @@ export const CreativeStorySection = () => {
                   transitionDelay: gridVisible && hasLoaded ? `${index * 150}ms` : '0ms'
                 }}
               >
-                <Card className="bg-white/90 backdrop-blur-md border border-gray-200 shadow-xl hover:shadow-2xl transition-all duration-500 group-hover:scale-105 overflow-hidden">
-                  <div className="flex h-36">
-                    {/* Left side - Image (30% width) */}
-                    <div className="w-[30%] relative overflow-hidden">
-                      <img
-                        src={mockImage}
-                        alt={story.name}
-                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/20"></div>
+                <Card className="relative overflow-hidden bg-white/50 backdrop-blur-md border border-gray-200 shadow-xl hover:shadow-2xl transition-all duration-500 group-hover:scale-105 rounded-xl">
+                  {/* Background image layer */}
+                  <div
+                    className="absolute inset-0 bg-cover bg-center opacity-40 blur-xs scale-110"
+                    style={{ backgroundImage: `url(${mockImage})` }}
+                  ></div>
+
+                  {/* Optional soft white overlay for readability */}
+                  <div className="absolute inset-0 bg-white/30 backdrop-blur-sm"></div>
+
+                  {/* Foreground content */}
+                  <div className="relative z-10 p-5 h-36 flex items-center justify-between w-full">
+                    {/* Left: Title + Description */}
+                    <div>
+                      <h4 className="text-lg font-bold mb-2 text-[#444c38] line-clamp-1">
+                        {story.name}
+                      </h4>
+                      <p className="text-sm text-[#444c38] line-clamp-2 leading-relaxed">
+                        {story.description}
+                      </p>
                     </div>
 
-                    {/* Right side - Content (70% width) */}
-                    <div className="w-[70%] p-5 flex items-center justify-between">
-                      <div>
-                        <h4 className="text-lg font-bold mb-2 text-[#232323] line-clamp-1">
-                          {story.name}
-                        </h4>
-                        <p className="text-sm text-[#373618] line-clamp-2 leading-relaxed">
-                          {story.description}
-                        </p>
-                      </div>
+                    {/* Right: "View Sections →" */}
+                    <div className="flex items-center space-x-2 text-[#444c38] font-medium text-sm">
+                      <span>View Sections</span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
                     </div>
                   </div>
                 </Card>

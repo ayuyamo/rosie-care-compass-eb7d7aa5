@@ -84,13 +84,20 @@ export const FloatingModuleGrid = () => {
             return (
               <Link key={topic.id} to={`/topic/${topic.id}/resources/detail`} className="block">
                 <Card className="bg-white/60 backdrop-blur-md border border-gray-200 p-4 text-center">
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-3" style={{ backgroundColor: color }}>
-                    <IconComponent className="h-6 w-6 text-white" />
+                  {/* Image container */}
+                  <div className="w-12 h-12 rounded-xl overflow-hidden flex items-center justify-center mx-auto mb-3" style={{ backgroundColor: color }}>
+                    <img
+                      src={topic.image_url}
+                      alt={topic.name}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
+
                   <h4 className="text-[#232323] font-bold text-sm mb-1">{topic.name}</h4>
                   <p className="text-[#373618] text-xs">{topic.description}</p>
                 </Card>
               </Link>
+
             );
           })}
         </div>

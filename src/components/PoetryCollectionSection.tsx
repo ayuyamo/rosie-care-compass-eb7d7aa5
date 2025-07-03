@@ -15,19 +15,22 @@ const PoetryCollectionSection = () => {
       title: "Gentle Hands",
       preview: "In the quiet moments of care, love speaks without words...",
       category: "Compassion",
-      color: "#679aa3"
+      color: "#679aa3",
+      background: 'https://ovexmcodlyhefuhmdfez.supabase.co/storage/v1/object/public/section-images//advocating.png'
     },
     {
       title: "Strength in Silence",
       preview: "When the world feels heavy, we find grace in small acts...",
       category: "Resilience",
-      color: "#8DA399"
+      color: "#8DA399",
+      background: 'https://ovexmcodlyhefuhmdfez.supabase.co/storage/v1/object/public/section-images//aging-in-the-village.png'
     },
     {
       title: "Morning Light",
       preview: "Each new day brings hope, even in the darkest times...",
       category: "Hope",
-      color: "#d79a8c"
+      color: "#d79a8c",
+      background: 'https://ovexmcodlyhefuhmdfez.supabase.co/storage/v1/object/public/section-images//instantly.png'
     }
   ];
 
@@ -40,37 +43,45 @@ const PoetryCollectionSection = () => {
 
         <div ref={gridRef} className={`space-y-4 transition-all duration-1000 ${gridVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.2s' }}>
           {poems.map((poem, index) => (
-            <Card key={poem.title} className={`
-                bg-white/60 backdrop-blur-md border border-gray-200 p-4 shadow-lg transition-all duration-700
-                ${gridVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}
-              `}
+            <Card
+              key={poem.title}
+              className={`
+    relative overflow-hidden rounded-xl p-4 shadow-lg backdrop-blur-md bg-white/50 transition-all duration-700
+    ${gridVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}
+  `}
               style={{
-                transitionDelay: gridVisible ? `${index * 100}ms` : '0ms'
-              }}>
-              <div className="flex items-start space-x-3">
-                <div className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style={{ backgroundColor: poem.color }}>
-                  <BookText className="h-5 w-5 text-white" />
-                </div>
+                transitionDelay: gridVisible ? `${index * 100}ms` : '0ms',
+                backgroundImage: `url(${poem.background})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center'
+              }}
+            >
+              {/* White overlay for contrast */}
+              <div className="absolute inset-0 bg-white/70 backdrop-blur-md z-0"></div>
 
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center justify-between mb-2">
-                    <Badge className="text-white border-white/30 text-xs" style={{ backgroundColor: poem.color }}>
-                      {poem.category}
-                    </Badge>
-                    <Sparkles className="h-4 w-4 text-[#dab216]" />
-                  </div>
-
-                  <h4 className="text-base font-bold text-[#232323] mb-1">
+              {/* Foreground content */}
+              <div className="relative z-10 flex items-center justify-between space-x-4">
+                {/* Poem info */}
+                <div className="flex flex-col min-w-0">
+                  <h4 className="text-base font-bold text-[#425672] mb-1">
                     {poem.title}
                   </h4>
-                  <p className="text-[#373618] text-sm mb-3 italic">
+                  <p className="text-[#334155] text-sm italic line-clamp-2">
                     {poem.preview}
                   </p>
+                </div>
 
-                  <Button variant="ghost" size="sm" className="text-sm font-medium hover:bg-gray-100/50" style={{ color: poem.color }}>
-                    Read Full Poem
-                    <ArrowRight className="ml-1 h-3 w-3" />
-                  </Button>
+                {/* Right CTA (matching story card arrow style) */}
+                <div className="flex items-center space-x-2 text-[#334155]">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-4 w-4"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
                 </div>
               </div>
             </Card>
