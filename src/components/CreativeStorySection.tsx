@@ -1,4 +1,3 @@
-
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -13,6 +12,13 @@ const colors = [
   "#d79a8c", "#367588", "#49796B", "#8F9779", "#5a7a85",
   "#B8860B", "#8B4513", "#556B2F", "#800080", "#008080",
   "#CD853F", "#4682B4", "#2E8B57", "#9932CC", "#20B2AA"
+];
+
+// Mock images for story cards
+const mockImages = [
+  "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=200&h=200&fit=crop",
+  "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=200&h=200&fit=crop",
+  "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=200&h=200&fit=crop"
 ];
 
 /**
@@ -79,6 +85,7 @@ export const CreativeStorySection = () => {
         <div ref={gridRef} className="space-y-4">
           {stories.map((story, index) => {
             const randomColor = getConsistentColor(story.name);
+            const mockImage = mockImages[index % mockImages.length];
             return (
               <div
                 key={story.name}
@@ -91,8 +98,12 @@ export const CreativeStorySection = () => {
                 <Card className="bg-white/90 backdrop-blur-md border border-gray-200 shadow-xl hover:shadow-2xl transition-all duration-500 group-hover:scale-105">
                   <CardContent className="p-6">
                     <div className="flex items-start space-x-4">
-                      <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: randomColor }}>
-                        <Heart className="h-6 w-6 text-white" />
+                      <div className="w-12 h-12 rounded-xl flex-shrink-0 overflow-hidden">
+                        <img 
+                          src={mockImage} 
+                          alt={story.name}
+                          className="w-full h-full object-cover"
+                        />
                       </div>
 
                       <div className="flex-1 min-w-0">
