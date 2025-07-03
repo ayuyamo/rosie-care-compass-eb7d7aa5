@@ -57,10 +57,11 @@ const CommunityHighlights = () => {
                             </button>
                         </div>
                     </Card>
-                    <Button className="w-full mt-4 bg-[#2b6cb0] text-white py-3 rounded-2xl">
-                        <Users className="mr-2 h-5 w-5" />
+                    <button
+                        className="w-full inline-flex items-center rounded-md justify-center min-w-[140px] md:min-w-[170px] h-12 px-4 shadow-lg border-2 border-[#4e4875] text-[#4e4875] font-semibold text-base leading-6 tracking-tight bg-white hover:text-[#06f] hover:border-[#06f] focus:text-[#171e29] transition-all duration-300"
+                    >
                         Join the Conversation
-                    </Button>
+                    </button>
                 </div>
 
             </div>

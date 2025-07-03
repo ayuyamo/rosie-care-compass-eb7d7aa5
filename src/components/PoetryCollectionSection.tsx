@@ -78,10 +78,11 @@ const PoetryCollectionSection = () => {
 
           <div className="text-center mt-4">
             <Link to="/poems-collection">
-              <Button className="w-full text-white font-bold py-4 px-6 rounded-2xl shadow-2xl transform hover:scale-[1.02] transition-all duration-300 bg-gradient-to-r from-[#a45a52] to-[#8f443c] hover:from-[#8f443c] to-[#7a3329] border-0">
-                <BookText className="mr-3 h-5 w-5" />
-                <span className="text-base">View Complete Collection</span>
-              </Button>
+              <button
+                className="w-full inline-flex items-center rounded-md justify-center min-w-[140px] md:min-w-[170px] h-12 px-4 shadow-lg border-2 border-[#4f4875] text-[#4f4875] font-semibold text-base leading-6 tracking-tight bg-white hover:text-[#06f] hover:border-[#06f] focus:text-[#171e29] transition-all duration-300"
+              >
+                View Complete Collection
+              </button>
             </Link>
           </div>
         </div>

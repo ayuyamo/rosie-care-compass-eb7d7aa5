@@ -97,10 +97,11 @@ export const FloatingModuleGrid = () => {
 
         <div className="text-center">
           <Link to="/resources">
-            <Button className="w-full bg-[#989827a4] text-white text-sm font-bold py-3 rounded-2xl">
-              <FolderClosed className="mr-2 h-5 w-5" />
+            <button
+              className="w-full inline-flex items-center rounded-md justify-center min-w-[140px] md:min-w-[170px] h-12 px-4 shadow-lg border-2 border-[#756b48] text-[#756b48] font-semibold text-base leading-6 tracking-tight bg-white hover:text-[#06f] hover:border-[#06f] focus:text-[#171e29] transition-all duration-300"
+            >
               Explore Resources
-            </Button>
+            </button>
           </Link>
         </div>
       </div>

@@ -24,14 +24,14 @@ const Index = () => {
         <div className="flex items-center justify-between max-w-md mx-auto">
           <div className="flex items-center space-x-3">
             <div className="relative">
-              <div className="w-12 h-12 rounded-xl border-4 border-[#B8E6C1] overflow-hidden">
+              <div className="w-12 h-12 rounded-xl border-4 border-[#e4e8e1] overflow-hidden">
                 <img
                   src="/ChatGPT-rosie.png"
                   alt="Rosie Care Bot"
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="absolute -top-1 -right-1 w-4 h-4 bg-[#679aa3] rounded-full flex items-center justify-center">
+              <div className="absolute -top-1 -right-1 w-4 h-4 bg-[#ceda88] rounded-full flex items-center justify-center">
                 <Bell className="w-3 h-3 text-white" />
               </div>
             </div>
@@ -42,7 +42,7 @@ const Index = () => {
           </div>
 
           <div className="flex items-center space-x-3">
-            <button className="p-2 bg-[#679aa3] rounded-lg">
+            <button className="p-2 bg-[#a5aba0] rounded-lg">
               <Search className="h-5 w-5 text-white" />
             </button>
             <button className="p-2 bg-gray-100 rounded-lg">
@@ -59,7 +59,7 @@ const Index = () => {
             {/* Profile Card */}
             <div className="bg-white/70 backdrop-blur-md border border-gray-200 rounded-3xl p-6 shadow-2xl">
               <div className="relative mb-4">
-                <div className="w-24 h-24 rounded-full mx-auto border-4 border-[#B8E6C1] shadow-lg flex items-center justify-center overflow-hidden">
+                <div className="w-24 h-24 rounded-full mx-auto border-4 border-[#e4e8e1] shadow-lg flex items-center justify-center overflow-hidden">
                   <img
                     src="/ChatGPT-rosie.png"
                     alt="Rosie Care Bot"
@@ -75,23 +75,22 @@ const Index = () => {
               <p className="text-[#373618] mb-4 text-sm leading-relaxed">
                 I'm Rosie, your AI companion for caregiving. Let's navigate this path together with stories, wisdom, and support.
               </p>
+              <Button
+                className="relative w-full text-[#18453B] font-bold py-4 px-6 rounded-2xl mb-3 shadow-2xl transform hover:scale-[1.02] transition-all duration-300 bg-[url('/ChatGPT-rosie.png')] bg-cover bg-center border-0 overflow-hidden"
+              >
+                {/* White transparent overlay */}
+                <div className="absolute inset-0 bg-white/60 rounded-2xl backdrop-blur-sm pointer-events-none" />
 
-              <Button className="w-full text-white font-bold py-4 px-6 rounded-2xl mb-3 shadow-2xl transform hover:scale-[1.02] transition-all duration-300 bg-gradient-to-r from-[#4e5d2c] to-[#3d4a21] hover:from-[#3d4a21] to-[#2c3618] border-0">
-                <Zap className="mr-3 h-5 w-5" />
-                <span className="text-base">Start Your Journey</span>
+                {/* Content on top */}
+                <div className="relative z-10 flex items-center justify-center">
+                  <Zap className="mr-3 h-5 w-5" />
+                  <span className="text-base">Start Your Journey</span>
+                </div>
               </Button>
 
-              <Button 
-                className="w-full font-bold py-4 px-6 rounded-2xl shadow-2xl transform hover:scale-[1.02] transition-all duration-300 text-white border-0 relative overflow-hidden"
-                style={{
-                  backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=400&h=300&fit=crop')`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  filter: 'saturate(0.5)'
-                }}
-              >
+              <Button className="w-full font-bold py-4 px-6 rounded-2xl shadow-lg bg-white hover:bg-white transform hover:scale-[1.02] transition-all duration-300 text-[#18453B] border-2 border-[#18453B]">
                 <Users className="mr-3 h-5 w-5" />
-                <span className="text-base">Join the Conversation</span>
+                <span className="text-base">Join Community</span>
               </Button>
             </div>
           </div>

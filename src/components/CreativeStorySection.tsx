@@ -71,10 +71,10 @@ export const CreativeStorySection = () => {
     <section className="relative z-10 py-6">
       <div className="max-w-md mx-auto px-4">
         <div ref={titleRef} className={`text-center mb-6 transition-all duration-1000 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <div className="inline-flex items-center space-x-2 bg-white/80 rounded-full px-4 py-2 mb-4 border border-gray-200">
+          {/* <div className="inline-flex items-center space-x-2 bg-white/80 rounded-full px-4 py-2 mb-4 border border-gray-200">
             <Sparkles className="h-5 w-5 text-[#679aa3]" />
             <span className="font-bold text-sm text-[#232323]">Story Collection</span>
-          </div>
+          </div> */}
           <h3 className="text-2xl font-black mb-3 text-[#232323]">
             Real Stories, Real Impact
           </h3>
@@ -108,9 +108,9 @@ export const CreativeStorySection = () => {
                       />
                       <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/20"></div>
                     </div>
-                    
+
                     {/* Right side - Content (70% width) */}
-                    <div className="w-[70%] p-5 flex flex-col justify-between">
+                    <div className="w-[70%] p-5 flex items-center justify-between">
                       <div>
                         <h4 className="text-lg font-bold mb-2 text-[#232323] line-clamp-1">
                           {story.name}
@@ -129,10 +129,11 @@ export const CreativeStorySection = () => {
 
         <div className="text-center mt-6 animate-fade-in" style={{ animationDelay: '1s' }}>
           <Link to="/topics">
-            <Button className="w-full text-white font-bold py-4 px-6 rounded-2xl shadow-2xl transform hover:scale-[1.02] transition-all duration-300 bg-gradient-to-r from-[#679aa3] to-[#5a8791] hover:from-[#5a8791] to-[#4a737e] border-0">
-              <BookOpen className="mr-3 h-5 w-5" />
-              <span className="text-base">Explore All Stories</span>
-            </Button>
+            <button
+              className="w-full inline-flex items-center rounded-md justify-center min-w-[140px] md:min-w-[170px] h-12 px-4 shadow-lg border-2 border-[#754848] text-[#754848] font-semibold text-base leading-6 tracking-tight bg-white hover:text-[#06f] hover:border-[#06f] focus:text-[#171e29] transition-all duration-300"
+            >
+              Explore More Topics
+            </button>
           </Link>
         </div>
       </div>

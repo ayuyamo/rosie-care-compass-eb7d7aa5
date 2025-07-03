@@ -30,7 +30,10 @@ export function injectElevenLabsWidget() {
   widget.id = ID;
   widget.setAttribute('agent-id', 'agent_01jy4gwf2wemqr4qqp2jay5t4q');
   widget.setAttribute('variant', 'compact');
-  widget.setAttribute('avatar-image-url', 'https://i.imgur.com/BtDwzSr.png');
+  widget.setAttribute(
+    'avatar-image-url',
+    'https://ovexmcodlyhefuhmdfez.supabase.co/storage/v1/object/public/topics-images//ChatGPT-rosie.png'
+  );
 
   // Set initial colors and variant based on current theme and device
   updateWidgetColors(widget);
