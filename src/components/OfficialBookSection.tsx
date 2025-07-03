@@ -5,6 +5,10 @@ import { BookOpen, ArrowRight, Heart } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { Link } from "react-router-dom";
 
+// https://villagecore.org/wp-content/uploads/2025/04/3D-Book-and-Kindle-image-1.png
+
+// https://villagecore.org/wp-content/uploads/2024/09/91UyCtrS8ZL._SL1500_.jpg
+
 const OfficialBookSection = () => {
   const { ref: sectionRef, isVisible: sectionVisible } = useScrollAnimation();
 
@@ -16,10 +20,9 @@ const OfficialBookSection = () => {
 
           <Card className="bg-white/60 backdrop-blur-md border border-gray-200 p-6 shadow-lg">
             <div className="flex items-start space-x-4">
-              <div className="w-16 h-20 bg-[#FA8072] rounded-lg flex items-center justify-center flex-shrink-0">
-                <BookOpen className="h-8 w-8 text-white" />
+              <div className="w-16 h-20 flex items-center justify-center flex-shrink-0">
+                <img src="https://villagecore.org/wp-content/uploads/2024/09/91UyCtrS8ZL._SL1500_.jpg" alt="Official Book Cover" className="w-full h-full object-cover rounded-lg" />
               </div>
-
               <div className="flex-1">
                 <h4 className="text-lg font-bold text-[#232323] mb-2">
                   Caregiving with Heart: A Journey of Love and Resilience
@@ -34,7 +37,7 @@ const OfficialBookSection = () => {
                     <span className="text-xs">Community Favorite</span>
                   </div>
                   <Link to="/book-details">
-                    <Button className="bg-[#FA8072] text-white text-sm">
+                    <Button className="bg-[#f96c5d] text-white text-sm">
                       Read Now
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>

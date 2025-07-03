@@ -85,7 +85,7 @@ export const CreativeStorySection = () => {
         <div ref={gridRef} className="space-y-4">
           {stories.map((story, index) => {
             const randomColor = getConsistentColor(story.name);
-            const mockImage = mockImages[index % mockImages.length];
+            const mockImage = story.image_url || mockImages[index % mockImages.length];
             return (
               <div
                 key={story.name}
@@ -99,8 +99,8 @@ export const CreativeStorySection = () => {
                   <CardContent className="p-6">
                     <div className="flex items-start space-x-4">
                       <div className="w-12 h-12 rounded-xl flex-shrink-0 overflow-hidden">
-                        <img 
-                          src={mockImage} 
+                        <img
+                          src={mockImage}
                           alt={story.name}
                           className="w-full h-full object-cover"
                         />

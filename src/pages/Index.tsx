@@ -32,11 +32,11 @@ const Index = () => {
         <div className="flex items-center justify-between max-w-md mx-auto">
           <div className="flex items-center space-x-3">
             <div className="relative">
-              <div className="w-12 h-12 bg-[#B8E6C1] rounded-xl flex items-center justify-center overflow-hidden">
+              <div className="w-12 h-12 rounded-xl border-4 border-[#B8E6C1] overflow-hidden">
                 <img
-                  src="/lovable-uploads/fe0b3df9-3769-49f8-8198-98831a293061.png"
+                  src="/ChatGPT-rosie.png"
                   alt="Rosie Care Bot"
-                  className="w-10 h-10 object-contain"
+                  className="w-full h-full object-cover"
                 />
               </div>
               <div className="absolute -top-1 -right-1 w-4 h-4 bg-[#679aa3] rounded-full flex items-center justify-center">
@@ -67,11 +67,11 @@ const Index = () => {
             {/* Profile Card */}
             <div className="bg-white/70 backdrop-blur-md border border-gray-200 rounded-3xl p-6 shadow-2xl">
               <div className="relative mb-4">
-                <div className="w-24 h-24 rounded-full mx-auto border-4 border-[#537c83a6] bg-[#B8E6C1] shadow-lg flex items-center justify-center overflow-hidden">
+                <div className="w-24 h-24 rounded-full mx-auto border-4 border-[#B8E6C1] shadow-lg flex items-center justify-center overflow-hidden">
                   <img
-                    src="/lovable-uploads/fe0b3df9-3769-49f8-8198-98831a293061.png"
+                    src="/ChatGPT-rosie.png"
                     alt="Rosie Care Bot"
-                    className="w-16 h-16 object-contain"
+                    className="w-full h-full object-cover rounded-full"
                   />
                 </div>
                 {/* <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 bg-[#4b63b3] px-3 py-1 rounded-full">
@@ -87,7 +87,7 @@ const Index = () => {
                 I'm Rosie, your AI companion for caregiving. Let's navigate this path together with stories, wisdom, and support.
               </p>
 
-              <Button className="w-full bg-[#537c83]  text-white font-bold py-3 rounded-2xl mb-3">
+              <Button className="w-full bg-[#4e5d2cbe]  text-white font-bold py-3 rounded-2xl mb-3">
                 <Zap className="mr-2 h-5 w-5" />
                 Start Your Journey
               </Button>
