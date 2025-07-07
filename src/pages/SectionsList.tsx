@@ -155,7 +155,7 @@ const SectionsList = () => {
             </Button>
           </Link>
           <div>
-            <h1 className="text-2xl font-bold text-black">{topicName}</h1>
+            <h1 className="text-2xl font-bold text-black">Topic: <span className="italic">{topicName}</span></h1>
           </div>
         </header>
 
@@ -190,12 +190,12 @@ const SectionsList = () => {
                         {section.name}
                       </h3>
                     </div>
-
-                    {/* Stories section */}
-                    <div className="space-y-2">
-                      <p className="text-xs font-medium text-gray-500">Stories:</p>
-                      <div className="flex flex-wrap gap-2">
-                        {section.stories.slice(0, 4).map((story, storyIndex) => (
+                    <div className="mb-4">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <p className="text-xs font-medium text-gray-500 mr-2 leading-none pt-[2px]">
+                          Stories:
+                        </p>
+                        {section.stories.slice(0, 3).map((story, storyIndex) => (
                           <Badge
                             key={storyIndex}
                             variant="secondary"
@@ -209,7 +209,7 @@ const SectionsList = () => {
                             {story.title}
                           </Badge>
                         ))}
-                        {section.stories.length > 4 && (
+                        {section.stories.length > 3 && (
                           <Badge
                             variant="secondary"
                             className="text-xs px-2 py-1 font-medium"
@@ -219,11 +219,12 @@ const SectionsList = () => {
                               border: `1px dashed ${randomColor}50`
                             }}
                           >
-                            +{section.stories.length - 4} more
+                            +{section.stories.length - 3} more
                           </Badge>
                         )}
                       </div>
                     </div>
+
 
                     {/* Footer section */}
                     <div className="flex items-center justify-between pt-2">
@@ -236,7 +237,7 @@ const SectionsList = () => {
                           section: section,
                         }}>
                         <Button variant="ghost" size="sm" className="group/btn" style={{ color: randomColor }}>
-                          View Stories
+                          View All {section.stories.length} Stories
                           <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
                         </Button>
                       </Link>

@@ -108,9 +108,9 @@ const Index = () => {
       </div>
 
       {/* Poetry Collection Section */}
-      <div className="animate-slide-up" style={{ animationDelay: '0.4s' }}>
+      {/* <div className="animate-slide-up" style={{ animationDelay: '0.4s' }}>
         <PoetryCollectionSection />
-      </div>
+      </div> */}
 
       {/* Enhanced Floating Modules Grid */}
       <div className="animate-slide-up" style={{ animationDelay: '0.5s' }}>
@@ -118,9 +118,9 @@ const Index = () => {
       </div>
 
       {/* Community Section with Pictures */}
-      <div className="animate-slide-up" style={{ animationDelay: '0.7s' }}>
+      {/* <div className="animate-slide-up" style={{ animationDelay: '0.7s' }}>
         <CommunityHighlights />
-      </div>
+      </div> */}
 
       <BottomNavigation />
       {/* Bottom spacing for fixed nav */}

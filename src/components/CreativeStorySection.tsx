@@ -71,10 +71,6 @@ export const CreativeStorySection = () => {
     <section className="relative z-10 py-6">
       <div className="max-w-md mx-auto px-4">
         <div ref={titleRef} className={`text-center mb-6 transition-all duration-1000 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          {/* <div className="inline-flex items-center space-x-2 bg-white/80 rounded-full px-4 py-2 mb-4 border border-gray-200">
-            <Sparkles className="h-5 w-5 text-[#679aa3]" />
-            <span className="font-bold text-sm text-[#232323]">Story Collection</span>
-          </div> */}
           <h3 className="text-2xl font-black mb-3 text-[#232323]">
             Real Stories, Real Impact
           </h3>
@@ -127,9 +123,9 @@ export const CreativeStorySection = () => {
                         </p>
                       </div>
 
-                      {/* Right: View Sections CTA */}
+                      {/* Right: View Topics CTA */}
                       <div className="flex items-center text-sm font-medium text-[#18453B] hover:underline shrink-0">
-                        <span>View Sections</span>
+                        <span>View Topics</span>
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           className="ml-1 h-4 w-4"

@@ -96,7 +96,9 @@ const Topics = () => {
               <ArrowLeft className="h-5 w-5" />
             </Button>
           </Link>
-          <h1 className="text-2xl font-bold text-black">Stories</h1>
+          <h1 className="text-2xl font-bold text-black">
+            Chapters of Care
+          </h1>
         </header>
 
         <div ref={gridRef} className="space-y-8">
@@ -134,12 +136,10 @@ const Topics = () => {
                           {story.description}
                         </p>
                       </div>
-
-                      {/* Mock sections */}
                       <div className="mb-4">
-                        <p className="text-xs font-medium text-gray-500 mb-2">Sections:</p>
-                        <div className="flex flex-wrap gap-1">
-                          {story.sections.slice(0, 4).map((section, sectionIndex) => (
+                        <div className="flex flex-wrap gap-1 items-start">
+                          <p className="text-xs font-medium text-gray-500 mr-2 pt-[3px]">Topics:</p>
+                          {story.sections.slice(0, 3).map((section, sectionIndex) => (
                             <Badge
                               key={sectionIndex}
                               variant="secondary"
@@ -153,7 +153,7 @@ const Topics = () => {
                               {section.name}
                             </Badge>
                           ))}
-                          {story.sections.length > 4 && (
+                          {story.sections.length > 3 && (
                             <Badge
                               variant="secondary"
                               className="text-xs px-2 py-1 font-medium"
@@ -163,11 +163,12 @@ const Topics = () => {
                                 border: `1px dashed ${randomColor}50`
                               }}
                             >
-                              +{story.sections.length - 4} more
+                              +{story.sections.length - 3} more
                             </Badge>
                           )}
                         </div>
                       </div>
+
 
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-2" style={{ color: '#679aa3' }}>
@@ -178,7 +179,7 @@ const Topics = () => {
                           state={{ topic: story }}
                         >
                           <Button variant="ghost" size="sm" className="group/btn" style={{ color: randomColor }}>
-                            View Sections
+                            View All {story.sections.length} Topics
                             <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
                           </Button>
                         </Link>
