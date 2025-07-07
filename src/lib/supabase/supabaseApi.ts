@@ -74,6 +74,16 @@ export const fetchSectionNameById = async (sectionId: string) => {
   return data?.name;
 };
 
+export const fetchPoems = async () => {
+  const { data, error } = await supabase
+    .from('poems')
+    .select('*')
+    .order('created_at', { ascending: true });
+
+  if (error) throw new Error(`fetchPoems: ${error.message}`);
+  return data;
+};
+
 export const subscribeToTableChanges = (
   table: string,
   callback: (payload: any) => void

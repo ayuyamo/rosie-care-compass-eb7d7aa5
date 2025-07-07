@@ -136,16 +136,15 @@ const StoriesList = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[#f8f9fa] p-4 pb-24">
+        <div className="min-h-screen bg-[#f8f9fa] p-4 pb-24" style={{
+            backgroundImage: `url(${headerBackgroundImage})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center'
+        }}>
             <div className="max-w-2xl mx-auto">
                 <header
                     ref={headerRef}
                     className={`relative flex items-center mb-6 p-6 rounded-lg overflow-hidden transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
-                    style={{
-                        backgroundImage: `url(${headerBackgroundImage})`,
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center'
-                    }}
                 >
                     {/* Half-saturated overlay */}
                     <div className="absolute inset-0 bg-white/60 backdrop-blur-sm"></div>
@@ -283,9 +282,15 @@ const StoriesList = () => {
 
                     {resources && resources.length > 0 && (
                         <div className="space-y-3">
-                            <p className="text-sm font-semibold text-gray-700">
-                                Resources
-                            </p>
+                            <div className="relative inline-block rounded-md overflow-hidden">
+                                {/* Blurred background */}
+                                <div className="absolute inset-0 bg-white/20 backdrop-blur-sm rounded-md"></div>
+
+                                {/* Text content */}
+                                <p className="relative z-10 text-sm font-semibold text-[#211414] px-3 py-1">
+                                    Resources
+                                </p>
+                            </div>
                             <div className="flex flex-wrap gap-3">
                                 {resources.map((resource) => (
                                     <a

@@ -107,9 +107,16 @@ const ResourcesDetail = () => {
                   <div className="space-y-4">
                     {/* Section Header */}
                     <div className="flex items-start space-x-4">
-                      <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: randomColor }}>
-                        <BookOpen className="h-6 w-6 text-white" />
+                      <div
+                        className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 overflow-hidden"
+                      >
+                        <img
+                          src={section.image_url}
+                          alt="Section"
+                          className="w-full h-full object-cover"
+                        />
                       </div>
+
                       <div className="flex-1 min-w-0">
                         <h3 className="text-lg font-bold mb-2" style={{ color: '#232323' }}>
                           {section.name}
@@ -127,13 +134,16 @@ const ResourcesDetail = () => {
                               className="flex items-center justify-between p-2 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors"
                             >
                               <a
+                                key={resourceIndex}
                                 href={resource.url}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="flex items-center space-x-1 text-xs hover:underline"
+                                className="flex items-center justify-between p-2 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors no-underline"
                               >
-                                <span className="break-all text-blue-600">{resource.url}</span>
-                                <ExternalLink className="h-3 w-3" />
+                                <span className="text-xs text-blue-600 truncate max-w-[80%]">
+                                  {new URL(resource.url).hostname}
+                                </span>
+                                <ExternalLink className="h-4 w-4 text-gray-500 ml-2 flex-shrink-0" />
                               </a>
                             </div>
                           ))}
