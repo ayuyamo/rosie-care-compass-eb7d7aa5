@@ -194,36 +194,36 @@ const BookDetails = () => {
             </button>
             
             {showDetails && (
-              <div className="mt-2 p-4 bg-white/70 backdrop-blur-sm border border-gray-200/50 rounded-lg space-y-3 animate-in fade-in duration-500">
-                <div className="flex items-center space-x-3 opacity-0 animate-in fade-in duration-700 delay-100">
+              <div className="mt-2 p-4 bg-white/70 backdrop-blur-sm border border-gray-200/50 rounded-lg space-y-3 animate-in slide-in-from-top duration-300">
+                <div className="flex items-center space-x-3">
                   <Calendar className="h-4 w-4 text-[#679aa3]" />
                   <div>
                     <p className="text-xs text-[#373618]">Published</p>
                     <p className="text-sm font-medium text-[#232323]">September 2024</p>
                   </div>
                 </div>
-                <div className="flex items-center space-x-3 opacity-0 animate-in fade-in duration-700 delay-200">
+                <div className="flex items-center space-x-3">
                   <Tag className="h-4 w-4 text-[#679aa3]" />
                   <div>
                     <p className="text-xs text-[#373618]">ISBN</p>
                     <p className="text-sm font-medium text-[#232323]">978-0-123456-78-9</p>
                   </div>
                 </div>
-                <div className="flex items-center space-x-3 opacity-0 animate-in fade-in duration-700 delay-300">
+                <div className="flex items-center space-x-3">
                   <Globe className="h-4 w-4 text-[#679aa3]" />
                   <div>
                     <p className="text-xs text-[#373618]">Language</p>
                     <p className="text-sm font-medium text-[#232323]">English</p>
                   </div>
                 </div>
-                <div className="flex items-center space-x-3 opacity-0 animate-in fade-in duration-700 delay-400">
+                <div className="flex items-center space-x-3">
                   <BookOpen className="h-4 w-4 text-[#679aa3]" />
                   <div>
                     <p className="text-xs text-[#373618]">Pages</p>
                     <p className="text-sm font-medium text-[#232323]">313</p>
                   </div>
                 </div>
-                <div className="flex items-center space-x-3 opacity-0 animate-in fade-in duration-700 delay-500">
+                <div className="flex items-center space-x-3">
                   <Heart className="h-4 w-4 text-[#679aa3]" />
                   <div>
                     <p className="text-xs text-[#373618]">Genre</p>
