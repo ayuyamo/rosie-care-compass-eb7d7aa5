@@ -104,7 +104,7 @@ const BookDetails = () => {
 
                 {/* Edition Tabs */}
                 <div className="mb-6">
-                  <div className="flex border-b border-gray-200">
+                  <div className="flex border-b border-gray-200 relative">
                     <button
                       onClick={() => setSelectedEdition('paperback')}
                       className={`px-4 py-2 text-sm font-medium transition-colors relative ${
@@ -114,9 +114,6 @@ const BookDetails = () => {
                       }`}
                     >
                       Paperback
-                      {selectedEdition === 'paperback' && (
-                        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#232323]"></div>
-                      )}
                     </button>
                     <button
                       onClick={() => setSelectedEdition('digital')}
@@ -127,22 +124,31 @@ const BookDetails = () => {
                       }`}
                     >
                       Digital
-                      {selectedEdition === 'digital' && (
-                        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#232323]"></div>
-                      )}
                     </button>
+                    {/* Animated underline */}
+                    <div 
+                      className={`absolute bottom-0 h-0.5 bg-[#232323] transition-all duration-500 ease-out ${
+                        selectedEdition === 'paperback' 
+                          ? 'left-0 w-[88px]' 
+                          : 'left-[88px] w-[60px]'
+                      }`}
+                      style={{
+                        transform: selectedEdition === 'paperback' ? 'scaleX(1.1)' : 'scaleX(1.1)',
+                        transformOrigin: 'center'
+                      }}
+                    ></div>
                   </div>
                   
                   <div className="pt-4">
                     {selectedEdition === 'paperback' && (
                       <div className="text-center">
-                        <p className="text-2xl font-bold text-[#232323]">$24.99 US / $32.50 CAN</p>
+                        <p className="text-lg font-medium text-[#232323]">$24.99 US / $32.50 CAN</p>
                         <p className="text-sm text-[#373618] mt-1">Free shipping worldwide</p>
                       </div>
                     )}
                     {selectedEdition === 'digital' && (
                       <div className="text-center">
-                        <p className="text-2xl font-bold text-[#232323]">$12.99 US / $16.50 CAN</p>
+                        <p className="text-lg font-medium text-[#232323]">$12.99 US / $16.50 CAN</p>
                         <p className="text-sm text-[#373618] mt-1">Instant download</p>
                       </div>
                     )}
