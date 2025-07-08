@@ -179,53 +179,51 @@ const BookDetails = () => {
           </Card>
 
 
-          {/* Book Details Dropdown */}
           <div className="mb-6">
             <button
               onClick={() => setShowDetails(!showDetails)}
-              className="w-full flex items-center justify-between p-3 bg-white/50 hover:bg-white/70 border border-gray-200/50 rounded-lg transition-all duration-200"
+              className="w-full flex items-center justify-between p-3 bg-white/50 hover:bg-white/70 border border-gray-200/50 rounded-lg transition-all duration-300 hover:shadow-md"
             >
-              <span className="text-sm font-medium text-[#232323] flex items-center">
-                <Bookmark className="h-4 w-4 mr-2 text-[#679aa3]" />
+              <span className="text-sm font-medium text-[#232323] flex items-center transition-colors duration-200">
+                <Bookmark className="h-4 w-4 mr-2 text-[#679aa3] transition-colors duration-200" />
                 Book Details
               </span>
-              {showDetails ? 
-                <ChevronUp className="h-4 w-4 text-[#679aa3]" /> : 
+              <div className={`transition-transform duration-300 ${showDetails ? 'rotate-180' : 'rotate-0'}`}>
                 <ChevronDown className="h-4 w-4 text-[#679aa3]" />
-              }
+              </div>
             </button>
             
             {showDetails && (
-              <div className="mt-2 p-4 bg-white/70 backdrop-blur-sm border border-gray-200/50 rounded-lg space-y-3 animate-fade-in">
-                <div className="flex items-center space-x-3">
+              <div className="mt-2 p-4 bg-white/70 backdrop-blur-sm border border-gray-200/50 rounded-lg space-y-3 animate-in fade-in duration-500">
+                <div className="flex items-center space-x-3 opacity-0 animate-in fade-in duration-700 delay-100">
                   <Calendar className="h-4 w-4 text-[#679aa3]" />
                   <div>
                     <p className="text-xs text-[#373618]">Published</p>
                     <p className="text-sm font-medium text-[#232323]">September 2024</p>
                   </div>
                 </div>
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-3 opacity-0 animate-in fade-in duration-700 delay-200">
                   <Tag className="h-4 w-4 text-[#679aa3]" />
                   <div>
                     <p className="text-xs text-[#373618]">ISBN</p>
                     <p className="text-sm font-medium text-[#232323]">978-0-123456-78-9</p>
                   </div>
                 </div>
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-3 opacity-0 animate-in fade-in duration-700 delay-300">
                   <Globe className="h-4 w-4 text-[#679aa3]" />
                   <div>
                     <p className="text-xs text-[#373618]">Language</p>
                     <p className="text-sm font-medium text-[#232323]">English</p>
                   </div>
                 </div>
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-3 opacity-0 animate-in fade-in duration-700 delay-400">
                   <BookOpen className="h-4 w-4 text-[#679aa3]" />
                   <div>
                     <p className="text-xs text-[#373618]">Pages</p>
                     <p className="text-sm font-medium text-[#232323]">313</p>
                   </div>
                 </div>
-                <div className="flex items-center space-x-3">
+                <div className="flex items-center space-x-3 opacity-0 animate-in fade-in duration-700 delay-500">
                   <Heart className="h-4 w-4 text-[#679aa3]" />
                   <div>
                     <p className="text-xs text-[#373618]">Genre</p>
