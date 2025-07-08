@@ -12,6 +12,7 @@ const BookDetails = () => {
   const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
   const { ref: contentRef, isVisible: contentVisible } = useScrollAnimation();
   const [showDetails, setShowDetails] = useState(false);
+  const [selectedEdition, setSelectedEdition] = useState('paperback');
 
   const chapters = [
     {
@@ -101,84 +102,51 @@ const BookDetails = () => {
                   A comprehensive guide filled with real stories, practical advice, and emotional support for caregivers. Written by our community, for our community.
                 </p>
 
-                {/* Pricing Cards */}
-                <div className="grid grid-cols-2 gap-3 mb-4">
-                  <div className="bg-gradient-to-br from-[#ff7f50]/10 to-[#ff7f50]/20 border border-[#ff7f50]/30 rounded-xl p-4 relative overflow-hidden">
-                    <div className="absolute top-2 right-2">
-                      <Download className="h-4 w-4 text-[#ff7f50]" />
-                    </div>
-                    <h4 className="text-sm font-semibold text-[#232323] mb-1">Digital Edition</h4>
-                    <p className="text-xl font-bold text-[#ff7f50] mb-1">$12.99</p>
-                    <p className="text-xs text-[#373618]">Instant download</p>
+                {/* Edition Tabs */}
+                <div className="mb-6">
+                  <div className="flex border-b border-gray-200">
+                    <button
+                      onClick={() => setSelectedEdition('paperback')}
+                      className={`px-4 py-2 text-sm font-medium transition-colors relative ${
+                        selectedEdition === 'paperback' 
+                          ? 'text-[#232323]' 
+                          : 'text-gray-500'
+                      }`}
+                    >
+                      Paperback
+                      {selectedEdition === 'paperback' && (
+                        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#232323]"></div>
+                      )}
+                    </button>
+                    <button
+                      onClick={() => setSelectedEdition('digital')}
+                      className={`px-4 py-2 text-sm font-medium transition-colors relative ${
+                        selectedEdition === 'digital' 
+                          ? 'text-[#232323]' 
+                          : 'text-gray-500'
+                      }`}
+                    >
+                      Digital
+                      {selectedEdition === 'digital' && (
+                        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#232323]"></div>
+                      )}
+                    </button>
                   </div>
-                  <div className="bg-gradient-to-br from-[#679aa3]/10 to-[#679aa3]/20 border border-[#679aa3]/30 rounded-xl p-4 relative overflow-hidden">
-                    <div className="absolute top-2 right-2">
-                      <BookOpen className="h-4 w-4 text-[#679aa3]" />
-                    </div>
-                    <h4 className="text-sm font-semibold text-[#232323] mb-1">Paperback</h4>
-                    <p className="text-xl font-bold text-[#679aa3] mb-1">$24.99</p>
-                    <p className="text-xs text-[#373618]">Free shipping</p>
-                  </div>
-                </div>
-
-                {/* Book Details Dropdown */}
-                <div className="mb-4">
-                  <button
-                    onClick={() => setShowDetails(!showDetails)}
-                    className="w-full flex items-center justify-between p-3 bg-white/50 hover:bg-white/70 border border-gray-200/50 rounded-lg transition-all duration-200"
-                  >
-                    <span className="text-sm font-medium text-[#232323] flex items-center">
-                      <Bookmark className="h-4 w-4 mr-2 text-[#679aa3]" />
-                      Book Details
-                    </span>
-                    {showDetails ? 
-                      <ChevronUp className="h-4 w-4 text-[#679aa3]" /> : 
-                      <ChevronDown className="h-4 w-4 text-[#679aa3]" />
-                    }
-                  </button>
                   
-                  {showDetails && (
-                    <div className="mt-2 p-4 bg-white/70 backdrop-blur-sm border border-gray-200/50 rounded-lg space-y-3 animate-fade-in">
-                      <div className="flex items-center space-x-3">
-                        <Calendar className="h-4 w-4 text-[#679aa3]" />
-                        <div>
-                          <p className="text-xs text-[#373618]">Published</p>
-                          <p className="text-sm font-medium text-[#232323]">September 2024</p>
-                        </div>
+                  <div className="pt-4">
+                    {selectedEdition === 'paperback' && (
+                      <div className="text-center">
+                        <p className="text-2xl font-bold text-[#232323]">$24.99 US / $32.50 CAN</p>
+                        <p className="text-sm text-[#373618] mt-1">Free shipping worldwide</p>
                       </div>
-                      <div className="flex items-center space-x-3">
-                        <Tag className="h-4 w-4 text-[#679aa3]" />
-                        <div>
-                          <p className="text-xs text-[#373618]">ISBN</p>
-                          <p className="text-sm font-medium text-[#232323]">978-0-123456-78-9</p>
-                        </div>
+                    )}
+                    {selectedEdition === 'digital' && (
+                      <div className="text-center">
+                        <p className="text-2xl font-bold text-[#232323]">$12.99 US / $16.50 CAN</p>
+                        <p className="text-sm text-[#373618] mt-1">Instant download</p>
                       </div>
-                      <div className="flex items-center space-x-3">
-                        <Globe className="h-4 w-4 text-[#679aa3]" />
-                        <div>
-                          <p className="text-xs text-[#373618]">Language</p>
-                          <p className="text-sm font-medium text-[#232323]">English</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center space-x-3">
-                        <Heart className="h-4 w-4 text-[#679aa3]" />
-                        <div>
-                          <p className="text-xs text-[#373618]">Genre</p>
-                          <p className="text-sm font-medium text-[#232323]">Self-Help, Caregiving, Health & Wellness</p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
-                </div>
-
-                {/* Stars */}
-                <div className="flex items-center justify-center space-x-4 mb-4">
-                  <div className="flex items-center space-x-1">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="h-4 w-4 fill-[#dab216] text-[#dab216]" />
-                    ))}
+                    )}
                   </div>
-                  <span className="text-[#373618] text-sm">5/5 rating</span>
                 </div>
 
                 {/* Button */}
@@ -211,20 +179,61 @@ const BookDetails = () => {
           </Card>
 
 
-          {/* Book Stats */}
-          <div className="grid grid-cols-3 gap-3 mb-6">
-            <Card className="bg-white/90 backdrop-blur-md p-4 text-center">
-              <div className="font-bold text-lg text-[#ff7f50]">313</div>
-              <div className="text-xs text-[#373618]">Pages</div>
-            </Card>
-            <Card className="bg-white/90 backdrop-blur-md p-4 text-center">
-              <div className="font-bold text-lg text-[#679aa3]">15k+</div>
-              <div className="text-xs text-[#373618]">Downloads</div>
-            </Card>
-            <Card className="bg-white/90 backdrop-blur-md p-4 text-center">
-              <div className="font-bold text-lg text-[#2b6cb0]">5.0</div>
-              <div className="text-xs text-[#373618]">Rating</div>
-            </Card>
+          {/* Book Details Dropdown */}
+          <div className="mb-6">
+            <button
+              onClick={() => setShowDetails(!showDetails)}
+              className="w-full flex items-center justify-between p-3 bg-white/50 hover:bg-white/70 border border-gray-200/50 rounded-lg transition-all duration-200"
+            >
+              <span className="text-sm font-medium text-[#232323] flex items-center">
+                <Bookmark className="h-4 w-4 mr-2 text-[#679aa3]" />
+                Book Details
+              </span>
+              {showDetails ? 
+                <ChevronUp className="h-4 w-4 text-[#679aa3]" /> : 
+                <ChevronDown className="h-4 w-4 text-[#679aa3]" />
+              }
+            </button>
+            
+            {showDetails && (
+              <div className="mt-2 p-4 bg-white/70 backdrop-blur-sm border border-gray-200/50 rounded-lg space-y-3 animate-fade-in">
+                <div className="flex items-center space-x-3">
+                  <Calendar className="h-4 w-4 text-[#679aa3]" />
+                  <div>
+                    <p className="text-xs text-[#373618]">Published</p>
+                    <p className="text-sm font-medium text-[#232323]">September 2024</p>
+                  </div>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <Tag className="h-4 w-4 text-[#679aa3]" />
+                  <div>
+                    <p className="text-xs text-[#373618]">ISBN</p>
+                    <p className="text-sm font-medium text-[#232323]">978-0-123456-78-9</p>
+                  </div>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <Globe className="h-4 w-4 text-[#679aa3]" />
+                  <div>
+                    <p className="text-xs text-[#373618]">Language</p>
+                    <p className="text-sm font-medium text-[#232323]">English</p>
+                  </div>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <BookOpen className="h-4 w-4 text-[#679aa3]" />
+                  <div>
+                    <p className="text-xs text-[#373618]">Pages</p>
+                    <p className="text-sm font-medium text-[#232323]">313</p>
+                  </div>
+                </div>
+                <div className="flex items-center space-x-3">
+                  <Heart className="h-4 w-4 text-[#679aa3]" />
+                  <div>
+                    <p className="text-xs text-[#373618]">Genre</p>
+                    <p className="text-sm font-medium text-[#232323]">Self-Help, Caregiving, Health & Wellness</p>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Chapters */}
