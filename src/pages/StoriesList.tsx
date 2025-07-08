@@ -114,26 +114,46 @@ const StoriesList = () => {
     const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation();
     const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
 
-    const shareStory = (platform: string, storyTitle: string, storyContent: string) => {
-        const url = window.location.href;
-        const text = `Check out this inspiring story: "${storyTitle}"`;
-
-        switch (platform) {
-            case 'facebook':
-                window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
-                break;
-            case 'twitter':
-                window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
-                break;
-            case 'linkedin':
-                window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, '_blank');
-                break;
-            case 'instagram':
-                navigator.clipboard.writeText(`${text}\n\n${url}`);
-                alert('Story link copied to clipboard! You can now paste it on Instagram.');
-                break;
+    const handleShare = async ({ title, text, url }) => {
+        if (navigator.share) {
+            try {
+                await navigator.share({
+                    title,
+                    text,
+                    url
+                });
+                console.log('Shared successfully');
+            } catch (error) {
+                console.error('Sharing failed', error);
+            }
+        } else {
+            // Fallback for unsupported browsers
+            alert('Sharing not supported. Please copy the link manually.');
+            navigator.clipboard.writeText(`${text}\n\n${url}`);
         }
     };
+
+
+    // const shareStory = (platform: string, storyTitle: string, storyContent: string) => {
+    //     const url = window.location.href;
+    //     const text = `Check out this inspiring story: "${storyTitle}"`;
+
+    //     switch (platform) {
+    //         case 'facebook':
+    //             window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+    //             break;
+    //         case 'twitter':
+    //             window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
+    //             break;
+    //         case 'linkedin':
+    //             window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, '_blank');
+    //             break;
+    //         case 'instagram':
+    //             navigator.clipboard.writeText(`${text}\n\n${url}`);
+    //             alert('Story link copied to clipboard! You can now paste it on Instagram.');
+    //             break;
+    //     }
+    // };
 
     return (
         <div className="min-h-screen bg-[#f8f9fa] p-4 pb-24" style={{
@@ -244,7 +264,7 @@ const StoriesList = () => {
                                             {/* Social Sharing */}
                                             <div className="flex items-center space-x-3">
                                                 <span className="text-sm text-gray-600 font-medium">Share:</span>
-                                                <button
+                                                {/* <button
                                                     onClick={() => shareStory('facebook', story.title, story.content)}
                                                     className="p-2.5 rounded-full bg-blue-100 hover:bg-blue-200 transition-colors active:scale-95"
                                                     title="Share on Facebook"
@@ -271,7 +291,15 @@ const StoriesList = () => {
                                                     title="Share on Instagram"
                                                 >
                                                     <Instagram className="h-4 w-4 text-pink-600" />
+                                                </button> */}
+                                                <button onClick={() => handleShare({
+                                                    title: "Check out this story!",
+                                                    text: "Here's something interesting I found.",
+                                                    url: window.location.href
+                                                })} className="p-2.5 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors active:scale-95" title="Share this story">
+                                                    <Share2 className="h-4 w-4 text-gray-600" />
                                                 </button>
+
                                             </div>
                                         </div>
                                     </div>

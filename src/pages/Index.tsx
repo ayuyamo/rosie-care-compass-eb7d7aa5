@@ -113,9 +113,9 @@ const Index = () => {
       </div> */}
 
       {/* Enhanced Floating Modules Grid */}
-      <div className="animate-slide-up" style={{ animationDelay: '0.5s' }}>
+      {/* <div className="animate-slide-up" style={{ animationDelay: '0.5s' }}>
         <FloatingModuleGrid />
-      </div>
+      </div> */}
 
       {/* Community Section with Pictures */}
       {/* <div className="animate-slide-up" style={{ animationDelay: '0.7s' }}>
