@@ -115,7 +115,7 @@ const BookDetails = () => {
                     >
                       Paperback
                       {selectedEdition === 'paperback' && (
-                        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#232323] animate-in slide-in-from-left duration-500"></div>
+                        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#232323] animate-in slide-in-from-right duration-500"></div>
                       )}
                     </button>
                     <button
