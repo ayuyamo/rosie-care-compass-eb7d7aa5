@@ -104,7 +104,7 @@ const BookDetails = () => {
 
                 {/* Edition Tabs */}
                 <div className="mb-6">
-                  <div className="flex border-b border-gray-200 relative">
+                  <div className="flex border-b border-gray-200">
                     <button
                       onClick={() => setSelectedEdition('paperback')}
                       className={`px-6 py-2 text-sm font-medium transition-colors relative ${
@@ -114,6 +114,9 @@ const BookDetails = () => {
                       }`}
                     >
                       Paperback
+                      <div className={`absolute bottom-0 left-0 right-0 h-0.5 bg-[#232323] transition-all duration-500 ease-out origin-left ${
+                        selectedEdition === 'paperback' ? 'scale-x-100' : 'scale-x-0'
+                      }`}></div>
                     </button>
                     <button
                       onClick={() => setSelectedEdition('digital')}
@@ -124,15 +127,10 @@ const BookDetails = () => {
                       }`}
                     >
                       Digital
+                      <div className={`absolute bottom-0 left-0 right-0 h-0.5 bg-[#232323] transition-all duration-500 ease-out origin-left ${
+                        selectedEdition === 'digital' ? 'scale-x-100' : 'scale-x-0'
+                      }`}></div>
                     </button>
-                    {/* Animated underline */}
-                    <div 
-                      className={`absolute bottom-0 h-0.5 bg-[#232323] transition-all duration-500 ease-out ${
-                        selectedEdition === 'paperback' 
-                          ? 'left-3 w-20' 
-                          : 'left-[108px] w-16'
-                      }`}
-                    ></div>
                   </div>
                   
                   <div className="pt-4">
