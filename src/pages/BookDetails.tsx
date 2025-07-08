@@ -114,9 +114,9 @@ const BookDetails = () => {
                       }`}
                     >
                       Paperback
-                      <div className={`absolute bottom-0 left-0 right-0 h-0.5 bg-[#232323] transition-all duration-500 ease-out origin-left ${
-                        selectedEdition === 'paperback' ? 'scale-x-100' : 'scale-x-0'
-                      }`}></div>
+                      {selectedEdition === 'paperback' && (
+                        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#232323] animate-in slide-in-from-left duration-500"></div>
+                      )}
                     </button>
                     <button
                       onClick={() => setSelectedEdition('digital')}
@@ -127,9 +127,9 @@ const BookDetails = () => {
                       }`}
                     >
                       Digital
-                      <div className={`absolute bottom-0 left-0 right-0 h-0.5 bg-[#232323] transition-all duration-500 ease-out origin-left ${
-                        selectedEdition === 'digital' ? 'scale-x-100' : 'scale-x-0'
-                      }`}></div>
+                      {selectedEdition === 'digital' && (
+                        <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#232323] animate-in slide-in-from-left duration-500"></div>
+                      )}
                     </button>
                   </div>
                   
