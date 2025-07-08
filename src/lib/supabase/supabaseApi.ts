@@ -84,6 +84,27 @@ export const fetchPoems = async () => {
   return data;
 };
 
+export const fetchBookDetails = async () => {
+  const { data, error } = await supabase
+    .from('books')
+    .select('*')
+    .limit(1)
+    .single();
+  if (error) throw new Error(`fetchBookDetails: ${error.message}`);
+  return data;
+};
+
+export const fetchBookChapters = async (bookId: string) => {
+  const { data, error } = await supabase
+    .from('chapters')
+    .select('*')
+    .eq('book_id', bookId)
+    .order('chapter_order', { ascending: true });
+
+  if (error) throw new Error(`fetchBookChapters: ${error.message}`);
+  return data;
+};
+
 export const subscribeToTableChanges = (
   table: string,
   callback: (payload: any) => void

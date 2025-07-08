@@ -1,12 +1,12 @@
 
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, BookOpen, Heart, Clock, Download, Share, Star, ChevronDown, ChevronUp, Tag, Calendar, Globe, Bookmark } from "lucide-react";
 import { Link } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { useState } from "react";
+import { useEffect, useLayoutEffect, useState } from "react";
+import { fetchBookDetails, fetchBookChapters } from "@/lib/supabase/supabaseApi";
 
 const BookDetails = () => {
   const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
@@ -14,58 +14,33 @@ const BookDetails = () => {
   const [showDetails, setShowDetails] = useState(false);
   const [selectedEdition, setSelectedEdition] = useState('paperback');
 
-  const chapters = [
-    {
-      title: "The Story of This Book",
-      description: "An introduction to how this caregiving collection came to be.",
-      pages: "16 pages"
-    },
-    {
-      title: "Caregiving Journeys Begin",
-      description: "Stories of how caregiving starts, from reluctant to instant caregivers.",
-      pages: "24 pages"
-    },
-    {
-      title: "Navigating Conflicts",
-      description: "Managing disagreements, emotional strain, and family chaos.",
-      pages: "50 pages"
-    },
-    {
-      title: "Evaluating Housing Options",
-      description: "Exploring living arrangements from shared homes to retirement communities.",
-      pages: "43 pages"
-    },
-    {
-      title: "Ensuring Safety & Security",
-      description: "Addressing risks like abuse, theft, falls, and medication mismanagement.",
-      pages: "64 pages"
-    },
-    {
-      title: "Accepting Dependence",
-      description: "Navigating changes in independence, mobility, and competence.",
-      pages: "24 pages"
-    },
-    {
-      title: "Leveraging Legal Documents",
-      description: "Understanding POAs, wills, directives, and end-of-life legal prep.",
-      pages: "29 pages"
-    },
-    {
-      title: "Easing Transition",
-      description: "Supportive care like hospice, respite, and emotional comfort.",
-      pages: "20 pages"
-    },
-    {
-      title: "Supporting End of Life",
-      description: "Providing dignity and closure in final caregiving moments.",
-      pages: "27 pages"
-    },
-    {
-      title: "Ending the Caregiving Journey",
-      description: "Reflecting on what comes after caregiving ends.",
-      pages: "7 pages"
+  const [chapters, setChapters] = useState([]);
+  const [bookDetails, setBookDetails] = useState(null);
+  const [hasLoaded, setHasLoaded] = useState(false);
+
+  useEffect(() => {
+    const fetchBookInfo = async () => {
+      try {
+        const bookDetails = await fetchBookDetails();
+        const chaptersData = await fetchBookChapters(bookDetails?.id);
+        setBookDetails(bookDetails || null);
+        setChapters(chaptersData || []);
+        if (bookDetails) { }
+      } catch (error) {
+        console.error("Failed to load book details:", error);
+      }
+    };
+
+    fetchBookInfo();
+  }, []);
+
+  useLayoutEffect(() => {
+    if (bookDetails && chapters.length > 0) {
+      requestAnimationFrame(() => {
+        setHasLoaded(true);
+      });
     }
-  ];
+  }, [bookDetails, chapters]);
 
 
   return (
@@ -80,14 +55,14 @@ const BookDetails = () => {
           <h1 className="text-2xl font-bold text-[#232323]">Our Official Book</h1>
         </header>
 
-        <div ref={contentRef} className={`transition-all duration-1000 ${contentVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.2s' }}>
+        <div ref={contentRef} className={`transition-all duration-1000 ${contentVisible && hasLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.2s' }}>
           {/* Book Overview Card */}
           <Card className="relative bg-white/90 backdrop-blur-md shadow-lg overflow-hidden p-0 mb-6">
             {/* Book cover background top half */}
             <div
               className="h-48 bg-cover bg-center relative"
               style={{
-                backgroundImage: `url('https://villagecore.org/wp-content/uploads/2024/09/91UyCtrS8ZL._SL1500_.jpg')`,
+                backgroundImage: `url(${bookDetails?.cover_url})`,
               }}
             >
             </div>
@@ -95,11 +70,14 @@ const BookDetails = () => {
             {/* Content over bottom half */}
             <div className="relative z-10 p-6 -mt-10 bg-white/90 backdrop-blur-md rounded-t-3xl">
               <div className="text-center mb-6">
-                <h2 className="text-xl font-bold text-[#232323] mb-2">
-                  Caregiving with Heart: A Journey of Love and Resilience
-                </h2>
+                <div className="mb-4">
+                  <h2 className="text-xl font-bold text-[#232323] mb-1 italic">
+                    {bookDetails?.title}
+                  </h2>
+                  <p className="text-sm text-[#555]">by <span className="italic">{bookDetails?.author}</span></p>
+                </div>
                 <p className="text-[#373618] text-sm mb-4">
-                  A comprehensive guide filled with real stories, practical advice, and emotional support for caregivers. Written by our community, for our community.
+                  {bookDetails?.description}
                 </p>
 
                 {/* Edition Tabs */}
@@ -107,11 +85,10 @@ const BookDetails = () => {
                   <div className="flex border-b border-gray-200">
                     <button
                       onClick={() => setSelectedEdition('paperback')}
-                      className={`px-6 py-2 text-sm font-medium transition-colors relative ${
-                        selectedEdition === 'paperback' 
-                          ? 'text-[#232323]' 
-                          : 'text-gray-500'
-                      }`}
+                      className={`px-6 py-2 text-sm font-medium transition-colors relative ${selectedEdition === 'paperback'
+                        ? 'text-[#232323]'
+                        : 'text-gray-500'
+                        }`}
                     >
                       Paperback
                       {selectedEdition === 'paperback' && (
@@ -120,11 +97,10 @@ const BookDetails = () => {
                     </button>
                     <button
                       onClick={() => setSelectedEdition('digital')}
-                      className={`px-6 py-2 text-sm font-medium transition-colors relative ${
-                        selectedEdition === 'digital' 
-                          ? 'text-[#232323]' 
-                          : 'text-gray-500'
-                      }`}
+                      className={`px-6 py-2 text-sm font-medium transition-colors relative ${selectedEdition === 'digital'
+                        ? 'text-[#232323]'
+                        : 'text-gray-500'
+                        }`}
                     >
                       Digital
                       {selectedEdition === 'digital' && (
@@ -132,18 +108,16 @@ const BookDetails = () => {
                       )}
                     </button>
                   </div>
-                  
+
                   <div className="pt-4">
                     {selectedEdition === 'paperback' && (
                       <div className="text-center">
-                        <p className="text-lg font-medium text-[#232323]">$24.99 US / $32.50 CAN</p>
-                        <p className="text-sm text-[#373618] mt-1">Free shipping worldwide</p>
+                        <p className="text-lg font-medium text-[#232323]">${bookDetails?.price_paperback} US</p>
                       </div>
                     )}
                     {selectedEdition === 'digital' && (
                       <div className="text-center">
-                        <p className="text-lg font-medium text-[#232323]">$12.99 US / $16.50 CAN</p>
-                        <p className="text-sm text-[#373618] mt-1">Instant download</p>
+                        <p className="text-lg font-medium text-[#232323]">${bookDetails?.price_digital} US</p>
                       </div>
                     )}
                   </div>
@@ -152,7 +126,7 @@ const BookDetails = () => {
                 {/* Button */}
                 <div className="flex space-x-3">
                   <a
-                    href="https://www.amazon.com/Experience-Caregiving-Seniors-Stories-Lighten/dp/B0D5QWBQPS"
+                    href={bookDetails?.amazon_url}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-1"
@@ -160,7 +134,7 @@ const BookDetails = () => {
                     <Button className="w-full bg-gradient-to-r from-[#ff9500] to-[#ff7f00] text-white hover:from-[#ff8800] hover:to-[#ff6600] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border-0 font-semibold text-base py-3 rounded-xl">
                       {/* Amazon icon */}
                       <svg
-                        className="mr-3 h-5 w-5"
+                        className="mr-3 h-5 w-5 pt-[3px]"
                         xmlns="http://www.w3.org/2000/svg"
                         shape-rendering="geometricPrecision"
                         text-rendering="geometricPrecision"
@@ -179,7 +153,7 @@ const BookDetails = () => {
           </Card>
 
 
-          <div className="mb-6">
+          <div className="mb-6 shadow-sm rounded-lg">
             <button
               onClick={() => setShowDetails(!showDetails)}
               className="w-full flex items-center justify-between p-3 bg-white/50 hover:bg-white/70 border border-gray-200/50 rounded-lg transition-all duration-300 hover:shadow-md"
@@ -192,42 +166,42 @@ const BookDetails = () => {
                 <ChevronDown className="h-4 w-4 text-[#679aa3]" />
               </div>
             </button>
-            
+
             {showDetails && (
               <div className="mt-2 p-4 bg-white/70 backdrop-blur-sm border border-gray-200/50 rounded-lg space-y-3 animate-in fade-in duration-300 ease-out overflow-hidden" style={{ transformOrigin: 'top' }}>
                 <div className="flex items-center space-x-3">
                   <Calendar className="h-4 w-4 text-[#679aa3]" />
                   <div>
                     <p className="text-xs text-[#373618]">Published</p>
-                    <p className="text-sm font-medium text-[#232323]">September 2024</p>
+                    <p className="text-sm font-medium text-[#232323]">{bookDetails?.published_date}</p>
                   </div>
                 </div>
                 <div className="flex items-center space-x-3">
                   <Tag className="h-4 w-4 text-[#679aa3]" />
                   <div>
-                    <p className="text-xs text-[#373618]">ISBN</p>
-                    <p className="text-sm font-medium text-[#232323]">978-0-123456-78-9</p>
+                    <p className="text-xs text-[#373618]">ISBN-13</p>
+                    <p className="text-sm font-medium text-[#232323]">{bookDetails?.isbn13}</p>
                   </div>
                 </div>
                 <div className="flex items-center space-x-3">
                   <Globe className="h-4 w-4 text-[#679aa3]" />
                   <div>
                     <p className="text-xs text-[#373618]">Language</p>
-                    <p className="text-sm font-medium text-[#232323]">English</p>
+                    <p className="text-sm font-medium text-[#232323]">{bookDetails?.language}</p>
                   </div>
                 </div>
                 <div className="flex items-center space-x-3">
                   <BookOpen className="h-4 w-4 text-[#679aa3]" />
                   <div>
                     <p className="text-xs text-[#373618]">Pages</p>
-                    <p className="text-sm font-medium text-[#232323]">313</p>
+                    <p className="text-sm font-medium text-[#232323]">{bookDetails?.page_count}</p>
                   </div>
                 </div>
                 <div className="flex items-center space-x-3">
                   <Heart className="h-4 w-4 text-[#679aa3]" />
                   <div>
                     <p className="text-xs text-[#373618]">Genre</p>
-                    <p className="text-sm font-medium text-[#232323]">Self-Help, Caregiving, Health & Wellness</p>
+                    <p className="text-sm font-medium text-[#232323]">{bookDetails?.genre}</p>
                   </div>
                 </div>
               </div>
