@@ -107,7 +107,7 @@ const BookDetails = () => {
                   <div className="flex border-b border-gray-200 relative">
                     <button
                       onClick={() => setSelectedEdition('paperback')}
-                      className={`px-4 py-2 text-sm font-medium transition-colors relative ${
+                      className={`px-6 py-2 text-sm font-medium transition-colors relative ${
                         selectedEdition === 'paperback' 
                           ? 'text-[#232323]' 
                           : 'text-gray-500'
@@ -117,7 +117,7 @@ const BookDetails = () => {
                     </button>
                     <button
                       onClick={() => setSelectedEdition('digital')}
-                      className={`px-4 py-2 text-sm font-medium transition-colors relative ${
+                      className={`px-6 py-2 text-sm font-medium transition-colors relative ${
                         selectedEdition === 'digital' 
                           ? 'text-[#232323]' 
                           : 'text-gray-500'
@@ -129,13 +129,9 @@ const BookDetails = () => {
                     <div 
                       className={`absolute bottom-0 h-0.5 bg-[#232323] transition-all duration-500 ease-out ${
                         selectedEdition === 'paperback' 
-                          ? 'left-0 w-[88px]' 
-                          : 'left-[88px] w-[60px]'
+                          ? 'left-3 w-20' 
+                          : 'left-[108px] w-16'
                       }`}
-                      style={{
-                        transform: selectedEdition === 'paperback' ? 'scaleX(1.1)' : 'scaleX(1.1)',
-                        transformOrigin: 'center'
-                      }}
                     ></div>
                   </div>
                   
@@ -163,10 +159,10 @@ const BookDetails = () => {
                     rel="noopener noreferrer"
                     className="flex-1"
                   >
-                    <Button className="w-full bg-[#ff7f50] text-white hover:bg-[#ff6a33] transition-colors duration-200">
+                    <Button className="w-full bg-gradient-to-r from-[#ff9500] to-[#ff7f00] text-white hover:from-[#ff8800] hover:to-[#ff6600] transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 border-0 font-semibold text-base py-3 rounded-xl">
                       {/* Amazon icon */}
                       <svg
-                        className="mr-2 h-4 w-4 relative top-[2px]"
+                        className="mr-3 h-5 w-5"
                         xmlns="http://www.w3.org/2000/svg"
                         shape-rendering="geometricPrecision"
                         text-rendering="geometricPrecision"
