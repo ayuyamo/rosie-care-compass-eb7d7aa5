@@ -144,8 +144,8 @@ const StoriesList = () => {
         } else {
             // Fallback for unsupported browsers
             try {
-                await navigator.clipboard.writeText(`${text}\n\n${url}`);
-                toast.success('Link copied to clipboard!');
+                await navigator.clipboard.writeText(url);
+                toast.success('Link copied to clipboard! Now you can share it on social media.');
             } catch (err) {
                 console.error('Clipboard write failed', err);
                 toast.error('Copy failed');
@@ -217,8 +217,7 @@ const StoriesList = () => {
 
                                                 {/* Featured People Section */}
                                                 {story.people && story.people.length > 0 && (
-                                                    <div className="mb-3">
-                                                        <p className="text-sm font-medium text-gray-600 mb-2">Featured People:</p>
+                                                    <div className="mb-3 mt-4">
                                                         <div className="flex flex-wrap gap-2">
                                                             {story.people.map((person, personIndex) => (
                                                                 <Badge
@@ -271,7 +270,7 @@ const StoriesList = () => {
                                         <div className="flex items-center justify-end">
                                             {/* Social Sharing */}
                                             <div className="flex items-center space-x-3">
-                                                <span className="text-sm text-gray-600 font-medium">Share:</span>
+                                                <span className="text-sm text-gray-600 font-medium">Share story:</span>
                                                 <button onClick={() => handleShare({
                                                     title: "Check out this story!",
                                                     text: "Here's something interesting I found.",
