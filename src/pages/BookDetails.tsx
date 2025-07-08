@@ -99,6 +99,28 @@ const BookDetails = () => {
                   A comprehensive guide filled with real stories, practical advice, and emotional support for caregivers. Written by our community, for our community.
                 </p>
 
+                {/* Book Details */}
+                <div className="bg-[#f8f9fa] rounded-lg p-4 mb-4">
+                  <div className="grid grid-cols-2 gap-4 mb-3">
+                    <div>
+                      <h4 className="text-sm font-semibold text-[#232323] mb-1">Digital Edition</h4>
+                      <p className="text-lg font-bold text-[#ff7f50]">$12.99</p>
+                      <p className="text-xs text-[#373618]">Instant download</p>
+                    </div>
+                    <div>
+                      <h4 className="text-sm font-semibold text-[#232323] mb-1">Paperback</h4>
+                      <p className="text-lg font-bold text-[#679aa3]">$24.99</p>
+                      <p className="text-xs text-[#373618]">Free shipping</p>
+                    </div>
+                  </div>
+                  <div className="space-y-1 text-xs text-[#373618]">
+                    <p>• Published: September 2024</p>
+                    <p>• ISBN: 978-0-123456-78-9</p>
+                    <p>• Language: English</p>
+                    <p>• Genre: Self-Help, Caregiving, Health & Wellness</p>
+                  </div>
+                </div>
+
                 {/* Stars */}
                 <div className="flex items-center justify-center space-x-4 mb-4">
                   <div className="flex items-center space-x-1">
