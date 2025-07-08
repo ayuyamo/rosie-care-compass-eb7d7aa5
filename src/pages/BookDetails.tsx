@@ -194,7 +194,7 @@ const BookDetails = () => {
             </button>
             
             {showDetails && (
-              <div className="mt-2 p-4 bg-white/70 backdrop-blur-sm border border-gray-200/50 rounded-lg space-y-3 animate-in fade-in duration-300 ease-out">`
+              <div className="mt-2 p-4 bg-white/70 backdrop-blur-sm border border-gray-200/50 rounded-lg space-y-3 animate-in fade-in slide-in-from-top duration-300 ease-out">
                 <div className="flex items-center space-x-3">
                   <Calendar className="h-4 w-4 text-[#679aa3]" />
                   <div>
