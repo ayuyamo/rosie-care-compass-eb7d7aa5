@@ -59,19 +59,19 @@ export const fetchTopicById = async (topicId: string) => {
   return data;
 };
 
-export const fetchSectionNameById = async (sectionId: string) => {
+export const fetchSectionById = async (sectionId: string) => {
   const { data, error } = await supabase
     .from('sections')
-    .select('name')
+    .select('*')
     .eq('id', sectionId)
     .single(); // because you're expecting one row
 
   if (error) {
-    console.error('Error fetching section name:', error);
+    console.error('Error fetching section:', error);
     return null;
   }
 
-  return data?.name;
+  return data;
 };
 
 export const fetchPoems = async () => {

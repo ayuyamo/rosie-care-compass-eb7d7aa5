@@ -1,4 +1,3 @@
-import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
@@ -7,18 +6,21 @@ import { Link, useParams, useLocation } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useState, useEffect, useLayoutEffect } from "react";
-import { fetchStoriesBySectionId, fetchSectionNameById, fetchResourcesBySectionId, subscribeToTableChanges } from "@/lib/supabase/supabaseApi";
-
+import { fetchStoriesBySectionId, fetchSectionById, fetchResourcesBySectionId, subscribeToTableChanges } from "@/lib/supabase/supabaseApi";
+import { Slide, ToastContainer, Zoom, toast } from "react-toastify";
+import { request } from "http";
 const StoriesList = () => {
     const { topicId } = useParams<{ topicId: string }>();
     const { sectionId } = useParams<{ sectionId: string }>();
     const location = useLocation();
     const passedSection = location.state?.section;
+    const [backgroundImage, setBackgroundImage] = useState<string | null>(null);
     const [sectionName, setSectionName] = useState("");
     const [stories, setStories] = useState([]);
     const [resources, setResources] = useState([]);
     const [hasLoaded, setHasLoaded] = useState(false);
     const [openStories, setOpenStories] = useState<string[]>([]);
+    const [scrollTargetId, setScrollTargetId] = useState<string | null>(null);
 
     const toggleStory = (storyId: string) => {
         setOpenStories(prev =>
@@ -33,9 +35,6 @@ const StoriesList = () => {
         return content.substring(0, maxLength).trim() + "...";
     };
 
-    // Background image for header
-    const headerBackgroundImage = passedSection?.image_url || "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=800&h=300&fit=crop";
-
     useEffect(() => {
         const loadData = async () => {
             try {
@@ -44,13 +43,16 @@ const StoriesList = () => {
                     setSectionName(passedSection.name);
                     setStories(passedSection.stories || []);
                     setResources(passedSection.resources || []);
+                    setBackgroundImage(passedSection.image_url || null);
                 } else {
                     console.log("Fetching stories by section ID:", sectionId);
                     const stories = await fetchStoriesBySectionId(sectionId);
                     const resources = await fetchResourcesBySectionId(sectionId);
-                    setSectionName(await fetchSectionNameById(sectionId));
+                    const section = await fetchSectionById(sectionId);
+                    setSectionName(section.name);
                     setStories(stories || []);
                     setResources(resources || []);
+                    setBackgroundImage(section.image_url || null);
                 }
             } catch (err) {
                 console.error("Failed to load topic or sections:", err);
@@ -87,6 +89,19 @@ const StoriesList = () => {
             unsubscribe();
         };
     }, []);
+
+    // Auto-scroll to the story if storyId is in the URL
+    useEffect(() => {
+        if (!hasLoaded) return;
+        const params = new URLSearchParams(window.location.search);
+        const storyId = params.get("storyId");
+        console.log('storyId from URL:', storyId);
+
+        if (storyId) {
+            setScrollTargetId(storyId);
+        }
+    }, [hasLoaded]);
+
 
     useLayoutEffect(() => {
         if (sectionName.length > 0 && stories.length > 0 && resources.length > 0) {
@@ -130,20 +145,21 @@ const StoriesList = () => {
             // Fallback for unsupported browsers
             try {
                 await navigator.clipboard.writeText(`${text}\n\n${url}`);
-                alert('Sharing not supported. Link copied to clipboard!');
+                toast.success('Link copied to clipboard!');
             } catch (err) {
                 console.error('Clipboard write failed', err);
-                alert('Sharing not supported, and copy to clipboard failed.');
+                toast.error('Copy failed');
             }
         }
     };
 
     return (
         <div className="min-h-screen bg-[#f8f9fa] p-4 pb-24" style={{
-            backgroundImage: `url(${headerBackgroundImage})`,
+            backgroundImage: `url(${backgroundImage})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center'
         }}>
+            <ToastContainer position="bottom-center" autoClose={2000} hideProgressBar={false} closeOnClick pauseOnFocusLoss draggable pauseOnHover transition={Slide} />
             <div className="max-w-2xl mx-auto">
                 <header
                     ref={headerRef}
@@ -171,9 +187,18 @@ const StoriesList = () => {
                         const randomColor = getConsistentColor(story.title);
                         const isOpen = openStories.includes(story.id);
                         const storyPreview = getStoryPreview(story.content);
+                        const storyTargetScroll = (el: HTMLElement | null) => {
+                            if (el && scrollTargetId === story.id) {
+                                console.log("Scrolling to story:", story.id);
+                                // Scroll when the element is actually mounted in the DOM
+                                el.scrollIntoView({ behavior: "smooth", block: "center" });
+                                el.classList.add("highlight");
+                                setTimeout(() => el.classList.remove("highlight"), 2000);
+                            }
+                        };
 
                         return (
-                            <Collapsible key={story.id} open={isOpen} onOpenChange={() => toggleStory(story.id)}>
+                            <Collapsible id={`story-${story.id}`} key={story.id} open={isOpen} onOpenChange={() => toggleStory(story.id)}>
                                 <article className={`
                                     bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-700
                                     ${gridVisible && hasLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}
@@ -183,7 +208,7 @@ const StoriesList = () => {
                                     }}>
 
                                     {/* Story Header */}
-                                    <div className="px-6 py-4 border-b border-gray-100">
+                                    <div ref={storyTargetScroll} className="px-6 py-4 border-b border-gray-100">
                                         <div className="flex items-center justify-between">
                                             <div className="flex-1">
                                                 <h2 className="text-xl font-bold text-[#232323] mb-2">
@@ -250,7 +275,7 @@ const StoriesList = () => {
                                                 <button onClick={() => handleShare({
                                                     title: "Check out this story!",
                                                     text: "Here's something interesting I found.",
-                                                    url: window.location.href
+                                                    url: `${window.location.origin}${window.location.pathname}?storyId=${story.id}`
                                                 })} className="p-2.5 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors active:scale-95" title="Share this story">
                                                     <Share2 className="h-4 w-4 text-gray-600" />
                                                 </button>
