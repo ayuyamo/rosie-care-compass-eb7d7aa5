@@ -6,7 +6,7 @@ import { Heart, BookOpen, Users, MessageCircle, Compass, Shield, Home, Scale, Ar
 import { Link } from "react-router-dom";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useState, useEffect, useLayoutEffect } from "react";
-import { fetchSectionsByTopicId, subscribeToTableChanges, fetchTopics } from "@/lib/supabase/supabaseApi";
+import { fetchTopicsByChapterId, subscribeToTableChanges, fetchChapters } from "@/lib/supabase/supabaseApi";
 
 // Default colors for modules
 const colors = [
@@ -45,7 +45,7 @@ export const FloatingModuleGrid = () => {
   useEffect(() => {
     // Subscribe to changes in the topics table
     const loadAndSetTopics = async () => {
-      const topics = await fetchTopics();
+      const topics = await fetchChapters();
       setTopics(topics);
     };
     loadAndSetTopics();

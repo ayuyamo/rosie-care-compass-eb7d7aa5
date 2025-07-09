@@ -1,73 +1,73 @@
 import { supabase } from './supabaseClient';
 
 /** Fetch all topics */
-export const fetchTopics = async () => {
+export const fetchChapters = async () => {
   const { data, error } = await supabase
     .from('topics')
     .select('id, name, description, image_url')
     .order('created_at', { ascending: true });
 
-  if (error) throw new Error(`fetchTopics: ${error.message}`);
+  if (error) throw new Error(`fetchChapters: ${error.message}`);
   return data;
 };
 
 /** Fetch all sections for a given topic */
-export const fetchSectionsByTopicId = async (topicId: string) => {
+export const fetchTopicsByChapterId = async (chapterId: string) => {
   const { data, error } = await supabase
     .from('sections')
     .select('*')
-    .eq('topic_id', topicId)
+    .eq('topic_id', chapterId)
     .order('order_index', { ascending: true });
 
-  if (error) throw new Error(`fetchSectionsByTopicId: ${error.message}`);
+  if (error) throw new Error(`fetchTopicsByChapterId: ${error.message}`);
   return data;
 };
 
 /** Fetch all stories for a given section */
-export const fetchStoriesBySectionId = async (sectionId: string) => {
+export const fetchStoriesByTopicId = async (topicId: string) => {
   const { data, error } = await supabase
     .from('stories')
     .select('*')
-    .eq('section_id', sectionId)
+    .eq('section_id', topicId)
     .order('created_at', { ascending: true });
 
-  if (error) throw new Error(`fetchStoriesBySectionId: ${error.message}`);
+  if (error) throw new Error(`fetchStoriesByTopicId: ${error.message}`);
   return data;
 };
 
 /** Fetch all resources for a given section */
-export const fetchResourcesBySectionId = async (sectionId: string) => {
+export const fetchResourcesByTopicId = async (topicId: string) => {
   const { data, error } = await supabase
     .from('resources')
     .select('*')
-    .eq('section_id', sectionId)
+    .eq('section_id', topicId)
     .order('created_at', { ascending: true });
 
-  if (error) throw new Error(`fetchResourcesBySectionId: ${error.message}`);
+  if (error) throw new Error(`fetchResourcesByTopicId: ${error.message}`);
   return data;
 };
 
 /** Optional: Fetch a single topic by ID */
-export const fetchTopicById = async (topicId: string) => {
+export const fetchChapterById = async (chapterId: string) => {
   const { data, error } = await supabase
     .from('topics')
     .select('*')
-    .eq('id', topicId)
+    .eq('id', chapterId)
     .single();
 
-  if (error) throw new Error(`fetchTopicById: ${error.message}`);
+  if (error) throw new Error(`fetchChapterById: ${error.message}`);
   return data;
 };
 
-export const fetchSectionById = async (sectionId: string) => {
+export const fetchTopicById = async (topicId: string) => {
   const { data, error } = await supabase
     .from('sections')
     .select('*')
-    .eq('id', sectionId)
+    .eq('id', topicId)
     .single(); // because you're expecting one row
 
   if (error) {
-    console.error('Error fetching section:', error);
+    console.error('Error fetching topic:', error);
     return null;
   }
 

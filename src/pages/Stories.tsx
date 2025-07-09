@@ -6,16 +6,16 @@ import { Link, useParams, useLocation } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useState, useEffect, useLayoutEffect } from "react";
-import { fetchStoriesBySectionId, fetchSectionById, fetchResourcesBySectionId, subscribeToTableChanges } from "@/lib/supabase/supabaseApi";
+import { fetchStoriesByTopicId, fetchTopicById, fetchResourcesByTopicId, subscribeToTableChanges } from "@/lib/supabase/supabaseApi";
 import { Slide, ToastContainer, Zoom, toast } from "react-toastify";
-import { request } from "http";
-const StoriesList = () => {
+
+const Stories = () => {
+    const { chapterId } = useParams<{ chapterId: string }>();
     const { topicId } = useParams<{ topicId: string }>();
-    const { sectionId } = useParams<{ sectionId: string }>();
     const location = useLocation();
-    const passedSection = location.state?.section;
+    const passedTopic = location.state?.topic;
     const [backgroundImage, setBackgroundImage] = useState<string | null>(null);
-    const [sectionName, setSectionName] = useState("");
+    const [topicName, setTopicName] = useState("");
     const [stories, setStories] = useState([]);
     const [resources, setResources] = useState([]);
     const [hasLoaded, setHasLoaded] = useState(false);
@@ -38,18 +38,18 @@ const StoriesList = () => {
     useEffect(() => {
         const loadData = async () => {
             try {
-                if (passedSection) {
-                    console.log("Using passed section:", passedSection);
-                    setSectionName(passedSection.name);
-                    setStories(passedSection.stories || []);
-                    setResources(passedSection.resources || []);
-                    setBackgroundImage(passedSection.image_url || null);
+                if (passedTopic) {
+                    console.log("Using passed topic:", passedTopic);
+                    setTopicName(passedTopic.name);
+                    setStories(passedTopic.stories || []);
+                    setResources(passedTopic.resources || []);
+                    setBackgroundImage(passedTopic.image_url || null);
                 } else {
-                    console.log("Fetching stories by section ID:", sectionId);
-                    const stories = await fetchStoriesBySectionId(sectionId);
-                    const resources = await fetchResourcesBySectionId(sectionId);
-                    const section = await fetchSectionById(sectionId);
-                    setSectionName(section.name);
+                    console.log("Fetching stories by topic ID:", topicId);
+                    const stories = await fetchStoriesByTopicId(topicId);
+                    const resources = await fetchResourcesByTopicId(topicId);
+                    const section = await fetchTopicById(topicId);
+                    setTopicName(section.name);
                     setStories(stories || []);
                     setResources(resources || []);
                     setBackgroundImage(section.image_url || null);
@@ -60,12 +60,8 @@ const StoriesList = () => {
         };
 
         loadData();
-        const unsubscribe = subscribeToTableChanges('stories', (payload) => {
+        const unsubscribeStories = subscribeToTableChanges('stories', (payload) => {
             const { eventType, new: newStory, old: oldStory } = payload;
-
-            // Only respond to changes that affect the current section
-            const relevantSectionId = eventType === 'DELETE' ? oldStory.section_id : newStory.section_id;
-            if (relevantSectionId !== sectionId) return;
 
             setStories((prevStories) => {
                 if (eventType === 'INSERT') {
@@ -85,8 +81,34 @@ const StoriesList = () => {
                 return prevStories;
             });
         });
+
+        const unsubscribeTopic = subscribeToTableChanges('topics', (payload) => { });
+
+        const unsubscribeResources = subscribeToTableChanges('resources', (payload) => {
+            const { eventType, new: newResource, old: oldResource } = payload;
+            if (newResource.section_id !== topicId) return; // Only update if resource belongs to this topic
+            setResources((prevResources) => {
+                if (eventType === 'INSERT') {
+                    return [...prevResources, newResource];
+                }
+
+                if (eventType === 'UPDATE') {
+                    return prevResources.map((resource) =>
+                        resource.id === newResource.id ? { ...resource, ...newResource } : resource
+                    );
+                }
+
+                if (eventType === 'DELETE') {
+                    return prevResources.filter((resource) => resource.id !== oldResource.id);
+                }
+
+                return prevResources;
+            });
+        });
         return () => {
-            unsubscribe();
+            unsubscribeTopic();
+            unsubscribeStories();
+            unsubscribeResources();
         };
     }, []);
 
@@ -104,12 +126,12 @@ const StoriesList = () => {
 
 
     useLayoutEffect(() => {
-        if (sectionName.length > 0 && stories.length > 0 && resources.length > 0) {
+        if (topicName.length > 0 && stories.length > 0 && resources.length > 0) {
             requestAnimationFrame(() => {
                 setHasLoaded(true);
             });
         }
-    }, [sectionName, stories, resources]);
+    }, [topicName, stories, resources]);
 
     const colors = [
         "#d79a8c", "#367588", "#49796B", "#8F9779", "#5a7a85",
@@ -170,13 +192,13 @@ const StoriesList = () => {
 
                     {/* Content */}
                     <div className="relative z-10 flex items-center w-full">
-                        <Link to={`/topic/${topicId}/sections`} className="mr-4">
+                        <Link to={`/chapters/${chapterId}/topics`} className="mr-4">
                             <Button variant="ghost" size="sm" className="text-[#5a7a85] hover:bg-white/20">
                                 <ArrowLeft className="h-5 w-5" />
                             </Button>
                         </Link>
                         <div>
-                            <h1 className="text-2xl font-bold text-black">{sectionName}</h1>
+                            <h1 className="text-2xl font-bold text-black">{topicName}</h1>
                             <p className="text-sm text-gray-700 mt-1">{stories.length} stories</p>
                         </div>
                     </div>
@@ -278,7 +300,6 @@ const StoriesList = () => {
                                                 })} className="p-2.5 rounded-full bg-gray-100 hover:bg-gray-200 transition-colors active:scale-95" title="Share this story">
                                                     <Share2 className="h-4 w-4 text-gray-600" />
                                                 </button>
-
                                             </div>
                                         </div>
                                     </div>
@@ -346,4 +367,4 @@ const StoriesList = () => {
     );
 };
 
-export default StoriesList;
+export default Stories;

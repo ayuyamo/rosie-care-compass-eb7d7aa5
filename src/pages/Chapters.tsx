@@ -1,75 +1,107 @@
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Heart, BookOpen, Users, MessageCircle, Compass, Shield, Scale, Star, Clock, ArrowRight, Home } from "lucide-react";
+import { ArrowLeft, BookOpen, Heart, Clock, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { fetchTopicsByChapterId, subscribeToTableChanges, fetchChapters } from "@/lib/supabase/supabaseApi";
 import { useState, useEffect, useLayoutEffect } from "react";
-import { fetchTopicsByChapterId, subscribeToTableChanges, fetchStoriesByTopicId, fetchResourcesByTopicId, fetchChapters } from "@/lib/supabase/supabaseApi";
 
-const Resources = () => {
+const Chapters = () => {
   const [chapters, setChapters] = useState([]);
   const [hasLoaded, setHasLoaded] = useState(false);
 
+  // Placeholder images for topics
+  const placeholderImages = [
+    "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=400&h=200&fit=crop",
+    "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=200&fit=crop",
+    "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=200&fit=crop",
+    "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&h=200&fit=crop",
+    "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=400&h=200&fit=crop",
+    "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?w=400&h=200&fit=crop",
+    "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=400&h=200&fit=crop",
+    "https://images.unsplash.com/photo-1472396961693-142e6e269027?w=400&h=200&fit=crop",
+    "https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=400&h=200&fit=crop",
+    "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=400&h=200&fit=crop"
+  ];
+
+  const getTopicImage = (topicId: string) => {
+    let hash = 0;
+    for (let i = 0; i < topicId.length; i++) {
+      hash = topicId.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    const index = Math.abs(hash) % placeholderImages.length;
+    return placeholderImages[index];
+  };
+
   useEffect(() => {
     // Subscribe to changes in the topics table
-    const loadChapters = async () => {
-      const chapters = await fetchChapters(); // assuming this returns topics
-
-      const chaptersWResources = await Promise.all(
-        chapters.map(async (chapter) => {
+    const loadAndSetChapters = async () => {
+      const data = await fetchChapters();
+      // Add mock sections to each story
+      const chaptersWTopics = await Promise.all(
+        data.map(async (chapter) => {
           const topics = await fetchTopicsByChapterId(chapter.id);
-
           return {
             ...chapter,
             topics: topics,
-          };
+          }
         })
       );
-      setChapters(chaptersWResources);
+      setChapters(chaptersWTopics);
     };
-
-    loadChapters();
-    const unsubscribeChapters = subscribeToTableChanges('topics', (payload) => {
-      const { eventType, new: change, old: oldChapter } = payload;
+    loadAndSetChapters();
+    const unsubscribeChapters = subscribeToTableChanges('topics', (newData) => {
+      const { eventType, new: change, old: oldChapter } = newData;
       setChapters((prevChapters) => {
         if (eventType === 'INSERT') {
           (async () => {
             const topics = await fetchTopicsByChapterId(change.id);
-            return [...prevChapters, { newRow: change, topics: topics }]
-          })()
+            return [...prevChapters, { ...change, topics }];
+          })();
         }
         if (eventType === 'UPDATE') {
-          return prevChapters.map((chapter) => {
-            return chapter.id === change.id ? { ...chapter, ...change } : chapter;
-          });
+          return prevChapters.map((prevChapter) => {
+            return prevChapter.id === change.id ? { ...prevChapter, ...change } : prevChapter;
+          })
         }
         if (eventType === 'DELETE') {
-          return prevChapters.filter(chapter => chapter.id !== oldChapter.id);
+          return prevChapters.filter((prevChapter) => prevChapter.id !== oldChapter.id);
         }
-      })
+      });
     });
-    const unsubscribeTopics = subscribeToTableChanges('sections', (payload) => {
-      const { eventType, new: change, old: oldTopic } = payload;
+
+    const unsubscribeTopics = subscribeToTableChanges('sections', (newData) => {
+      const { eventType, new: change, old: oldTopic } = newData;
       setChapters((prevChapters) => {
-        return prevChapters.map((prevChapter) => {
-          if (prevChapter.id === (eventType === 'DELETE' ? oldTopic.topic_id : change.topic_id)) {
+        return prevChapters.map((chapter) => {
+          if (chapter.id === (eventType === 'DELETE' ? oldTopic.topic_id : change.topic_id)) {
             if (eventType === 'INSERT') {
-              return { ...prevChapter, topics: [...prevChapter.topics, change] }
+              return {
+                ...chapter,
+                topics: [...chapter.topics, change]
+              };
             }
             if (eventType === 'UPDATE') {
-              return { ...prevChapter, topics: prevChapter.topics.map(topic => topic.id === change.id ? { ...topic, ...change } : topic) }
+              return {
+                ...chapter,
+                topics: chapter.topics.map((topic) =>
+                  topic.id === change.id ? { ...topic, ...change } : topic
+                )
+              };
             }
             if (eventType === 'DELETE') {
-              return { ...prevChapter, topics: prevChapter.topics.filter(topic => topic.id !== oldTopic.id) }
+              return {
+                ...chapter,
+                topics: chapter.topics.filter((topic) => topic.id !== oldTopic.id)
+              };
             }
           }
-          return prevChapter;
-        })
-      })
-
-    })
+          return chapter;
+        });
+      });
+    });
     return () => {
       unsubscribeChapters(); // Clean up subscription on unmount
       unsubscribeTopics();
@@ -111,7 +143,9 @@ const Resources = () => {
               <ArrowLeft className="h-5 w-5" />
             </Button>
           </Link>
-          <h1 className="text-2xl font-bold text-black">Resources by Chapters</h1>
+          <h1 className="text-2xl font-bold text-black">
+            Chapters of Care
+          </h1>
         </header>
 
         <div ref={gridRef} className="space-y-8">
@@ -127,6 +161,7 @@ const Resources = () => {
                     transitionDelay: gridVisible && hasLoaded ? `${index * 150}ms` : '0ms',
                     position: "relative",
                   }}>
+
                   {/* Topic Image - Top Half */}
                   <div className="relative h-48 overflow-hidden">
                     <img
@@ -136,6 +171,7 @@ const Resources = () => {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
                   </div>
+
                   <CardContent className="p-6">
                     <div className="space-y-4">
                       <div>
@@ -185,11 +221,11 @@ const Resources = () => {
                           <Heart className="h-4 w-4" />
                           <span className="text-xs">Helpful story</span>
                         </div>
-                        <Link to={`/chapters/${chapter.id}/resources/detail`}
+                        <Link to={`/chapters/${chapter.id}/topics`}
                           state={{ chapter }}
                         >
                           <Button variant="ghost" size="sm" className="group/btn" style={{ color: randomColor }}>
-                            View Resources
+                            View All {chapter.topics.length} Topics
                             <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
                           </Button>
                         </Link>
@@ -206,4 +242,5 @@ const Resources = () => {
     </div>
   );
 };
-export default Resources;
+
+export default Chapters;

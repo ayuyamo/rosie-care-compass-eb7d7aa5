@@ -7,57 +7,96 @@ import { Link, useParams, useLocation } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useState, useEffect, useLayoutEffect } from "react";
-import { fetchSectionsByTopicId, fetchStoriesBySectionId, fetchResourcesBySectionId, fetchTopicById } from "@/lib/supabase/supabaseApi";
+import { fetchTopicsByChapterId, fetchStoriesByTopicId, fetchResourcesByTopicId, fetchChapterById } from "@/lib/supabase/supabaseApi";
 import { subscribeToTableChanges } from "@/lib/supabase/supabaseApi";
 const ResourcesDetail = () => {
-  const { topicId } = useParams<{ topicId: string }>();
+  const { chapterId } = useParams<{ chapterId: string }>();
   const location = useLocation();
-  const passedData = location.state?.topic;
-  const [topicName, setTopicName] = useState("");
-  const [sections, setSections] = useState([]);
+  const passedData = location.state?.chapter;
+  const [chapterName, setChapterName] = useState("");
+  const [topics, setTopics] = useState([]);
   const [hasLoaded, setHasLoaded] = useState(false);
 
   useEffect(() => {
-    const loadAndSetResources = async () => {
-      if (!topicId) return;
-      const sections = await fetchSectionsByTopicId(topicId);
+    const loadResources = async (topics) => {
+      if (!chapterId) return;
 
-      const sectionsWithStories = await Promise.all(
-        sections.map(async (section) => {
-          const resources = await fetchResourcesBySectionId(section.id);
+      const topicsWStories = await Promise.all(
+        topics.map(async (topic) => {
+          const resources = await fetchResourcesByTopicId(topic.id);
 
           return {
-            ...section,
+            ...topic,
             resources: resources,
           };
         })
       );
-      const topic = await fetchTopicById(topicId);
-      setTopicName(topic.name);
-      setSections(sectionsWithStories);
+      const chapter = await fetchChapterById(chapterId);
+      setChapterName(chapter.name);
+      setTopics(topicsWStories);
     }
     if (passedData) {
-      setTopicName(passedData.name);
-      setSections(passedData.sections);
+      console.log('Passed data:', passedData);
+      setChapterName(passedData.name);
+      loadResources(passedData.topics);
     } else {
-      loadAndSetResources();
+      if (!chapterId) return;
+      (async () => {
+        const chapter = await fetchChapterById(chapterId);
+        setChapterName(chapter.name);
+        const topics = await fetchTopicsByChapterId(chapterId);
+        loadResources(topics);
+      })()
     }
-    const unsubscribe = subscribeToTableChanges('resources', (newData) => {
-      console.log('🔄 Change received:', newData);
-      loadAndSetResources();
+    const unsubscribeTopics = subscribeToTableChanges('sections', (payload) => {
+      const { eventType, new: change, old: oldTopic } = payload;
+      setTopics((prevTopics) => {
+        if (eventType === 'INSERT') {
+          (async () => {
+            const resources = await fetchResourcesByTopicId(change.id);
+            return [...prevTopics, { change, resources: resources }]
+          })()
+        }
+        if (eventType === 'UPDATE') {
+          return prevTopics.map((topic) => topic.id === change.id ? { ...topic, ...change } : topic);
+        }
+        if (eventType === 'DELETE') {
+          return prevTopics.filter(topic => topic.id !== oldTopic.id);
+        }
+      })
     });
+    const unsubscribeResources = subscribeToTableChanges('resources', (payload) => {
+      const { eventType, new: change, old: oldResource } = payload;
+      setTopics((prevTopics) => {
+        return prevTopics.map((topic) => {
+          if (topic.id === (eventType === 'DELETE' ? oldResource.section_id : change.section_id)) {
+            if (eventType === 'INSERT') {
+              return { ...topic, resources: [...topic.resources, change] }
+            }
+            if (eventType === 'UPDATE') {
+              return { ...topic, resources: topic.resources.map(resource => resource.id === change.id ? { ...resource, ...change } : resource) }
+            }
+            if (eventType === 'DELETE') {
+              return { ...topic, resources: topic.resources.filter(resource => resource.id !== oldResource.id) }
+            }
+          }
+          return topic;
+        })
+      })
+    })
     return () => {
-      unsubscribe(); // Clean up subscription on unmount
+      unsubscribeTopics(); // Clean up subscription on unmount
+      unsubscribeResources();
     };
   }, []);
 
   useLayoutEffect(() => {
-    if (topicName.length > 0 && sections.length > 0) {
+    if (chapterName.length > 0 && topics.length > 0) {
       requestAnimationFrame(() => {
         setHasLoaded(true);
       });
     }
-  }, [sections, topicName]);
+  }, [topics, chapterName]);
 
   const colors = [
     "#d79a8c", "#367588", "#49796B", "#8F9779", "#5a7a85",
@@ -87,16 +126,16 @@ const ResourcesDetail = () => {
             </Button>
           </Link>
           <div>
-            <h1 className="text-2xl font-bold text-black">{topicName} Resources</h1>
-            <p className="text-sm text-gray-600">Helpful resources organized by sections</p>
+            <h1 className="text-2xl font-bold text-black">Resources by Topics</h1>
+            <p className="text-md text-gray-600 italic">Chapter: {chapterName}</p>
           </div>
         </header>
 
         <div ref={gridRef} className="space-y-6">
-          {sections.map((section, index) => {
-            const randomColor = getConsistentColor(section.name);
+          {topics.map((topic, index) => {
+            const randomColor = getConsistentColor(topic.name);
             return (
-              <Card key={section.id} className={`
+              <Card key={topic.id} className={`
                 bg-white/90 backdrop-blur-md shadow-lg overflow-hidden transition-all duration-700 hover:shadow-xl
                 ${gridVisible && hasLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}
               `}
@@ -111,7 +150,7 @@ const ResourcesDetail = () => {
                         className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 overflow-hidden"
                       >
                         <img
-                          src={section.image_url}
+                          src={topic.image_url}
                           alt="Section"
                           className="w-full h-full object-cover"
                         />
@@ -119,16 +158,16 @@ const ResourcesDetail = () => {
 
                       <div className="flex-1 min-w-0">
                         <h3 className="text-lg font-bold mb-2" style={{ color: '#232323' }}>
-                          {section.name}
+                          Topic: {topic.name}
                         </h3>
                       </div>
                     </div>
-                    {section.resources?.length > 0 && (
+                    {topic.resources?.length > 0 && (
                       <div className="space-y-2">
                         <div className="flex items-center space-x-2">
                         </div>
                         <div className="space-y-2 ml-6">
-                          {section.resources.map((resource, resourceIndex) => (
+                          {topic.resources.map((resource, resourceIndex) => (
                             <div
                               key={resourceIndex}
                               className="flex items-center justify-between p-2 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors"
@@ -150,8 +189,6 @@ const ResourcesDetail = () => {
                         </div>
                       </div>
                     )}
-
-
                   </div>
                 </CardContent>
               </Card>

@@ -1,18 +1,22 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, BookOpen, Heart, Clock, ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import { ArrowLeft, BookOpen, Clock, User, Heart, ArrowRight } from "lucide-react";
+import { Link, useParams, useLocation } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { fetchSectionsByTopicId, subscribeToTableChanges, fetchTopics } from "@/lib/supabase/supabaseApi";
 import { useState, useEffect, useLayoutEffect } from "react";
+import { fetchChapterById, fetchTopicsByChapterId, fetchStoriesByTopicId, fetchResourcesByTopicId, subscribeToTableChanges } from "@/lib/supabase/supabaseApi";
 
 const Topics = () => {
+  const { chapterId } = useParams<{ chapterId: string }>();
+  const location = useLocation();
+  const passedChapter = location.state?.chapter;
   const [topics, setTopics] = useState([]);
+  const [chapterName, setChapterName] = useState("");
   const [hasLoaded, setHasLoaded] = useState(false);
 
-  // Placeholder images for topics
+  // Placeholder images for sections
   const placeholderImages = [
     "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=400&h=200&fit=crop",
     "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=200&fit=crop",
@@ -26,48 +30,131 @@ const Topics = () => {
     "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=400&h=200&fit=crop"
   ];
 
-  const getTopicImage = (topicId: string) => {
+  const setTopicImage = (sectionId: string) => {
     let hash = 0;
-    for (let i = 0; i < topicId.length; i++) {
-      hash = topicId.charCodeAt(i) + ((hash << 5) - hash);
+    for (let i = 0; i < sectionId.length; i++) {
+      hash = sectionId.charCodeAt(i) + ((hash << 5) - hash);
     }
     const index = Math.abs(hash) % placeholderImages.length;
     return placeholderImages[index];
   };
 
   useEffect(() => {
-    // Subscribe to changes in the topics table
-    const loadAndSetTopics = async () => {
-      const data = await fetchTopics();
-      // Add mock sections to each story
-      const storiesWithSections = await Promise.all(
-        data.map(async (story) => {
-          const sections = await fetchSectionsByTopicId(story.id);
-          return {
-            ...story,
-            sections: sections,
-          }
-        })
-      );
-      setTopics(storiesWithSections);
+    const loadData = async () => {
+      try {
+        if (passedChapter) {
+          console.log("Using passed chapter:", passedChapter);
+          setChapterName(passedChapter.name);
+          // Fetch stories per section
+          const topicsWStories = await Promise.all(
+            passedChapter.topics.map(async (topic) => {
+              const stories = await fetchStoriesByTopicId(topic.id);
+              const resources = await fetchResourcesByTopicId(topic.id);
+              return {
+                ...topic,
+                stories: stories,
+                resources: resources
+              };
+            })
+          );
+          setTopics(topicsWStories);
+        } else {
+          console.log("Fetching chapter by ID:", chapterId);
+          const chapter = await fetchChapterById(chapterId);
+          const fetchedTopics = await fetchTopicsByChapterId(chapterId);
+          const topicsWStories = await Promise.all(
+            fetchedTopics.map(async (topic) => {
+              const stories = await fetchStoriesByTopicId(topic.id);
+              const resources = await fetchResourcesByTopicId(topic.id);
+              return {
+                ...topic,
+                stories: stories,
+                resources: resources
+              };
+            })
+          );
+          setChapterName(chapter.name);
+          setTopics(topicsWStories);
+        }
+      } catch (err) {
+        console.error("Failed to load topic or sections:", err);
+      }
     };
-    loadAndSetTopics();
-    const unsubscribe = subscribeToTableChanges('topics', (newData) => {
-      console.log('🔄 Change received:', newData);
-      loadAndSetTopics();
+
+    loadData();
+    const unsubscribeTopics = subscribeToTableChanges('sections', async (payload) => {
+      const { eventType, new: newTopic, old: oldTopic } = payload;
+
+      setTopics((prevTopics) => {
+        if (eventType === 'INSERT') {
+          (async () => {
+            const stories = await fetchStoriesByTopicId(newTopic.id);
+            const resources = await fetchResourcesByTopicId(newTopic.id);
+            return [
+              ...prevTopics, {
+                ...newTopic,
+                stories: stories,
+                resources: resources
+              }]
+          })()
+        }
+
+        if (eventType === 'UPDATE') {
+          return prevTopics.map((topic) =>
+            topic.id === newTopic.id ? { ...topic, ...newTopic } : topic
+          );
+        }
+
+        if (eventType === 'DELETE') {
+          return prevTopics.filter((topic) => topic.id !== oldTopic.id);
+        }
+      });
+    });
+
+    const unsubscribeStories = subscribeToTableChanges('stories', async (payload) => {
+      const { eventType, new: newStory, old: oldStory } = payload;
+
+      setTopics((prevTopics) => {
+        return prevTopics.map((topic) => {
+          if (topic.id === newStory.section_id) {
+            if (eventType === 'INSERT') {
+              return {
+                ...topic,
+                stories: [...topic.stories, newStory]
+              };
+            }
+            if (eventType === 'UPDATE') {
+              return {
+                ...topic,
+                stories: topic.stories.map((story) =>
+                  story.id === newStory.id ? { ...story, ...newStory } : story
+                )
+              };
+            }
+            if (eventType === 'DELETE') {
+              return {
+                ...topic,
+                stories: topic.stories.filter((story) => story.id !== oldStory.id)
+              };
+            }
+          }
+          return topic;
+        });
+      });
     });
     return () => {
-      unsubscribe(); // Clean up subscription on unmount
+      unsubscribeTopics();
+      unsubscribeStories();
     };
   }, []);
 
   useLayoutEffect(() => {
-    if (topics.length > 0) {
+    if (chapterName.length > 0 && topics.length > 0) {
       requestAnimationFrame(() => {
         setHasLoaded(true);
       });
     }
-  }, [topics]);
+  }, [topics, chapterName]);
 
   const colors = [
     "#d79a8c", "#367588", "#49796B", "#8F9779", "#5a7a85",
@@ -91,109 +178,106 @@ const Topics = () => {
     <div className="min-h-screen bg-[#f8f9fa] p-4 pb-24">
       <div className="max-w-md mx-auto">
         <header ref={headerRef} className={`flex items-center mb-6 transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <Link to="/" className="mr-4">
+          <Link to="/chapters" className="mr-4">
             <Button variant="ghost" size="sm" className="text-[#5a7a85]">
               <ArrowLeft className="h-5 w-5" />
             </Button>
           </Link>
-          <h1 className="text-2xl font-bold text-black">
-            Chapters of Care
-          </h1>
+          <div>
+            <h1 className="text-2xl font-bold text-black">Chapter: <span className="italic">{chapterName}</span></h1>
+          </div>
         </header>
 
-        <div ref={gridRef} className="space-y-8">
-          {topics.map((story, index) => {
-            const randomColor = getConsistentColor(story.name);
-            const topicImage = story.image_url;
+        <div ref={gridRef} className="space-y-6">
+          {topics.map((topic, index) => {
+            const randomColor = getConsistentColor(topic.name);
+            const topicImg = topic.image_url || setTopicImage(topic.id);
             return (
-              <div key={story.id}>
-                <Card className={`
-                    bg-white/90 backdrop-blur-md shadow-lg overflow-hidden group cursor-pointer will-change-transform transition-all duration-700 hover:shadow-xl hover:scale-[1.02]
-                    ${gridVisible && hasLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}
-                  `}
-                  style={{
-                    transitionDelay: gridVisible && hasLoaded ? `${index * 150}ms` : '0ms',
-                    position: "relative",
-                  }}>
+              <Card key={topic.id} className={`
+                  bg-white/90 backdrop-blur-md shadow-lg overflow-hidden group cursor-pointer transition-all duration-700 hover:shadow-xl hover:scale-[1.02]
+                  ${gridVisible && hasLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}
+                `}
+                style={{
+                  transitionDelay: gridVisible && hasLoaded ? `${index * 150}ms` : '0ms'
+                }}>
 
-                  {/* Topic Image - Top Half */}
-                  <div className="relative h-48 overflow-hidden">
-                    <img
-                      src={topicImage}
-                      alt={story.name}
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-                  </div>
+                {/* Section Image - Top Half */}
+                <div className="relative h-48 overflow-hidden">
+                  <img
+                    src={topicImg}
+                    alt={topic.name}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+                </div>
 
-                  <CardContent className="p-6">
-                    <div className="space-y-4">
-                      <div>
-                        <h3 className="text-lg font-bold mb-2" style={{ color: '#232323' }}>
-                          {story.name}
-                        </h3>
-                        <p className="text-sm mb-4" style={{ color: '#373618' }}>
-                          {story.description}
+                <CardContent className="p-6">
+                  <div className="space-y-4">
+                    {/* Header section with title */}
+                    <div>
+                      <h3 className="text-lg font-bold mb-2" style={{ color: '#232323' }}>
+                        Topic: {topic.name}
+                      </h3>
+                    </div>
+                    <div className="mb-4">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <p className="text-xs font-medium text-gray-500 mr-2 leading-none pt-[2px]">
+                          Stories:
                         </p>
-                      </div>
-                      <div className="mb-4">
-                        <div className="flex flex-wrap gap-1 items-start">
-                          <p className="text-xs font-medium text-gray-500 mr-2 pt-[3px]">Topics:</p>
-                          {story.sections.slice(0, 3).map((section, sectionIndex) => (
-                            <Badge
-                              key={sectionIndex}
-                              variant="secondary"
-                              className="text-xs px-2 py-1"
-                              style={{
-                                backgroundColor: `${randomColor}20`,
-                                color: randomColor,
-                                border: `1px solid ${randomColor}40`
-                              }}
-                            >
-                              {section.name}
-                            </Badge>
-                          ))}
-                          {story.sections.length > 3 && (
-                            <Badge
-                              variant="secondary"
-                              className="text-xs px-2 py-1 font-medium"
-                              style={{
-                                backgroundColor: `${randomColor}10`,
-                                color: randomColor,
-                                border: `1px dashed ${randomColor}50`
-                              }}
-                            >
-                              +{story.sections.length - 3} more
-                            </Badge>
-                          )}
-                        </div>
-                      </div>
-
-
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-2" style={{ color: '#679aa3' }}>
-                          <Heart className="h-4 w-4" />
-                          <span className="text-xs">Helpful story</span>
-                        </div>
-                        <Link to={`/topic/${story.id}/sections`}
-                          state={{ topic: story }}
-                        >
-                          <Button variant="ghost" size="sm" className="group/btn" style={{ color: randomColor }}>
-                            View All {story.sections.length} Topics
-                            <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
-                          </Button>
-                        </Link>
+                        {topic.stories.slice(0, 3).map((story, storyIndex) => (
+                          <Badge
+                            key={storyIndex}
+                            variant="secondary"
+                            className="text-xs px-2 py-1"
+                            style={{
+                              backgroundColor: `${randomColor}20`,
+                              color: randomColor,
+                              border: `1px solid ${randomColor}40`
+                            }}
+                          >
+                            {story.title}
+                          </Badge>
+                        ))}
+                        {topic.stories.length > 3 && (
+                          <Badge
+                            variant="secondary"
+                            className="text-xs px-2 py-1 font-medium"
+                            style={{
+                              backgroundColor: `${randomColor}10`,
+                              color: randomColor,
+                              border: `1px dashed ${randomColor}50`
+                            }}
+                          >
+                            +{topic.stories.length - 3} more
+                          </Badge>
+                        )}
                       </div>
                     </div>
-                  </CardContent>
-                </Card>
-              </div>
+
+
+                    {/* Footer section */}
+                    <div className="flex items-center justify-between pt-2">
+                      <div className="flex items-center space-x-2" style={{ color: '#679aa3' }}>
+                        <Heart className="h-4 w-4" />
+                        <span className="text-xs">Helpful story</span>
+                      </div>
+                      <Link to={`/chapters/${chapterId}/topics/${topic.id}/stories`}
+                        state={{ topic }}>
+                        <Button variant="ghost" size="sm" className="group/btn" style={{ color: randomColor }}>
+                          View All {topic.stories.length} Stories
+                          <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+                        </Button>
+                      </Link>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             );
           })}
         </div>
       </div>
       <BottomNavigation />
-    </div>
+    </div >
   );
 };
 

@@ -4,15 +4,15 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
+import Chapters from "./pages/Chapters";
 import Topics from "./pages/Topics";
-import SectionsList from "./pages/SectionsList";
 import Chat from "./pages/Chat";
 import Community from "./pages/Community";
 import Resources from "./pages/Resources";
 import BookDetails from "./pages/BookDetails";
 import PoemsCollection from "./pages/PoemsCollection";
 import NotFound from "./pages/NotFound";
-import StoriesList from "./pages/StoriesList";
+import Stories from "./pages/Stories";
 import ResourcesDetail from "./pages/ResourcesDetail";
 
 const queryClient = new QueryClient();
@@ -25,10 +25,10 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/topics" element={<Topics />} />
-          <Route path="/topic/:topicId/sections" element={<SectionsList />} />
-          <Route path="/topic/:topicId/resources/detail" element={<ResourcesDetail />} />
-          <Route path="/topic/:topicId/sections/:sectionId/stories" element={<StoriesList />} />
+          <Route path="/chapters" element={<Chapters />} />
+          <Route path="/chapters/:chapterId/topics" element={<Topics />} />
+          <Route path="/chapters/:chapterId/resources/detail" element={<ResourcesDetail />} />
+          <Route path="/chapters/:chapterId/topics/:topicId/stories" element={<Stories />} />
           <Route path="/chat" element={<Chat />} />
           <Route path="/community" element={<Community />} />
           <Route path="/resources" element={<Resources />} />
