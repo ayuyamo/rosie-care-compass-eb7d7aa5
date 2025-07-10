@@ -54,7 +54,8 @@ const Resources = () => {
       const { eventType, new: change, old: oldTopic } = payload;
       setChapters((prevChapters) => {
         return prevChapters.map((prevChapter) => {
-          if (prevChapter.id === (eventType === 'DELETE' ? oldTopic.topic_id : change.topic_id)) {
+          if (prevChapter.id === (eventType === 'DELETE' ? oldTopic.chapter_id : change.chapter_id)) {
+            console.log('found chapter to insert/delete/update: ', prevChapter.name);
             if (eventType === 'INSERT') {
               return { ...prevChapter, topics: [...prevChapter.topics, change] }
             }
