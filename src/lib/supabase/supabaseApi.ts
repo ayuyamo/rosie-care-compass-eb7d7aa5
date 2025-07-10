@@ -3,7 +3,7 @@ import { supabase } from './supabaseClient';
 /** Fetch all topics */
 export const fetchChapters = async () => {
   const { data, error } = await supabase
-    .from('topics')
+    .from('chapters')
     .select('id, name, description, image_url')
     .order('created_at', { ascending: true });
 
@@ -14,9 +14,9 @@ export const fetchChapters = async () => {
 /** Fetch all sections for a given topic */
 export const fetchTopicsByChapterId = async (chapterId: string) => {
   const { data, error } = await supabase
-    .from('sections')
+    .from('topics')
     .select('*')
-    .eq('topic_id', chapterId)
+    .eq('chapter_id', chapterId)
     .order('order_index', { ascending: true });
 
   if (error) throw new Error(`fetchTopicsByChapterId: ${error.message}`);
@@ -28,7 +28,7 @@ export const fetchStoriesByTopicId = async (topicId: string) => {
   const { data, error } = await supabase
     .from('stories')
     .select('*')
-    .eq('section_id', topicId)
+    .eq('topic_id', topicId)
     .order('created_at', { ascending: true });
 
   if (error) throw new Error(`fetchStoriesByTopicId: ${error.message}`);
@@ -40,7 +40,7 @@ export const fetchResourcesByTopicId = async (topicId: string) => {
   const { data, error } = await supabase
     .from('resources')
     .select('*')
-    .eq('section_id', topicId)
+    .eq('topic_id', topicId)
     .order('created_at', { ascending: true });
 
   if (error) throw new Error(`fetchResourcesByTopicId: ${error.message}`);
@@ -50,7 +50,7 @@ export const fetchResourcesByTopicId = async (topicId: string) => {
 /** Optional: Fetch a single topic by ID */
 export const fetchChapterById = async (chapterId: string) => {
   const { data, error } = await supabase
-    .from('topics')
+    .from('chapters')
     .select('*')
     .eq('id', chapterId)
     .single();
@@ -61,7 +61,7 @@ export const fetchChapterById = async (chapterId: string) => {
 
 export const fetchTopicById = async (topicId: string) => {
   const { data, error } = await supabase
-    .from('sections')
+    .from('topics')
     .select('*')
     .eq('id', topicId)
     .single(); // because you're expecting one row
@@ -84,11 +84,11 @@ export const fetchPoems = async () => {
   return data;
 };
 
-export const fetchBookDetails = async () => {
+export const fetchBookDetails = async (isbn: string) => {
   const { data, error } = await supabase
     .from('books')
     .select('*')
-    .limit(1)
+    .eq('isbn13', isbn)
     .single();
   if (error) throw new Error(`fetchBookDetails: ${error.message}`);
   return data;
@@ -96,7 +96,7 @@ export const fetchBookDetails = async () => {
 
 export const fetchBookChapters = async (bookId: string) => {
   const { data, error } = await supabase
-    .from('chapters')
+    .from('book_summary')
     .select('*')
     .eq('book_id', bookId)
     .order('chapter_order', { ascending: true });

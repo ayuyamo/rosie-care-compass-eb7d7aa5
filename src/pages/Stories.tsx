@@ -64,49 +64,49 @@ const Stories = () => {
             const { eventType, new: newStory, old: oldStory } = payload;
 
             setStories((prevStories) => {
-                if (eventType === 'INSERT') {
-                    return [...prevStories, newStory];
-                }
+                if (topicId === (eventType === 'DELETE' ? oldStory.topic_id : newStory.topic_id)) {
+                    if (eventType === 'INSERT') {
+                        return [...prevStories, newStory];
+                    }
 
-                if (eventType === 'UPDATE') {
-                    return prevStories.map((story) =>
-                        story.id === newStory.id ? { ...story, ...newStory } : story
-                    );
-                }
+                    if (eventType === 'UPDATE') {
+                        return prevStories.map((story) =>
+                            story.id === newStory.id ? { ...story, ...newStory } : story
+                        );
+                    }
 
-                if (eventType === 'DELETE') {
-                    return prevStories.filter((story) => story.id !== oldStory.id);
+                    if (eventType === 'DELETE') {
+                        return prevStories.filter((story) => story.id !== oldStory.id);
+                    }
                 }
 
                 return prevStories;
             });
         });
 
-        const unsubscribeTopic = subscribeToTableChanges('topics', (payload) => { });
-
         const unsubscribeResources = subscribeToTableChanges('resources', (payload) => {
             const { eventType, new: newResource, old: oldResource } = payload;
-            if (newResource.section_id !== topicId) return; // Only update if resource belongs to this topic
             setResources((prevResources) => {
-                if (eventType === 'INSERT') {
-                    return [...prevResources, newResource];
-                }
+                if (topicId === (eventType === 'DELETE' ? oldResource.topic_id : newResource.topic_id)) {
+                    if (eventType === 'INSERT') {
+                        return [...prevResources, newResource];
+                    }
 
-                if (eventType === 'UPDATE') {
-                    return prevResources.map((resource) =>
-                        resource.id === newResource.id ? { ...resource, ...newResource } : resource
-                    );
-                }
+                    if (eventType === 'UPDATE') {
+                        return prevResources.map((resource) =>
+                            resource.id === newResource.id ? { ...resource, ...newResource } : resource
+                        );
+                    }
 
-                if (eventType === 'DELETE') {
-                    return prevResources.filter((resource) => resource.id !== oldResource.id);
+                    if (eventType === 'DELETE') {
+                        return prevResources.filter((resource) => resource.id !== oldResource.id);
+                    }
                 }
 
                 return prevResources;
             });
         });
         return () => {
-            unsubscribeTopic();
             unsubscribeStories();
             unsubscribeResources();
         };

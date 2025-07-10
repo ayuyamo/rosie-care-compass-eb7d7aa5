@@ -31,7 +31,7 @@ const Resources = () => {
     };
 
     loadChapters();
-    const unsubscribeChapters = subscribeToTableChanges('topics', (payload) => {
+    const unsubscribeChapters = subscribeToTableChanges('chapters', (payload) => {
       const { eventType, new: change, old: oldChapter } = payload;
       setChapters((prevChapters) => {
         if (eventType === 'INSERT') {
@@ -50,7 +50,7 @@ const Resources = () => {
         }
       })
     });
-    const unsubscribeTopics = subscribeToTableChanges('sections', (payload) => {
+    const unsubscribeTopics = subscribeToTableChanges('topics', (payload) => {
       const { eventType, new: change, old: oldTopic } = payload;
       setChapters((prevChapters) => {
         return prevChapters.map((prevChapter) => {

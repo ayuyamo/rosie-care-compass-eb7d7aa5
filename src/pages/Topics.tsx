@@ -82,32 +82,35 @@ const Topics = () => {
     };
 
     loadData();
-    const unsubscribeTopics = subscribeToTableChanges('sections', async (payload) => {
+    const unsubscribeTopics = subscribeToTableChanges('topics', async (payload) => {
       const { eventType, new: newTopic, old: oldTopic } = payload;
 
       setTopics((prevTopics) => {
-        if (eventType === 'INSERT') {
-          (async () => {
-            const stories = await fetchStoriesByTopicId(newTopic.id);
-            const resources = await fetchResourcesByTopicId(newTopic.id);
-            return [
-              ...prevTopics, {
-                ...newTopic,
-                stories: stories,
-                resources: resources
-              }]
-          })()
-        }
+        if (chapterId === (eventType === 'DELETE' ? oldTopic.chapter_id : newTopic.chapter_id)) {
+          if (eventType === 'INSERT') {
+            (async () => {
+              const stories = await fetchStoriesByTopicId(newTopic.id);
+              const resources = await fetchResourcesByTopicId(newTopic.id);
+              return [
+                ...prevTopics, {
+                  ...newTopic,
+                  stories: stories,
+                  resources: resources
+                }]
+            })()
+          }
 
-        if (eventType === 'UPDATE') {
-          return prevTopics.map((topic) =>
-            topic.id === newTopic.id ? { ...topic, ...newTopic } : topic
-          );
-        }
+          if (eventType === 'UPDATE') {
+            return prevTopics.map((topic) =>
+              topic.id === newTopic.id ? { ...topic, ...newTopic } : topic
+            );
+          }
 
-        if (eventType === 'DELETE') {
-          return prevTopics.filter((topic) => topic.id !== oldTopic.id);
+          if (eventType === 'DELETE') {
+            return prevTopics.filter((topic) => topic.id !== oldTopic.id);
+          }
         }
+        return prevTopics;
       });
     });
 
@@ -116,7 +119,7 @@ const Topics = () => {
 
       setTopics((prevTopics) => {
         return prevTopics.map((topic) => {
-          if (topic.id === newStory.section_id) {
+          if (topic.id === (eventType === 'DELETE' ? oldStory.topic_id : newStory.topic_id)) {
             if (eventType === 'INSERT') {
               return {
                 ...topic,

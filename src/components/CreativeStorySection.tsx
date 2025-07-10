@@ -56,7 +56,7 @@ export const CreativeStorySection = () => {
     };
     fetch();
     // Subscribe to changes in the topics table
-    const unsubscribeChapters = subscribeToTableChanges('topics', (newData) => {
+    const unsubscribeChapters = subscribeToTableChanges('chapters', (newData) => {
       const { eventType, new: change } = newData;
       setChapters((prevChapters) => {
         if (eventType == 'INSERT') {
@@ -76,44 +76,23 @@ export const CreativeStorySection = () => {
       });
     });
     // subscribe to changes in the sections table
-    const unsubscribeTopics = subscribeToTableChanges('sections', (newData) => {
-      const { eventType, new: change } = newData;
+    const unsubscribeTopics = subscribeToTableChanges('topics', (newData) => {
+      const { eventType, new: newTopic, old: oldTopic } = newData;
       setChapters((prevChapters) => {
-        if (eventType == 'INSERT') {
-          return prevChapters.map((chapter) => {
-            if (chapter.id === change.topic_id) {
-              return {
-                ...chapter,
-                topics: [...chapter.topics, change]
-              };
+        return prevChapters.map((prevChapter) => {
+          if (prevChapter.id === (eventType === 'DELETE' ? oldTopic.chapter_id : newTopic.chapter_id)) {
+            if (eventType === 'INSERT') {
+              return { ...prevChapter, topics: [...prevChapter.topics, newTopic] }
             }
-            return chapter;
-          });
-        }
-        if (eventType == 'DELETE') {
-          return prevChapters.map((chapter) => {
-            if (chapter.id === change.topic_id) {
-              return {
-                ...chapter,
-                topics: chapter.topics.filter((topic) => topic.id !== change.id)
-              };
+            if (eventType === 'UPDATE') {
+              return { ...prevChapter, topics: prevChapter.topics.map(topic => topic.id === newTopic.id ? { ...topic, ...newTopic } : topic) }
             }
-            return chapter;
-          });
-        }
-        if (eventType == 'UPDATE') {
-          return prevChapters.map((chapter) => {
-            if (chapter.id === change.topic_id) {
-              return {
-                ...chapter,
-                topics: chapter.topics.map((topic) => {
-                  return topic.id === change.id ? { ...topic, ...change } : topic;
-                })
-              };
+            if (eventType === 'DELETE') {
+              return { ...prevChapter, topics: prevChapter.topics.filter(topic => topic.id !== oldTopic.id) }
             }
-            return chapter;
-          });
-        }
+          }
+          return prevChapter;
+        })
       });
     });
     return () => {

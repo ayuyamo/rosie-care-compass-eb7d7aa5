@@ -5,8 +5,8 @@ import { ArrowLeft, BookOpen, Heart, Clock, Download, Share, Star, ChevronDown, 
 import { Link } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { useEffect, useLayoutEffect, useState } from "react";
-import { fetchBookDetails, fetchBookChapters } from "@/lib/supabase/supabaseApi";
+import { useEffect, useLayoutEffect, useState, useRef } from "react";
+import { fetchBookDetails, fetchBookChapters, subscribeToTableChanges } from "@/lib/supabase/supabaseApi";
 
 const BookDetails = () => {
   const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
@@ -17,21 +17,62 @@ const BookDetails = () => {
   const [chapters, setChapters] = useState([]);
   const [bookDetails, setBookDetails] = useState(null);
   const [hasLoaded, setHasLoaded] = useState(false);
+  const bookRef = useRef(null);
 
   useEffect(() => {
     const fetchBookInfo = async () => {
       try {
-        const bookDetails = await fetchBookDetails();
+        const bookDetails = await fetchBookDetails('979-8990588615'); // insert isbn
         const chaptersData = await fetchBookChapters(bookDetails?.id);
         setBookDetails(bookDetails || null);
+        bookRef.current = bookDetails || null;
         setChapters(chaptersData || []);
-        if (bookDetails) { }
       } catch (error) {
         console.error("Failed to load book details:", error);
       }
     };
 
     fetchBookInfo();
+    const unsubscribeBookInfo = subscribeToTableChanges('books', (payload) => {
+      const { eventType, new: newBook, old: oldBook } = payload;
+      setBookDetails((book) => {
+        if (book.id === (eventType === 'DELETE' ? oldBook.id : newBook.id)) {
+          let updatedBook = book;
+          if (eventType === 'UPDATE') {
+            updatedBook = { ...book, ...newBook };
+          }
+          if (eventType === 'DELETE') {
+            updatedBook = null;
+          }
+          bookRef.current = updatedBook;
+          return updatedBook;
+        }
+        return book;
+      })
+    });
+
+    const unsubscribeChapters = subscribeToTableChanges('book_summary', (payload) => {
+      const { eventType, new: newChapter, old: oldChapter } = payload;
+      setChapters((chapters) => {
+        if (bookRef && bookRef.current.id === (eventType === 'DELETE' ? oldChapter.book_id : newChapter.book_id)) {
+          if (eventType === 'INSERT') {
+            return [...chapters, newChapter];
+          }
+          if (eventType === 'UPDATE') {
+            return chapters.map(chapter => chapter.id === newChapter.id ? { ...chapter, ...newChapter } : chapter);
+          }
+          if (eventType === 'DELETE') {
+            return chapters.filter(chapter => chapter.id !== oldChapter.id);
+          }
+        }
+        return chapters;
+      })
+    })
+
+    return () => {
+      unsubscribeBookInfo();
+      unsubscribeChapters();
+    }
   }, []);
 
   useLayoutEffect(() => {

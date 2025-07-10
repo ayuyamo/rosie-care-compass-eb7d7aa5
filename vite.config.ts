@@ -16,5 +16,21 @@ export default defineConfig(({ mode }) => ({
   },
   build: {
     target: 'esnext',
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (id.includes('node_modules')) {
+            if (id.includes('react')) return 'react';
+            if (id.includes('@supabase/supabase-js')) return 'supabase';
+            if (id.includes('lucide-react')) return 'icons';
+            if (id.includes('@radix-ui')) return 'radix-ui';
+            if (id.includes('@tanstack/react-query')) return 'react-query';
+            if (id.includes('react-router-dom')) return 'router';
+            if (id.includes('react-hook-form') || id.includes('@hookform'))
+              return 'forms';
+          }
+        },
+      },
+    },
   },
 }));

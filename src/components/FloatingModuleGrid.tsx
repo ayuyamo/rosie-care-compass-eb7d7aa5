@@ -49,8 +49,7 @@ export const FloatingModuleGrid = () => {
       setTopics(topics);
     };
     loadAndSetTopics();
-    const unsubscribe = subscribeToTableChanges('topics', (newData) => {
-      console.log('🔄 Change received:', newData);
+    const unsubscribe = subscribeToTableChanges('chapters', (newData) => {
       loadAndSetTopics();
     });
     return () => {

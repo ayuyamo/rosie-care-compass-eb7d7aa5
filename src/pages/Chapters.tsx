@@ -52,7 +52,7 @@ const Chapters = () => {
       setChapters(chaptersWTopics);
     };
     loadAndSetChapters();
-    const unsubscribeChapters = subscribeToTableChanges('topics', (newData) => {
+    const unsubscribeChapters = subscribeToTableChanges('chapters', (newData) => {
       const { eventType, new: change, old: oldChapter } = newData;
       setChapters((prevChapters) => {
         if (eventType === 'INSERT') {
@@ -72,11 +72,11 @@ const Chapters = () => {
       });
     });
 
-    const unsubscribeTopics = subscribeToTableChanges('sections', (newData) => {
+    const unsubscribeTopics = subscribeToTableChanges('topics', (newData) => {
       const { eventType, new: change, old: oldTopic } = newData;
       setChapters((prevChapters) => {
         return prevChapters.map((chapter) => {
-          if (chapter.id === (eventType === 'DELETE' ? oldTopic.topic_id : change.topic_id)) {
+          if (chapter.id === (eventType === 'DELETE' ? oldTopic.chapter_id : change.chapter_id)) {
             if (eventType === 'INSERT') {
               return {
                 ...chapter,

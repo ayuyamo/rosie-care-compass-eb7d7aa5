@@ -48,28 +48,31 @@ const ResourcesDetail = () => {
         loadResources(topics);
       })()
     }
-    const unsubscribeTopics = subscribeToTableChanges('sections', (payload) => {
+    const unsubscribeTopics = subscribeToTableChanges('topics', (payload) => {
       const { eventType, new: change, old: oldTopic } = payload;
       setTopics((prevTopics) => {
-        if (eventType === 'INSERT') {
-          (async () => {
-            const resources = await fetchResourcesByTopicId(change.id);
-            return [...prevTopics, { change, resources: resources }]
-          })()
+        if (chapterId === (eventType === 'DELETE' ? oldTopic.chapter_id : change.chapter_id)) {
+          if (eventType === 'INSERT') {
+            (async () => {
+              const resources = await fetchResourcesByTopicId(change.id);
+              return [...prevTopics, { change, resources: resources }]
+            })()
+          }
+          if (eventType === 'UPDATE') {
+            return prevTopics.map((topic) => topic.id === change.id ? { ...topic, ...change } : topic);
+          }
+          if (eventType === 'DELETE') {
+            return prevTopics.filter(topic => topic.id !== oldTopic.id);
+          }
         }
-        if (eventType === 'UPDATE') {
-          return prevTopics.map((topic) => topic.id === change.id ? { ...topic, ...change } : topic);
-        }
-        if (eventType === 'DELETE') {
-          return prevTopics.filter(topic => topic.id !== oldTopic.id);
-        }
+        return prevTopics;
       })
     });
     const unsubscribeResources = subscribeToTableChanges('resources', (payload) => {
       const { eventType, new: change, old: oldResource } = payload;
       setTopics((prevTopics) => {
         return prevTopics.map((topic) => {
-          if (topic.id === (eventType === 'DELETE' ? oldResource.section_id : change.section_id)) {
+          if (topic.id === (eventType === 'DELETE' ? oldResource.topic_id : change.topic_id)) {
             if (eventType === 'INSERT') {
               return { ...topic, resources: [...topic.resources, change] }
             }
