@@ -84,11 +84,11 @@ export const fetchPoems = async () => {
   return data;
 };
 
-export const fetchBookDetails = async (isbn: string) => {
+export const fetchBookDetails = async (bookId: string) => {
   const { data, error } = await supabase
     .from('books')
     .select('*')
-    .eq('isbn13', isbn)
+    .eq('id', bookId)
     .single();
   if (error) throw new Error(`fetchBookDetails: ${error.message}`);
   return data;

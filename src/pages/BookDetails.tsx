@@ -2,13 +2,16 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, BookOpen, Heart, Clock, Download, Share, Star, ChevronDown, ChevronUp, Tag, Calendar, Globe, Bookmark } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useEffect, useLayoutEffect, useState, useRef } from "react";
 import { fetchBookDetails, fetchBookChapters, subscribeToTableChanges } from "@/lib/supabase/supabaseApi";
 
 const BookDetails = () => {
+  const { bookId } = useParams<{ bookId: string }>();
+  const location = useLocation();
+  const passedBook = location.state?.book;
   const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
   const { ref: contentRef, isVisible: contentVisible } = useScrollAnimation();
   const [showDetails, setShowDetails] = useState(false);
@@ -22,9 +25,15 @@ const BookDetails = () => {
   useEffect(() => {
     const fetchBookInfo = async () => {
       try {
-        const bookDetails = await fetchBookDetails('979-8990588615'); // insert isbn
-        const chaptersData = await fetchBookChapters(bookDetails?.id);
-        setBookDetails(bookDetails || null);
+        if (!bookId) return;
+        if (passedBook) {
+          console.log('using passed data: ', passedBook);
+          setBookDetails(passedBook);
+        } else {
+          const bookDetails = await fetchBookDetails(bookId);
+          setBookDetails(bookDetails || null);
+        }
+        const chaptersData = await fetchBookChapters(bookId);
         bookRef.current = bookDetails || null;
         setChapters(chaptersData || []);
       } catch (error) {
