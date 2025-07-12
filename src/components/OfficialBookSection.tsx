@@ -62,12 +62,12 @@ const OfficialBookSection = () => {
       <div className="max-w-md mx-auto px-4">
         <div ref={sectionRef} className={`transition-all duration-1000 ${sectionVisible && hasLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <h3 className="text-xl font-bold text-[#232323] mb-4">Our Official Book</h3>
-          {book && <Link to={`/book-details/${book.id}`} state={{ book }}>
+          <Link to={`/book-details/${book?.id}`} state={{ book }}>
             <Card className="bg-white shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer rounded-xl overflow-hidden pointer-events-none flex flex-col h-[450px]">
               {/* Top: image with fixed height or basis */}
               <div className="basis-1/3 max-h-[200px]">
                 <img
-                  src={book.cover_url}
+                  src={book?.cover_url}
                   alt="Book Cover"
                   className="w-full h-full object-cover"
                 />
@@ -77,10 +77,10 @@ const OfficialBookSection = () => {
               <div className="flex-1 p-6 flex flex-col justify-between">
                 <div>
                   <h4 className="text-lg font-bold text-[#232323] mb-2 leading-snug">
-                    {book.title}
+                    {book?.title}
                   </h4>
                   <p className="text-sm text-[#4a4a4a] leading-relaxed mb-4">
-                    {book.description}
+                    {book?.description}
                   </p>
                 </div>
 
@@ -100,7 +100,7 @@ const OfficialBookSection = () => {
                 </div>
               </div>
             </Card>
-          </Link>}
+          </Link>
         </div>
       </div>
     </section>

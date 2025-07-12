@@ -203,10 +203,10 @@ const BookDetails = () => {
           </Card>
 
 
-          <div className="mb-6 shadow-sm rounded-lg">
+          <div className="mb-6 rounded-lg">
             <button
               onClick={() => setShowDetails(!showDetails)}
-              className="w-full flex items-center justify-between p-3 bg-white/50 hover:bg-white/70 border border-gray-200/50 rounded-lg transition-all duration-300 hover:shadow-md"
+              className="w-full flex items-center justify-between p-3 bg-white/50 hover:bg-white/70 border border-gray-200 rounded-lg transition-all duration-300 shadow-sm"
             >
               <span className="text-sm font-medium text-[#232323] flex items-center transition-colors duration-200">
                 <Bookmark className="h-4 w-4 mr-2 text-[#679aa3] transition-colors duration-200" />
@@ -217,8 +217,8 @@ const BookDetails = () => {
               </div>
             </button>
 
-            {showDetails && (
-              <div className="mt-2 p-4 bg-white/70 backdrop-blur-sm border border-gray-200/50 rounded-lg space-y-3 animate-in fade-in duration-300 ease-out overflow-hidden" style={{ transformOrigin: 'top' }}>
+            <div className={`transition-all duration-1000 ${showDetails ? 'opacity-100 translate-y-0 max-h-[500px]' : 'opacity-0 -translate-y-10 max-h-0 overflow-hidden'}`}>
+              <div className="mt-2 p-4 bg-white/70 backdrop-blur-sm border border-gray-200 rounded-lg space-y-3 shadow-sm">
                 <div className="flex items-center space-x-3">
                   <Calendar className="h-4 w-4 text-[#679aa3]" />
                   <div>
@@ -255,7 +255,8 @@ const BookDetails = () => {
                   </div>
                 </div>
               </div>
-            )}
+            </div>
+
           </div>
 
           {/* Chapters */}
