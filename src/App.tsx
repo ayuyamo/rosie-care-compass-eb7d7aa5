@@ -3,6 +3,7 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useState, useEffect } from "react";
 import Index from "./pages/Index";
 import Chapters from "./pages/Chapters";
 import Topics from "./pages/Topics";
@@ -14,32 +15,56 @@ import PoemsCollection from "./pages/PoemsCollection";
 import NotFound from "./pages/NotFound";
 import Stories from "./pages/Stories";
 import ResourcesDetail from "./pages/ResourcesDetail";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
+import AcceptableUsePolicy from "./pages/AcceptableUsePolicy";
+import TermsModal from "./components/TermsModal";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/chapters" element={<Chapters />} />
-          <Route path="/chapters/:chapterId/topics" element={<Topics />} />
-          <Route path="/chapters/:chapterId/resources/detail" element={<ResourcesDetail />} />
-          <Route path="/chapters/:chapterId/topics/:topicId/stories" element={<Stories />} />
-          <Route path="/chat" element={<Chat />} />
-          <Route path="/community" element={<Community />} />
-          <Route path="/resources" element={<Resources />} />
-          <Route path="/book-details/:bookId" element={<BookDetails />} />
-          {/* <Route path="/poems-collection" element={<PoemsCollection />} /> */}
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+const App = () => {
+  const [showTermsModal, setShowTermsModal] = useState(false);
+
+  useEffect(() => {
+    const hasAcceptedTerms = localStorage.getItem('termsAccepted');
+    if (!hasAcceptedTerms) {
+      setShowTermsModal(true);
+    }
+  }, []);
+
+  const handleAcceptTerms = () => {
+    localStorage.setItem('termsAccepted', 'true');
+    setShowTermsModal(false);
+  };
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <TermsModal isOpen={showTermsModal} onAgree={handleAcceptTerms} />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/chapters" element={<Chapters />} />
+            <Route path="/chapters/:chapterId/topics" element={<Topics />} />
+            <Route path="/chapters/:chapterId/resources/detail" element={<ResourcesDetail />} />
+            <Route path="/chapters/:chapterId/topics/:topicId/stories" element={<Stories />} />
+            <Route path="/chat" element={<Chat />} />
+            <Route path="/community" element={<Community />} />
+            <Route path="/resources" element={<Resources />} />
+            <Route path="/book-details/:bookId" element={<BookDetails />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-of-service" element={<TermsOfService />} />
+            <Route path="/acceptable-use-policy" element={<AcceptableUsePolicy />} />
+            {/* <Route path="/poems-collection" element={<PoemsCollection />} /> */}
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;
