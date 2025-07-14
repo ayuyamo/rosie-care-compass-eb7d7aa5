@@ -37,7 +37,7 @@ const Index = () => {
             </div>
             <div>
               <h1 className="text-lg font-bold text-[#232323]">Rosie Care</h1>
-              <p className="text-[#4B5320] text-sm">Your Companion</p>
+              <p className="text-[#4B5320] text-sm">Your Guide</p>
             </div>
           </div>
 
@@ -73,7 +73,7 @@ const Index = () => {
               </h2>
 
               <p className="text-[#373618] mb-4 text-sm leading-relaxed">
-                I'm Rosie, your AI companion for caregiving. Let's navigate this path together with stories, wisdom, and support.
+                I'm Rosie, your AI guide for caregiving. Let's navigate this path together with stories, wisdom, and support.
               </p>
               <Button
                 className="relative w-full text-[#18453B] font-bold py-4 px-6 rounded-2xl mb-3 shadow-2xl transform hover:scale-[1.02] transition-all duration-300 bg-[url('/ChatGPT-rosie.png')] bg-cover bg-center border-0 overflow-hidden"

@@ -1,23 +1,33 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogFooter,
+  DialogOverlay
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 
 const FirstLaunchModal = () => {
+  const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
     const hasAgreed = localStorage.getItem("termsAgreed");
-    if (!hasAgreed) {
+    const isOnPolicyPage =
+      location.pathname === '/privacy-policy' ||
+      location.pathname === '/terms-of-service' ||
+      location.pathname === '/acceptable-use-policy';
+    console.log("hasAgreed =", hasAgreed);
+    console.log("location.pathname =", location.pathname);
+    console.log("isOnPolicyPage =", isOnPolicyPage);
+    if (!hasAgreed && !isOnPolicyPage) {
       setIsOpen(true);
     }
-  }, []);
+  }, [location]);
+
 
   const handleAgree = () => {
     localStorage.setItem("termsAgreed", "true");
@@ -25,35 +35,35 @@ const FirstLaunchModal = () => {
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={() => {}}>
-      <DialogContent className="sm:max-w-[400px] max-w-[340px] mx-4">
+    <Dialog open={isOpen} onOpenChange={() => { }}>
+      <DialogContent className="max-w-[340px] lg:max-w-[400px] rounded-lg">
         <DialogHeader>
           <DialogTitle className="text-center text-lg font-semibold">
             Welcome to Our App
           </DialogTitle>
         </DialogHeader>
-        
+
         <div className="py-4 text-center">
           <p className="text-sm text-muted-foreground leading-relaxed">
             By using this app, you agree to our{" "}
-            <Link 
-              to="/privacy-policy" 
+            <Link
+              to="/privacy-policy"
               className="text-primary hover:underline"
               onClick={() => setIsOpen(false)}
             >
               Privacy Policy
             </Link>
             ,{" "}
-            <Link 
-              to="/terms-of-service" 
+            <Link
+              to="/terms-of-service"
               className="text-primary hover:underline"
               onClick={() => setIsOpen(false)}
             >
               Terms of Service
             </Link>
             , and{" "}
-            <Link 
-              to="/acceptable-use-policy" 
+            <Link
+              to="/acceptable-use-policy"
               className="text-primary hover:underline"
               onClick={() => setIsOpen(false)}
             >
