@@ -26,7 +26,7 @@ const FirstLaunchModal = () => {
 
   return (
     <Dialog open={isOpen} onOpenChange={() => {}}>
-      <DialogContent className="sm:max-w-[400px] max-w-[340px] mx-4">
+      <DialogContent className="sm:max-w-[380px] max-w-[320px] mx-auto my-auto">
         <DialogHeader>
           <DialogTitle className="text-center text-lg font-semibold">
             Welcome to Our App
