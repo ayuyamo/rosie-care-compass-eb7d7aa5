@@ -14,6 +14,10 @@ import PoemsCollection from "./pages/PoemsCollection";
 import NotFound from "./pages/NotFound";
 import Stories from "./pages/Stories";
 import ResourcesDetail from "./pages/ResourcesDetail";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
+import AcceptableUsePolicy from "./pages/AcceptableUsePolicy";
+import FirstLaunchModal from "./components/FirstLaunchModal";
 
 const queryClient = new QueryClient();
 
@@ -23,6 +27,7 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
+        <FirstLaunchModal />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/chapters" element={<Chapters />} />
@@ -33,6 +38,9 @@ const App = () => (
           <Route path="/community" element={<Community />} />
           <Route path="/resources" element={<Resources />} />
           <Route path="/book-details/:bookId" element={<BookDetails />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/terms-of-service" element={<TermsOfService />} />
+          <Route path="/acceptable-use-policy" element={<AcceptableUsePolicy />} />
           {/* <Route path="/poems-collection" element={<PoemsCollection />} /> */}
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
