@@ -63,6 +63,7 @@ const Index = () => {
   }, []);
 
   const [results, setResults] = useState<SearchResults | null>(null);
+  const [inputQuery, setInputQuery] = useState('');
   const [query, setQuery] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
@@ -124,11 +125,12 @@ const Index = () => {
               type="text"
               autoFocus
               placeholder="Search..."
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
+              value={inputQuery}
+              onChange={(e) => setInputQuery(e.target.value)}
               onKeyDown={async (e) => {
                 if (e.key === 'Enter') {
-                  const results = await searchContent(query);
+                  setQuery(inputQuery);
+                  const results = await searchContent(inputQuery);
                   setResults(results);
                   console.log('results: ', results)
                 }
