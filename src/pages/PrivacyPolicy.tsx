@@ -4,7 +4,6 @@ import { Button } from "@/components/ui/button";
 import MarkdownViewer from "@/components/MarkDownViewer";
 
 const PrivacyPolicy = () => {
-  const timestamp = Date.now();
   return (
     <div className="min-h-screen bg-background p-4">
       <div className="max-w-3xl mx-auto">
@@ -16,7 +15,7 @@ const PrivacyPolicy = () => {
             </Button>
           </Link>
         </div>
-        <MarkdownViewer fileUrl={`https://ovexmcodlyhefuhmdfez.supabase.co/storage/v1/object/public/policies//privacy-policy.md?v=${timestamp}`} />
+        <MarkdownViewer fileUrl='https://ovexmcodlyhefuhmdfez.supabase.co/storage/v1/object/public/policies//privacy-policy.md' />
       </div>
     </div>
   );
