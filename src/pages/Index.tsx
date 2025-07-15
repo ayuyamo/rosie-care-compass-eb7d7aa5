@@ -130,12 +130,14 @@ const Index = () => {
                 if (e.key === 'Enter') {
                   const results = await searchContent(query);
                   setResults(results);
+                  console.log('results: ', results)
                 }
               }}
               className="w-full p-4 rounded-lg text-lg shadow-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#a5aba0]"
             />
           </div>
-          {results && (
+          {results ? (
+
             <div className='mt-6 bg-white p-4 rounded shadow max-h-[60vh] overflow-y-auto w-[340px] md:w-[400px] lg:w-[470px]'>
               {Object.entries(results).map(([table, items]) => {
                 if (!items || items.length === 0) return null;
@@ -179,6 +181,10 @@ const Index = () => {
                   </div>
                 )
               })}
+            </div>
+          ) : (
+            <div className='mt-6 bg-white p-4 rounded shadow max-h-[60vh] overflow-y-auto w-[340px] md:w-[400px] lg:w-[470px]'>
+              <h2>No results found.</h2>
             </div>
           )}
         </div>

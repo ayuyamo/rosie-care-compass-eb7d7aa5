@@ -1,13 +1,7 @@
 import { supabase } from './supabase/supabaseClient';
 
 export async function searchContent(query: string) {
-  if (!query.trim())
-    return {
-      chapters: [],
-      books: [],
-      stories: [],
-      topics: [],
-    };
+  if (!query.trim()) return null;
 
   const pattern = `%${query}%`;
   const [chapters, books, topics, stories] = await Promise.all([
@@ -31,10 +25,13 @@ export async function searchContent(query: string) {
       .or(`title.ilike.${pattern},content.ilike.${pattern}`),
   ]);
 
-  return {
+  const results = {
     chapters: chapters.data || [],
     books: books.data || [],
     topics: topics.data || [],
     stories: stories.data || [],
   };
+  if (Object.values(results).every((item) => item.length === 0)) return null;
+
+  return results;
 }
