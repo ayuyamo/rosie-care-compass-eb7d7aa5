@@ -11,11 +11,61 @@ import CommunityHighlights from "@/components/CommunityHighlights";
 import OfficialBookSection from "@/components/OfficialBookSection";
 import PoetryCollectionSection from "@/components/PoetryCollectionSection";
 import { injectElevenLabsWidget } from "@/lib/elevenlabsWidget";
+import { searchContent } from "@/lib/searchContent";
+type SearchResults = {
+  chapters: any[];
+  books: any[];
+  topics: any[];
+  stories: any[];
+};
 
 const Index = () => {
+  function highlightMatch(text: string, query: string) {
+    if (!query) return text;
+    const regex = new RegExp(`(${query})`, 'gi');
+    return text.split(regex).map((part, i) =>
+      part.toLowerCase() === query.toLowerCase() ?
+        (<mark key={i} className='bg-yellow-200'>{part}</mark>) : (part)
+    )
+  }
+  function highlightSnippet(content: string, query: string, radius = 40): JSX.Element {
+    if (!content || !query) return <>{content}</>;
+
+    const lowerContent = content.toLowerCase();
+    const lowerQuery = query.toLowerCase();
+    const matchIndex = lowerContent.indexOf(lowerQuery);
+
+    if (matchIndex === -1) {
+      // no match, fallback
+      return <>{content.slice(0, 80)}...</>;
+    }
+
+    const start = Math.max(0, matchIndex - radius);
+    const end = Math.min(content.length, matchIndex + query.length + radius);
+
+    const before = content.slice(start, matchIndex);
+    const match = content.slice(matchIndex, matchIndex + query.length);
+    const after = content.slice(matchIndex + query.length, end);
+
+    return (
+      <>
+        {start > 0 && '...'}
+        {before}
+        <span className="bg-yellow-200 font-semibold text-black">{match}</span>
+        {after}
+        {end < content.length && '...'}
+      </>
+    );
+  }
+
   useEffect(() => {
     injectElevenLabsWidget();
   }, []);
+
+  const [results, setResults] = useState<SearchResults | null>(null);
+  const [query, setQuery] = useState('');
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
 
   return (
     <div className="min-h-screen bg-white relative overflow-hidden">
@@ -42,7 +92,11 @@ const Index = () => {
           </div>
 
           <div className="flex items-center space-x-3">
-            <button className="p-2 bg-[#a5aba0] rounded-lg">
+            <button
+              className="p-2 bg-[#a5aba0] rounded-lg"
+              onClick={() => setIsSearchOpen(true)}
+              aria-label="Open Search"
+            >
               <Search className="h-5 w-5 text-white" />
             </button>
             <button className="p-2 bg-gray-100 rounded-lg">
@@ -52,6 +106,83 @@ const Index = () => {
         </div>
       </header>
 
+      {/* Overlay */}
+      {isSearchOpen && (
+        <div className="fixed inset-0 z-50 bg-black bg-opacity-60 flex flex-col items-center justify-center">
+          <div className="relative w-[340px] md:w-[400px] lg:w-[500px] px-6">
+            {/* Close Button */}
+            <button
+              onClick={() => setIsSearchOpen(false)}
+              className="absolute -top-10 right-0 text-white"
+              aria-label="Close"
+            >
+              <X className="h-6 w-6" />
+            </button>
+
+            {/* Search Bar */}
+            <input
+              type="text"
+              autoFocus
+              placeholder="Search..."
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              onKeyDown={async (e) => {
+                if (e.key === 'Enter') {
+                  const results = await searchContent(query);
+                  setResults(results);
+                }
+              }}
+              className="w-full p-4 rounded-lg text-lg shadow-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#a5aba0]"
+            />
+          </div>
+          {results && (
+            <div className='mt-6 bg-white p-4 rounded shadow max-h-[60vh] overflow-y-auto w-[340px] md:w-[400px] lg:w-[470px]'>
+              {Object.entries(results).map(([table, items]) => {
+                if (!items || items.length === 0) return null;
+                return (
+                  <div key={table} className='mb-4'>
+                    <h2 className='text-lg font-semibold capitalize'>{table}</h2>
+                    <ul className='list-none ml-6'>
+                      {items.map((item, i) => {
+                        return (
+                          <li key={item.id || i} className="text-sm border-b pb-2">
+                            {table === "chapters" && (
+                              <>
+                                <p className="font-semibold">{highlightMatch(item.name, query)}</p>
+                                <p className="text-gray-600">{highlightMatch(item.description, query)}</p>
+                              </>
+                            )}
+
+                            {table === "books" && (
+                              <>
+                                <p className="font-semibold">{highlightMatch(item.title, query)}</p>
+                                <p className="text-gray-600 italic">by {highlightMatch(item.author, query)}</p>
+                              </>
+                            )}
+
+                            {table === "stories" && (
+                              <>
+                                <p className="font-semibold">{highlightMatch(item.title, query)}</p>
+                                <p className="text-gray-600">{highlightSnippet(item.content, query)}...</p>
+                              </>
+                            )}
+
+                            {table === "topics" && (
+                              <>
+                                <p className="font-semibold">{highlightMatch(item.name, query)}</p>
+                              </>
+                            )}
+                          </li>
+                        )
+                      })}
+                    </ul>
+                  </div>
+                )
+              })}
+            </div>
+          )}
+        </div>
+      )}
       {/* Hero Section with Profile Picture */}
       <section className="relative z-10 py-8 animate-fade-in duration-500">
         <div className="max-w-md mx-auto px-4">
