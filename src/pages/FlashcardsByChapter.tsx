@@ -76,7 +76,7 @@ const FlashcardsByChapter = () => {
                 </h1>
             </header>
             <div>
-                <div ref={barRef} className={`flex items-center gap-2 transition-all duration-1000 ${barVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+                <div ref={barRef} className={`flex items-center gap-2 transition-all duration-1000 ${barVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
                     <div className='flex-1 bg-gray-200 rounded-full h-4'>
                         <div className='bg-green-500 h-4 rounded-full transition-all duration-500'
                             style={{ width: `${progress}%` }}
