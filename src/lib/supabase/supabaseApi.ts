@@ -59,6 +59,20 @@ export const fetchChapterById = async (chapterId: string) => {
   return data;
 };
 
+export const fetchFlashcardsByChapterId = async (chapterId: string) => {
+  const { data, error } = await supabase
+    .from('flashcards')
+    .select('*')
+    .eq('chapter_id', chapterId);
+
+  if (error) {
+    console.error('Error fetching flashcards: ', error);
+    return null;
+  }
+
+  return data;
+};
+
 export const fetchTopicById = async (topicId: string) => {
   const { data, error } = await supabase
     .from('topics')

@@ -12,6 +12,8 @@ import OfficialBookSection from "@/components/OfficialBookSection";
 import PoetryCollectionSection from "@/components/PoetryCollectionSection";
 import { injectElevenLabsWidget } from "@/lib/elevenlabsWidget";
 import { searchContent } from "@/lib/searchContent";
+import { Link } from "react-router-dom";
+
 type SearchResults = {
   chapters: any[];
   books: any[];
@@ -151,30 +153,32 @@ const Index = () => {
                         return (
                           <li key={item.id || i} className="text-sm border-b pb-2">
                             {table === "chapters" && (
-                              <>
+                              <Link
+                                to={`/chapters/${item.id}/topics`}
+                              >
                                 <p className="font-semibold">{highlightMatch(item.name, query)}</p>
                                 <p className="text-gray-600">{highlightMatch(item.description, query)}</p>
-                              </>
+                              </Link>
                             )}
 
                             {table === "books" && (
-                              <>
+                              <Link to={`/book-details/${item.id}`}>
                                 <p className="font-semibold">{highlightMatch(item.title, query)}</p>
                                 <p className="text-gray-600 italic">by {highlightMatch(item.author, query)}</p>
-                              </>
+                              </Link>
                             )}
 
                             {table === "stories" && (
-                              <>
+                              <Link to={`/chapters/${item.chapter_id}/topics/${item.topic_id}/stories?storyId=${item.id}`}>
                                 <p className="font-semibold">{highlightMatch(item.title, query)}</p>
                                 <p className="text-gray-600">{highlightSnippet(item.content, query)}...</p>
-                              </>
+                              </Link>
                             )}
 
                             {table === "topics" && (
-                              <>
+                              <Link to={`/chapters/${item.chapter_id}/topics/${item.id}/stories`}>
                                 <p className="font-semibold">{highlightMatch(item.name, query)}</p>
-                              </>
+                              </Link>
                             )}
                           </li>
                         )

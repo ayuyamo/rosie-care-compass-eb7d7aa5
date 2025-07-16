@@ -48,11 +48,11 @@ const Stories = () => {
                     console.log("Fetching stories by topic ID:", topicId);
                     const stories = await fetchStoriesByTopicId(topicId);
                     const resources = await fetchResourcesByTopicId(topicId);
-                    const section = await fetchTopicById(topicId);
-                    setTopicName(section.name);
+                    const topics = await fetchTopicById(topicId);
+                    setTopicName(topics.name);
                     setStories(stories || []);
                     setResources(resources || []);
-                    setBackgroundImage(section.image_url || null);
+                    setBackgroundImage(topics.image_url || null);
                 }
             } catch (err) {
                 console.error("Failed to load topic or sections:", err);
@@ -214,14 +214,12 @@ const Stories = () => {
                                 console.log("Scrolling to story:", story.id);
                                 // Scroll when the element is actually mounted in the DOM
                                 el.scrollIntoView({ behavior: "smooth", block: "center" });
-                                el.classList.add("highlight");
-                                setTimeout(() => el.classList.remove("highlight"), 2000);
                             }
                         };
 
                         return (
                             <Collapsible id={`story-${story.id}`} key={story.id} open={isOpen} onOpenChange={() => toggleStory(story.id)}>
-                                <article className={`
+                                <article ref={storyTargetScroll} className={`
                                     bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-700
                                     ${gridVisible && hasLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}
                                 `}
@@ -230,7 +228,7 @@ const Stories = () => {
                                     }}>
 
                                     {/* Story Header */}
-                                    <div ref={storyTargetScroll} className="px-6 py-4 border-b border-gray-100">
+                                    <div className="px-6 py-4 border-b border-gray-100">
                                         <div className="flex items-center justify-between">
                                             <div className="flex-1">
                                                 <h2 className="text-xl font-bold text-[#232323] mb-2">

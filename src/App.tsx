@@ -18,6 +18,8 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import AcceptableUsePolicy from "./pages/AcceptableUsePolicy";
 import FirstLaunchModal from "./components/FirstLaunchModal";
+import Flashcards from "./pages/Flashcards";
+import FlashcardsByChapter from "./pages/FlashcardsByChapter";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +43,8 @@ const App = () => (
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/terms-of-service" element={<TermsOfService />} />
           <Route path="/acceptable-use-policy" element={<AcceptableUsePolicy />} />
+          <Route path="/flashcards" element={<Flashcards />} />
+          <Route path="/flashcards/:chapterId" element={<FlashcardsByChapter />} />
           {/* <Route path="/poems-collection" element={<PoemsCollection />} /> */}
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
