@@ -196,7 +196,7 @@ const Stories = () => {
                             </Button>
                         </Link>
                         <div>
-                            <h1 className="text-2xl font-bold text-black">{topicName}</h1>
+                            <h1 className="text-2xl font-bold text-black">Topic: <span className='italic'>{topicName}</span></h1>
                             <p className="text-sm text-gray-700 mt-1">{stories.length} stories</p>
                         </div>
                     </div>

@@ -186,8 +186,9 @@ const Topics = () => {
               <ArrowLeft className="h-5 w-5" />
             </Button>
           </Link>
-          <div>
+          <div className="flex flex-col">
             <h1 className="text-2xl font-bold text-black">Chapter: <span className="italic">{chapterName}</span></h1>
+            <h2 className="text-sm text-gray-700">{topics.length} topics</h2>
           </div>
         </header>
 
@@ -217,11 +218,9 @@ const Topics = () => {
                 <CardContent className="p-6">
                   <div className="space-y-4">
                     {/* Header section with title */}
-                    <div>
-                      <h3 className="text-lg font-bold mb-2" style={{ color: '#232323' }}>
-                        Topic: {topic.name}
-                      </h3>
-                    </div>
+                    <h3 className="text-lg font-bold mb-2" style={{ color: '#232323' }}>
+                      Topic: {topic.name}
+                    </h3>
                     <div className="mb-4">
                       <div className="flex flex-wrap items-center gap-2">
                         <p className="text-xs font-medium text-gray-500 mr-2 leading-none pt-[2px]">
