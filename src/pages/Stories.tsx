@@ -22,6 +22,7 @@ const Stories = () => {
     const [openStories, setOpenStories] = useState<string[]>([]);
     const [scrollTargetId, setScrollTargetId] = useState<string | null>(null);
     const [offsetY, setOffsetY] = useState(0);
+    const [intro, setIntro] = useState('');
 
     const toggleStory = (storyId: string) => {
         setOpenStories(prev =>
@@ -42,6 +43,7 @@ const Stories = () => {
                 if (passedTopic) {
                     console.log("Using passed topic:", passedTopic);
                     setTopicName(passedTopic.name);
+                    setIntro(passedTopic.intro);
                     setStories(passedTopic.stories || []);
                     setResources(passedTopic.resources || []);
                     setBackgroundImage(passedTopic.image_url || null);
@@ -49,11 +51,12 @@ const Stories = () => {
                     console.log("Fetching stories by topic ID:", topicId);
                     const stories = await fetchStoriesByTopicId(topicId);
                     const resources = await fetchResourcesByTopicId(topicId);
-                    const topics = await fetchTopicById(topicId);
-                    setTopicName(topics.name);
+                    const topic = await fetchTopicById(topicId);
+                    setIntro(topic.intro);
+                    setTopicName(topic.name);
                     setStories(stories || []);
                     setResources(resources || []);
-                    setBackgroundImage(topics.image_url || null);
+                    setBackgroundImage(topic.image_url || null);
                 }
             } catch (err) {
                 console.error("Failed to load topic or sections:", err);
@@ -158,6 +161,7 @@ const Stories = () => {
 
     const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation();
     const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
+    const { ref: imgRef, isVisible: imgVisible } = useScrollAnimation();
 
     const handleShare = async ({ title, text, url }) => {
         if (navigator.share) {
@@ -191,8 +195,6 @@ const Stories = () => {
                     ref={headerRef}
                     className={`relative flex items-center mb-6 p-6 rounded-lg overflow-hidden transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
                 >
-                    {/* Half-saturated overlay */}
-                    <div className="absolute inset-0 bg-white/60 backdrop-blur-sm"></div>
 
                     {/* Content */}
                     <div className="relative z-10 flex items-center w-full">
@@ -208,13 +210,23 @@ const Stories = () => {
                     </div>
                 </header>
 
-                <div className="h-48 mb-8" style={{
-                    backgroundImage: `url(${backgroundImage})`,
-                    backgroundSize: 'auto 200%',
-                    backgroundRepeat: 'no-repeat',
-                    backgroundPosition: `center ${-offsetY * 0.5}px`,
-                    transition: 'background-position 0.1s ease-out',
-                }}></div>
+                <div ref={imgRef} className={`relative mb-8 p-10 flex items-center justify-center transition-all duration-1000 background-position 0.1s ease-out ${imgVisible && hasLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+                    style={{
+                        backgroundImage: `url(${backgroundImage})`,
+                        backgroundSize: 'auto 200%',
+                        backgroundRepeat: 'no-repeat',
+                        backgroundPosition: `center ${-offsetY * 0.5}px`,
+                    }}
+                >
+                    {/* Overlay for blur + transparency */}
+                    <div className="absolute inset-0 bg-black/50 backdrop-blur-lg z-0" />
+                    {/* Text content stays above */}
+                    <div className="relative z-10 text-white text-sm max-w-md italic text-center space-y-4">
+                        <div className="w-16 h-px bg-white mx-auto" />
+                        <p className="leading-relaxed">{intro}</p>
+                        <div className="w-16 h-px bg-white mx-auto" />
+                    </div>
+                </div>
 
                 <div ref={gridRef} className="space-y-8">
                     {stories.map((story, index) => {
