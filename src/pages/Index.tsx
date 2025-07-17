@@ -13,6 +13,7 @@ import PoetryCollectionSection from "@/components/PoetryCollectionSection";
 import { injectElevenLabsWidget } from "@/lib/elevenlabsWidget";
 import { searchContent } from "@/lib/searchContent";
 import { Link } from "react-router-dom";
+import { Typewriter } from "react-simple-typewriter";
 
 type SearchResults = {
   chapters: any[];
@@ -68,6 +69,7 @@ const Index = () => {
   const [inputQuery, setInputQuery] = useState('');
   const [query, setQuery] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
 
   return (
@@ -96,18 +98,37 @@ const Index = () => {
 
           <div className="flex items-center space-x-3">
             <button
-              className="p-2 bg-[#a5aba0] rounded-lg"
+              className="p-2 bg-[#a5aba0] rounded-lg active:scale-105"
               onClick={() => setIsSearchOpen(true)}
               aria-label="Open Search"
             >
               <Search className="h-5 w-5 text-white" />
             </button>
-            <button className="p-2 bg-gray-100 rounded-lg">
-              <Menu className="h-5 w-5 text-[#373618]" />
-            </button>
+            <div className='relative inline-block space-y-3'>
+
+              <button className="p-2 bg-gray-100 rounded-lg active:scale-105"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+              >
+                <Menu className="h-5 w-5 text-[#373618]" />
+              </button>
+              {isMenuOpen && (
+                <div className='absolute right-0 mt-2 w-40 bg-white border rounded-lg shadow-lg z-50 p-1'>
+                  <a href="/privacy-policy" className='block px-4 py-2 hover:bg-gray-100 text-gray-800'>
+                    Privacy Policy
+                  </a>
+                  <a href="/terms-of-service" className='block px-4 py-2 hover:bg-gray-100 text-gray-800'>
+                    Terms of Service
+                  </a>
+                  <a href="/acceptable-use-policy" className='block px-4 py-2 hover:bg-gray-100 text-gray-800'>
+                    Acceptable Use Policy
+                  </a>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </header>
+
 
       {/* Overlay */}
       {isSearchOpen && (
@@ -200,42 +221,41 @@ const Index = () => {
         <div className="max-w-md mx-auto px-4">
           <div className="text-center">
             {/* Profile Card */}
-            <div className="bg-white/70 backdrop-blur-md border border-gray-200 rounded-3xl p-6 shadow-2xl">
-              <div className="relative mb-4">
-                <div className="w-24 h-24 rounded-full mx-auto border-4 border-[#e4e8e1] shadow-lg flex items-center justify-center overflow-hidden">
-                  <img
-                    src="/ChatGPT-rosie.png"
-                    alt="Rosie Care Bot"
-                    className="w-full h-full object-cover rounded-full"
+            <div className="relative bg-[url('/ChatGPT-rosie.png')] bg-cover bg-center rounded-3xl shadow-2xl overflow-hidden">
+              {/* Frosted glass overlay */}
+              <div className="absolute inset-0 bg-white/60 backdrop-blur-2xl rounded-3xl pointer-events-none" />
+              {/* Bottom white overlay */}
+              <div className="absolute bottom-0 h-[75%] w-full bg-white/70 rounded-b-3xl" />
+
+              {/* Foreground content */}
+              <div className="relative p-6">
+                {/* Avatar */}
+                <div className="mb-4">
+                  <div className="w-24 h-24 rounded-full mx-auto border-4 border-[#e4e8e1] shadow-lg flex items-center justify-center overflow-hidden">
+                    <img
+                      src="/ChatGPT-rosie.png"
+                      alt="Rosie Care Bot"
+                      className="w-full h-full object-cover rounded-full"
+                    />
+                  </div>
+                </div>
+                {/* Text content */}
+                <h2 className="text-2xl font-black text-[#232323] mb-2 text-center">
+                  Welcome to Your Journey
+                </h2>
+                <p className="text-[#373618] mb-4 text-sm leading-relaxed text-center">
+                  <Typewriter
+                    words={['I\'m Rosie, your AI guide for caregiving. Let\'s navigate this path together with stories, wisdom, and support.']}
+                    cursor
+                    cursorStyle="_"
+                    typeSpeed={50}
+                    deleteSpeed={50}
+                    delaySpeed={1000}
                   />
-                </div>
+                </p>
               </div>
-
-              <h2 className="text-2xl font-black text-[#232323] mb-2">
-                Welcome to Your Journey
-              </h2>
-
-              <p className="text-[#373618] mb-4 text-sm leading-relaxed">
-                I'm Rosie, your AI guide for caregiving. Let's navigate this path together with stories, wisdom, and support.
-              </p>
-              <Button
-                className="relative w-full text-[#18453B] font-bold py-4 px-6 rounded-2xl mb-3 shadow-2xl transform hover:scale-[1.02] transition-all duration-300 bg-[url('/ChatGPT-rosie.png')] bg-cover bg-center border-0 overflow-hidden"
-              >
-                {/* White transparent overlay */}
-                <div className="absolute inset-0 bg-white/60 rounded-2xl backdrop-blur-lg pointer-events-none" />
-
-                {/* Content on top */}
-                <div className="relative z-10 flex items-center justify-center">
-                  <Zap className="mr-3 h-5 w-5" />
-                  <span className="text-base">Start Your Journey</span>
-                </div>
-              </Button>
-
-              <Button className="w-full font-bold py-4 px-6 rounded-2xl shadow-lg bg-white hover:bg-white transform hover:scale-[1.02] transition-all duration-300 text-[#18453B] border-2 border-[#18453B]">
-                <Users className="mr-3 h-5 w-5" />
-                <span className="text-base">Join Community</span>
-              </Button>
             </div>
+
           </div>
         </div>
       </section>
