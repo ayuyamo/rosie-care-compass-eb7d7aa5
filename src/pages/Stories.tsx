@@ -210,10 +210,12 @@ const Stories = () => {
                     }}
                 >
                     <div className="absolute inset-0 bg-black/50 backdrop-blur-lg z-0" />
-                    <div className="relative z-10 text-white text-sm max-w-md italic text-center space-y-4">
-                        <div className="w-16 h-px bg-white mx-auto" />
-                        <p className="leading-relaxed">{intro}</p>
-                        <div className="w-16 h-px bg-white mx-auto" />
+                    <div className="relative z-10 p-2 text-white text-sm max-w-md italic text-center">
+                        <div className="inline-block border-t border-white w-14 mx-auto" />
+                        <div className="mt-1 px-4 py-2 inline-block">
+                            {intro}
+                        </div>
+                        <div className="inline-block border-b border-white w-14 mx-auto" />
                     </div>
                 </div>
 
