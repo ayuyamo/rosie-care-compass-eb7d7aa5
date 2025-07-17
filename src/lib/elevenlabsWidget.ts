@@ -113,9 +113,3 @@ export function injectElevenLabsWidget() {
   wrapper.appendChild(widget);
   document.body.appendChild(wrapper);
 }
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', injectElevenLabsWidget);
-} else {
-  injectElevenLabsWidget();
-}

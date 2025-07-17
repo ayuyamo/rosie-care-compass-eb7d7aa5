@@ -67,7 +67,7 @@ const Flashcards = () => {
     const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation();
     const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
     return (
-        <div className="min-h-screen bg-[#f8f9fa] p-4 pb-24">
+        <div className="min-h-screen bg-[#f8f9fa] p-4 pb-40">
             <div className="max-w-md mx-auto">
                 <header ref={headerRef} className={`flex items-center mb-6 transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
                     <Link to="/" className="mr-4">
@@ -75,9 +75,12 @@ const Flashcards = () => {
                             <ArrowLeft className="h-5 w-5" />
                         </Button>
                     </Link>
-                    <h1 className="text-2xl font-bold text-black">
-                        Flashcards by Chapters
-                    </h1>
+                    <div className='flex flex-col'>
+                        <h1 className="text-2xl font-bold text-black">
+                            Flashcards by Chapters
+                        </h1>
+                        <h2 className="text-md italic text-gray-700">Ask these questions to bond with your loved ones.</h2>
+                    </div>
                 </header>
 
                 <div ref={gridRef} className="space-y-4">

@@ -21,6 +21,7 @@ const Stories = () => {
     const [hasLoaded, setHasLoaded] = useState(false);
     const [openStories, setOpenStories] = useState<string[]>([]);
     const [scrollTargetId, setScrollTargetId] = useState<string | null>(null);
+    const [offsetY, setOffsetY] = useState(0);
 
     const toggleStory = (storyId: string) => {
         setOpenStories(prev =>
@@ -112,6 +113,13 @@ const Stories = () => {
         };
     }, []);
 
+    useEffect(() => {
+        const handleScroll = () => setOffsetY(window.scrollY);
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [])
+
+
     // Auto-scroll to the story if storyId is in the URL
     useEffect(() => {
         if (!hasLoaded) return;
@@ -176,11 +184,7 @@ const Stories = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[#f8f9fa] p-4 pb-24" style={{
-            backgroundImage: `url(${backgroundImage})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center'
-        }}>
+        <div className="min-h-screen bg-[#f8f9fa] p-4 pb-24">
             <ToastContainer position="bottom-center" autoClose={2000} hideProgressBar={false} closeOnClick pauseOnFocusLoss draggable pauseOnHover transition={Slide} />
             <div className="max-w-2xl mx-auto">
                 <header
@@ -204,6 +208,14 @@ const Stories = () => {
                     </div>
                 </header>
 
+                <div className="h-48 mb-8" style={{
+                    backgroundImage: `url(${backgroundImage})`,
+                    backgroundSize: 'auto 200%',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundPosition: `center ${-offsetY * 0.5}px`,
+                    transition: 'background-position 0.1s ease-out',
+                }}></div>
+
                 <div ref={gridRef} className="space-y-8">
                     {stories.map((story, index) => {
                         const randomColor = getConsistentColor(story.title);
@@ -219,7 +231,7 @@ const Stories = () => {
 
                         return (
                             <Collapsible id={`story-${story.id}`} key={story.id} open={isOpen} onOpenChange={() => toggleStory(story.id)}>
-                                <article ref={storyTargetScroll} className={`
+                                <article className={`
                                     bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-700
                                     ${gridVisible && hasLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}
                                 `}
@@ -228,7 +240,7 @@ const Stories = () => {
                                     }}>
 
                                     {/* Story Header */}
-                                    <div className="px-6 py-4 border-b border-gray-100">
+                                    <div ref={storyTargetScroll} className="px-6 py-4 border-b border-gray-100">
                                         <div className="flex items-center justify-between">
                                             <div className="flex-1">
                                                 <h2 className="text-xl font-bold text-[#232323] mb-2">

@@ -9,6 +9,7 @@ import {
   DialogOverlay
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { injectElevenLabsWidget } from "@/lib/elevenlabsWidget";
 
 const FirstLaunchModal = () => {
   const location = useLocation();
@@ -28,11 +29,20 @@ const FirstLaunchModal = () => {
     }
   }, [location]);
 
+  useEffect(() => {
+    const hasAgreed = localStorage.getItem("termsAgreed");
+    if (hasAgreed === "true") {
+      injectElevenLabsWidget(); // Safe to load
+    }
+  }, []);
+
 
   const handleAgree = () => {
     localStorage.setItem("termsAgreed", "true");
     setIsOpen(false);
+    injectElevenLabsWidget();
   };
+
 
   return (
     <Dialog open={isOpen} onOpenChange={() => { }}>
@@ -42,7 +52,6 @@ const FirstLaunchModal = () => {
             Welcome to Our App
           </DialogTitle>
         </DialogHeader>
-
         <div className="py-4 text-center">
           <p className="text-sm text-muted-foreground leading-relaxed">
             By using this app, you agree to our{" "}

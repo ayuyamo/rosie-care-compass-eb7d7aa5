@@ -10,7 +10,6 @@ import { CreativeStorySection } from "@/components/CreativeStorySection";
 import CommunityHighlights from "@/components/CommunityHighlights";
 import OfficialBookSection from "@/components/OfficialBookSection";
 import PoetryCollectionSection from "@/components/PoetryCollectionSection";
-import { injectElevenLabsWidget } from "@/lib/elevenlabsWidget";
 import { searchContent } from "@/lib/searchContent";
 import { Link } from "react-router-dom";
 import { Typewriter } from "react-simple-typewriter";
@@ -61,10 +60,6 @@ const Index = () => {
     );
   }
 
-  useEffect(() => {
-    injectElevenLabsWidget();
-  }, []);
-
   const [results, setResults] = useState<SearchResults | null>(null);
   const [inputQuery, setInputQuery] = useState('');
   const [query, setQuery] = useState('');
@@ -73,7 +68,7 @@ const Index = () => {
 
 
   return (
-    <div className="min-h-screen bg-white relative overflow-hidden">
+    <div className="min-h-screen bg-white relative overflow-hidden pb-24">
       {/* Mobile App Header */}
       <header className="relative z-50 p-4 animate-fade-in bg-white/90 backdrop-blur-md border-b border-gray-200/30">
         <div className="flex items-center justify-between max-w-md mx-auto">
@@ -245,12 +240,14 @@ const Index = () => {
                 </h2>
                 <p className="text-[#373618] mb-4 text-sm leading-relaxed text-center">
                   <Typewriter
-                    words={['I\'m Rosie, your AI guide for caregiving. Let\'s navigate this path together with stories, wisdom, and support.']}
+                    words={['I\'m Rosie, your AI guide for caregiving.',
+                      '',
+                      'Let\'s navigate this path together with stories, wisdom, and support.']}
                     cursor
                     cursorStyle="_"
                     typeSpeed={50}
                     deleteSpeed={50}
-                    delaySpeed={1000}
+                    delaySpeed={1500}
                   />
                 </p>
               </div>
@@ -286,8 +283,6 @@ const Index = () => {
       </div> */}
 
       <BottomNavigation />
-      {/* Bottom spacing for fixed nav */}
-      <div className="h-20"></div>
     </div>
   );
 };

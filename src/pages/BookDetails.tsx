@@ -94,7 +94,7 @@ const BookDetails = () => {
 
 
   return (
-    <div className="min-h-screen bg-[#f8f9fa] p-4 pb-24">
+    <div className="min-h-screen bg-[#f8f9fa] p-4 pb-40">
       <div className="max-w-md mx-auto">
         <header ref={headerRef} className={`flex items-center mb-6 transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <Link to="/" className="mr-4">
