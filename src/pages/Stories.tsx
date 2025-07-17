@@ -116,13 +116,6 @@ const Stories = () => {
         };
     }, []);
 
-    useEffect(() => {
-        const handleScroll = () => setOffsetY(window.scrollY);
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, [])
-
-
     // Auto-scroll to the story if storyId is in the URL
     useEffect(() => {
         if (!hasLoaded) return;
@@ -195,7 +188,6 @@ const Stories = () => {
                     ref={headerRef}
                     className={`relative flex items-center mb-6 p-6 rounded-lg overflow-hidden transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
                 >
-
                     {/* Content */}
                     <div className="relative z-10 flex items-center w-full">
                         <Link to={`/chapters/${chapterId}/topics`} className="mr-4">
@@ -210,17 +202,14 @@ const Stories = () => {
                     </div>
                 </header>
 
-                <div ref={imgRef} className={`relative mb-8 p-10 flex items-center justify-center transition-all duration-1000 background-position 0.1s ease-out ${imgVisible && hasLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+                <div ref={imgRef} className={`relative mb-8 p-10 flex items-center justify-center transition-all duration-1000 ${imgVisible && hasLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
                     style={{
                         backgroundImage: `url(${backgroundImage})`,
-                        backgroundSize: 'auto 200%',
                         backgroundRepeat: 'no-repeat',
-                        backgroundPosition: `center ${-offsetY * 0.5}px`,
+                        backgroundPosition: 'center',
                     }}
                 >
-                    {/* Overlay for blur + transparency */}
                     <div className="absolute inset-0 bg-black/50 backdrop-blur-lg z-0" />
-                    {/* Text content stays above */}
                     <div className="relative z-10 text-white text-sm max-w-md italic text-center space-y-4">
                         <div className="w-16 h-px bg-white mx-auto" />
                         <p className="leading-relaxed">{intro}</p>
