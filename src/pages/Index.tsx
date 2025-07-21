@@ -10,6 +10,7 @@ import { CreativeStorySection } from "@/components/CreativeStorySection";
 import CommunityHighlights from "@/components/CommunityHighlights";
 import OfficialBookSection from "@/components/OfficialBookSection";
 import PoetryCollectionSection from "@/components/PoetryCollectionSection";
+import MusicSection from "@/components/MusicSection";
 import { searchContent } from "@/lib/searchContent";
 import { Link } from "react-router-dom";
 import { Typewriter } from "react-simple-typewriter";
@@ -265,6 +266,11 @@ const Index = () => {
       {/* Official Book Section */}
       <div className="animate-slide-up" style={{ animationDelay: '0.3s' }}>
         <OfficialBookSection />
+      </div>
+
+      {/* Music Section */}
+      <div className="animate-slide-up" style={{ animationDelay: '0.4s' }}>
+        <MusicSection />
       </div>
 
       {/* Poetry Collection Section */}
