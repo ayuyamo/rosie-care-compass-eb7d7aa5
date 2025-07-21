@@ -263,15 +263,15 @@ const Index = () => {
         <CreativeStorySection />
       </div>
 
-      {/* Official Book Section */}
+      {/* Music Section */}
       <div className="animate-slide-up" style={{ animationDelay: '0.3s' }}>
+        <MusicSection />
+      </div>
+      {/* Official Book Section */}
+      <div className="animate-slide-up" style={{ animationDelay: '0.4s' }}>
         <OfficialBookSection />
       </div>
 
-      {/* Music Section */}
-      <div className="animate-slide-up" style={{ animationDelay: '0.4s' }}>
-        <MusicSection />
-      </div>
 
       {/* Poetry Collection Section */}
       {/* <div className="animate-slide-up" style={{ animationDelay: '0.4s' }}>

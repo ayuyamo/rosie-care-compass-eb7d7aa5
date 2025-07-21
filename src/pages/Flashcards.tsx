@@ -88,7 +88,7 @@ const Flashcards = () => {
                                         <div className="space-y-4 flex justify-between">
                                             <div>
                                                 <h3 className="text-lg font-bold mb-2" style={{ color: '#232323' }}>
-                                                    {chapter.name}
+                                                    Chapter: <span className="italic">{chapter.name}</span>
                                                 </h3>
                                                 <p className="text-sm mb-4" style={{ color: '#373618' }}>
                                                     {chapter.description}
