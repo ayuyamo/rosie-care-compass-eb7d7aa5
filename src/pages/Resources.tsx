@@ -7,6 +7,7 @@ import BottomNavigation from "@/components/BottomNavigation";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useState, useEffect, useLayoutEffect } from "react";
 import { fetchTopicsByChapterId, subscribeToTableChanges, fetchStoriesByTopicId, fetchResourcesByTopicId, fetchChapters } from "@/lib/supabase/supabaseApi";
+import { getConsistentColor } from "@/lib/colors";
 
 const Resources = () => {
   const [chapters, setChapters] = useState([]);
@@ -85,21 +86,6 @@ const Resources = () => {
     }
   }, [chapters]);
 
-  const colors = [
-    "#d79a8c", "#367588", "#49796B", "#8F9779", "#5a7a85",
-    "#B8860B", "#8B4513", "#556B2F", "#800080", "#008080",
-    "#CD853F", "#4682B4", "#2E8B57", "#9932CC", "#20B2AA"
-  ];
-
-  const getConsistentColor = (key: string): string => {
-    let hash = 0;
-    for (let i = 0; i < key.length; i++) {
-      hash = key.charCodeAt(i) + ((hash << 5) - hash);
-    }
-    const index = Math.abs(hash) % colors.length;
-    return colors[index];
-  };
-
   const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation();
   const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
 
@@ -112,7 +98,10 @@ const Resources = () => {
               <ArrowLeft className="h-5 w-5" />
             </Button>
           </Link>
-          <h1 className="text-2xl font-bold text-black">Resources by Chapters</h1>
+          <div className="flex flex-col p-4">
+            <h1 className="text-2xl font-bold text-black">Resources</h1>
+            <h2 className="text-md italic text-gray-700">Helpful resources shared in each chapter</h2>
+          </div>
         </header>
 
         <div ref={gridRef} className="space-y-8">
@@ -181,11 +170,7 @@ const Resources = () => {
                       </div>
 
 
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-2" style={{ color: '#679aa3' }}>
-                          <Heart className="h-4 w-4" />
-                          <span className="text-xs">Helpful story</span>
-                        </div>
+                      <div className="flex items-center justify-end">
                         <Link to={`/chapters/${chapter.id}/resources/detail`}
                           state={{ chapter }}
                         >

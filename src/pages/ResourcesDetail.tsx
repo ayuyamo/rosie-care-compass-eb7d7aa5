@@ -101,20 +101,6 @@ const ResourcesDetail = () => {
     }
   }, [topics, chapterName]);
 
-  const colors = [
-    "#d79a8c", "#367588", "#49796B", "#8F9779", "#5a7a85",
-    "#B8860B", "#8B4513", "#556B2F", "#800080", "#008080",
-    "#CD853F", "#4682B4", "#2E8B57", "#9932CC", "#20B2AA"
-  ];
-
-  const getConsistentColor = (key: string): string => {
-    let hash = 0;
-    for (let i = 0; i < key.length; i++) {
-      hash = key.charCodeAt(i) + ((hash << 5) - hash);
-    }
-    const index = Math.abs(hash) % colors.length;
-    return colors[index];
-  };
 
   const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation();
   const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
@@ -136,7 +122,6 @@ const ResourcesDetail = () => {
 
         <div ref={gridRef} className="space-y-6">
           {topics.map((topic, index) => {
-            const randomColor = getConsistentColor(topic.name);
             return (
               <Card key={topic.id} className={`
                 bg-white/90 backdrop-blur-md shadow-lg overflow-hidden transition-all duration-700 hover:shadow-xl
@@ -160,7 +145,7 @@ const ResourcesDetail = () => {
                       </div>
 
                       <div className="flex-1 min-w-0">
-                        <h3 className="text-lg font-bold mb-2" style={{ color: '#232323' }}>
+                        <h3 className="text-lg font-bold" style={{ color: '#232323' }}>
                           Topic: {topic.name}
                         </h3>
                       </div>

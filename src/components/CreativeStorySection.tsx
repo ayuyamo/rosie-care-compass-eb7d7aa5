@@ -8,33 +8,8 @@ import { Link } from "react-router-dom";
 import { useState, useEffect, useLayoutEffect } from "react";
 import { subscribeToTableChanges } from "@/lib/supabase/supabaseApi";
 import { fetchChapters, fetchTopicsByChapterId } from "@/lib/supabase/supabaseApi";
+import { getConsistentColor } from "@/lib/colors";
 
-const colors = [
-  "#d79a8c", "#367588", "#49796B", "#8F9779", "#5a7a85",
-  "#B8860B", "#8B4513", "#556B2F", "#800080", "#008080",
-  "#CD853F", "#4682B4", "#2E8B57", "#9932CC", "#20B2AA"
-];
-
-// Mock images for story cards
-const mockImages = [
-  "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=400&h=300&fit=crop",
-  "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=300&fit=crop",
-  "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=300&fit=crop"
-];
-
-/**
- * Hash a string to a consistent index for color mapping.
- * @param key Any string like a name or ID
- * @returns A hex color string
- */
-const getConsistentColor = (key: string): string => {
-  let hash = 0;
-  for (let i = 0; i < key.length; i++) {
-    hash = key.charCodeAt(i) + ((hash << 5) - hash); // simple string hash
-  }
-  const index = Math.abs(hash) % colors.length;
-  return colors[index];
-};
 
 export const CreativeStorySection = () => {
   const [chapters, setChapters] = useState([]);
@@ -126,7 +101,6 @@ export const CreativeStorySection = () => {
         <div ref={gridRef} className="space-y-4">
           {chapters.slice(0, 3).map((chapter, index) => {
             const randomColor = getConsistentColor(chapter.name);
-            const mockImage = chapter.image_url || mockImages[index % mockImages.length];
             return (
               <Link
                 key={chapter.name}
@@ -150,7 +124,7 @@ export const CreativeStorySection = () => {
                   {/* Topic Image - Top Half */}
                   <div className="relative h-48 overflow-hidden">
                     <img
-                      src={mockImage}
+                      src={chapter.image_url}
                       alt={chapter.name}
                       className="w-full h-full object-cover"
                     />
@@ -199,12 +173,7 @@ export const CreativeStorySection = () => {
                         </div>
                       </div>
 
-
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-2" style={{ color: '#679aa3' }}>
-                          <Heart className="h-4 w-4" />
-                          <span className="text-xs">Helpful story</span>
-                        </div>
+                      <div className="flex justify-end">
                         <Button variant="ghost" size="sm" className="group/btn" style={{ color: randomColor }}>
                           View All {chapter.topics.length} Topics
                           <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />

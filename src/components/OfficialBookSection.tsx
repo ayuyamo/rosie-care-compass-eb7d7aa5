@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import { fetchBookDetails } from "@/lib/supabase/supabaseApi";
 import { subscribeToTableChanges } from "@/lib/supabase/supabaseApi";
 import { useEffect, useState, useLayoutEffect } from "react";
+import { getConsistentColor } from "@/lib/colors";
 
 const OfficialBookSection = () => {
   const [book, setBook] = useState(null);
@@ -84,15 +85,11 @@ const OfficialBookSection = () => {
                   </p>
                 </div>
 
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2 text-[#679aa3]">
-                    <Heart className="h-4 w-4" />
-                    <span className="text-xs">Helpful story</span>
-                  </div>
+                <div className="flex items-center justify-end">
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="group/btn text-blue-600 pointer-events-auto"
+                    className={`group/btn text-[${getConsistentColor(book?.title)}] pointer-events-auto`}
                   >
                     More Details
                     <ArrowRight className="ml-2 h-4 w-4 relative top-[1px] transition-transform group-hover/btn:translate-x-1" />

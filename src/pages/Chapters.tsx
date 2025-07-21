@@ -7,33 +7,11 @@ import BottomNavigation from "@/components/BottomNavigation";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { fetchTopicsByChapterId, subscribeToTableChanges, fetchChapters } from "@/lib/supabase/supabaseApi";
 import { useState, useEffect, useLayoutEffect } from "react";
+import { getConsistentColor } from "@/lib/colors";
 
 const Chapters = () => {
   const [chapters, setChapters] = useState([]);
   const [hasLoaded, setHasLoaded] = useState(false);
-
-  // Placeholder images for topics
-  const placeholderImages = [
-    "https://images.unsplash.com/photo-1649972904349-6e44c42644a7?w=400&h=200&fit=crop",
-    "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?w=400&h=200&fit=crop",
-    "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&h=200&fit=crop",
-    "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&h=200&fit=crop",
-    "https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=400&h=200&fit=crop",
-    "https://images.unsplash.com/photo-1581092795360-fd1ca04f0952?w=400&h=200&fit=crop",
-    "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=400&h=200&fit=crop",
-    "https://images.unsplash.com/photo-1472396961693-142e6e269027?w=400&h=200&fit=crop",
-    "https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=400&h=200&fit=crop",
-    "https://images.unsplash.com/photo-1465146344425-f00d5f5c8f07?w=400&h=200&fit=crop"
-  ];
-
-  const getTopicImage = (topicId: string) => {
-    let hash = 0;
-    for (let i = 0; i < topicId.length; i++) {
-      hash = topicId.charCodeAt(i) + ((hash << 5) - hash);
-    }
-    const index = Math.abs(hash) % placeholderImages.length;
-    return placeholderImages[index];
-  };
 
   useEffect(() => {
     // Subscribe to changes in the topics table
@@ -115,21 +93,6 @@ const Chapters = () => {
       });
     }
   }, [chapters]);
-
-  const colors = [
-    "#d79a8c", "#367588", "#49796B", "#8F9779", "#5a7a85",
-    "#B8860B", "#8B4513", "#556B2F", "#800080", "#008080",
-    "#CD853F", "#4682B4", "#2E8B57", "#9932CC", "#20B2AA"
-  ];
-
-  const getConsistentColor = (key: string): string => {
-    let hash = 0;
-    for (let i = 0; i < key.length; i++) {
-      hash = key.charCodeAt(i) + ((hash << 5) - hash);
-    }
-    const index = Math.abs(hash) % colors.length;
-    return colors[index];
-  };
 
   const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation();
   const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
@@ -216,16 +179,12 @@ const Chapters = () => {
                       </div>
 
 
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center space-x-2" style={{ color: '#679aa3' }}>
-                          <Heart className="h-4 w-4" />
-                          <span className="text-xs">Helpful story</span>
-                        </div>
+                      <div className="flex items-center justify-end">
                         <Link to={`/chapters/${chapter.id}/topics`}
                           state={{ chapter }}
                         >
                           <Button variant="ghost" size="sm" className="group/btn" style={{ color: randomColor }}>
-                            View All {chapter.topics.length} Topics
+                            View All {chapter.topics.length} {chapter.topics.length > 1 ? 'Topics' : 'Topic'}
                             <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
                           </Button>
                         </Link>
