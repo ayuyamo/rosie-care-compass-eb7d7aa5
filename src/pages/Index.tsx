@@ -7,9 +7,7 @@ import { Heart, BookOpen, Users, MessageCircle, Compass, Shield, Home, Scale, Ar
 import BottomNavigation from "@/components/BottomNavigation";
 import { FloatingModuleGrid } from "@/components/FloatingModuleGrid";
 import { CreativeStorySection } from "@/components/CreativeStorySection";
-import CommunityHighlights from "@/components/CommunityHighlights";
 import OfficialBookSection from "@/components/OfficialBookSection";
-import PoetryCollectionSection from "@/components/PoetryCollectionSection";
 import MusicSection from "@/components/MusicSection";
 import { searchContent } from "@/lib/searchContent";
 import { Link } from "react-router-dom";

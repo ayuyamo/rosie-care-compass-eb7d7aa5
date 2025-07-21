@@ -119,6 +119,16 @@ export const fetchBookChapters = async (bookId: string) => {
   return data;
 };
 
+export const fetchMusicInfo = async () => {
+  const { data, error } = await supabase
+    .from('music')
+    .select('name, icon_url, description, url')
+    .order('created_at', { ascending: true });
+
+  if (error) throw new Error(`Error fetching music info: ${error.message}`);
+  return data;
+};
+
 export const subscribeToTableChanges = (
   table: string,
   callback: (payload: any) => void

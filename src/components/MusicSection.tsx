@@ -1,34 +1,56 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Music, ExternalLink, Headphones, Play } from "lucide-react";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
+import { fetchMusicInfo, subscribeToTableChanges } from "@/lib/supabase/supabaseApi";
+import { useEffect, useState, useLayoutEffect } from "react";
 
 const MusicSection = () => {
-  const musicPlatforms = [
-    {
-      name: "Spotify",
-      icon: "https://img.icons8.com/?size=100&id=11116&format=png&color=000000",
-      description: "Curated playlists for caregiving moments",
-      url: "https://spotify.link/pJf1XMHj7Tb",
-      color: "bg-green-500"
-    },
-    {
-      name: "Apple Music",
-      icon: "https://img.icons8.com/?size=100&id=mpeojql23sni&format=png&color=000000",
-      description: "Soothing albums for peaceful times",
-      url: "https://music.apple.com/us/album/caregiving-for-seniors/1818346520",
-      color: "bg-gray-800"
-    },
-    {
-      name: "iHeart",
-      icon: "/iHeart-icon.png",
-      description: "Comfort music for difficult days",
-      url: "https://www.iheart.com/artist/villagecore-46948319/albums/caregiving-for-seniors-331852948/?utm_campaign=website&utm_medium=Email%20&utm_source=SendGrid",
-      color: "bg-blue-500"
+  const [musicPlatforms, setMusicPlatforms] = useState([]);
+  const [hasLoaded, setHasLoaded] = useState(false);
+
+  const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation();
+  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
+
+  useEffect(() => {
+    const fetchMusicData = async () => {
+      const musicInfo = await fetchMusicInfo();
+      setMusicPlatforms(musicInfo);
     }
-  ];
+
+    fetchMusicData();
+  }, []);
+
+  useLayoutEffect(() => {
+    if (musicPlatforms.length > 0) {
+      requestAnimationFrame(() => {
+        setHasLoaded(true);
+      });
+    }
+
+    const musicSubscriber = subscribeToTableChanges('music', (payload) => {
+      const { eventType, new: newData, old: oldData } = payload;
+      setMusicPlatforms((prev) => {
+        if (eventType == 'INSERT') {
+          return [...prev, newData];
+        }
+        if (eventType == 'UPDATE') {
+          return prev.map((data) => data.id === newData.id ? { ...data, newData } : data);
+        }
+        if (eventType === 'DELETE') {
+          return prev.filter((data) => data.id !== oldData.id);
+        }
+      });
+    });
+
+    return () => {
+      musicSubscriber();
+    }
+  }, [musicPlatforms]);
+
 
   return (
-    <section className="py-8 px-4 bg-gradient-to-b from-white to-gray-50 transition-all duration-1000 animate-slide-up">
+    <section ref={headerRef} className={`py-8 px-4 bg-gradient-to-b from-white to-gray-50 transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
       <div className="max-w-md mx-auto">
         <div className="text-center mb-6">
           <div className="flex items-center justify-center mb-3">
@@ -42,15 +64,14 @@ const MusicSection = () => {
           </p>
         </div>
 
-        <div className="grid grid-cols-3 gap-2">
+        <div ref={gridRef} className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-2 transition-all duration-1000 ${gridVisible && hasLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           {musicPlatforms.map((platform, index) => (
             <Card key={platform.name} className="group hover:shadow-md transition-all duration-300 border border-gray-200/50">
               <CardContent className="p-4">
-                <div className="text-center">
-                  {/* <div className="text-2xl mb-2">{platform.icon}</div> */}
-                  <img src={platform.icon} alt={`${platform.name} icon`} />
+                <div className="flex flex-col items-center">
+                  <img src={platform.icon_url} alt={`${platform.name} icon`} />
                   <h3 className="font-semibold text-[#232323] text-sm mb-1">{platform.name}</h3>
-                  <p className="text-xs text-[#4B5320] mb-3 leading-tight">{platform.description}</p>
+                  <p className="text-xs text-[#4B5320] mb-3 leading-tight text-center">{platform.description}</p>
                   <Button
                     size="sm"
                     variant="outline"
