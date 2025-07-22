@@ -199,7 +199,7 @@ const Index = () => {
                     stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" className="text-gray-900">
                   </path>
                 </svg>
-                <h2 className="text-lg font-semibold text-gray-700">Loading...</h2>              </div>
+                <h2 className="text-lg font-semibold text-gray-700">Searching...</h2>              </div>
             )}
 
             {hasInput && !isSearching && !results && (
