@@ -7,6 +7,7 @@ import BottomNavigation from "@/components/BottomNavigation";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useEffect, useLayoutEffect, useState, useRef } from "react";
 import { fetchBookDetails, fetchBookChapters, subscribeToTableChanges } from "@/lib/supabase/supabaseApi";
+import { BookDetailsSkeleton } from "@/components/ui/skeletons";
 
 const BookDetails = () => {
   const { bookId } = useParams<{ bookId: string }>();
@@ -92,6 +93,9 @@ const BookDetails = () => {
     }
   }, [bookDetails, chapters]);
 
+  if (!hasLoaded || !bookDetails) {
+    return <BookDetailsSkeleton />;
+  }
 
   return (
     <div className="min-h-screen bg-[#f8f9fa] p-4 pb-40">

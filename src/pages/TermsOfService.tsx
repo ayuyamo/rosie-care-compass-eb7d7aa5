@@ -2,8 +2,21 @@ import { ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import MarkDownViewer from "@/components/MarkDownViewer";
+import { TermsOfServiceSkeleton } from "@/components/ui/skeletons";
+import { useState, useEffect } from "react";
 
 const TermsOfService = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return <TermsOfServiceSkeleton />;
+  }
+
   return (
     <div className="min-h-screen bg-background p-4">
       <div className="max-w-3xl mx-auto">
