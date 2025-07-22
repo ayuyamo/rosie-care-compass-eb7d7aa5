@@ -10,6 +10,7 @@ import { useState, useEffect, useLayoutEffect } from "react";
 import { fetchTopicsByChapterId, fetchStoriesByTopicId, fetchResourcesByTopicId, fetchChapterById } from "@/lib/supabase/supabaseApi";
 import { subscribeToTableChanges } from "@/lib/supabase/supabaseApi";
 import Submit from "@/components/Submit";
+import { ResourcesDetailSkeleton } from "@/components/ui/skeletons";
 const ResourcesDetail = () => {
   const { chapterId } = useParams<{ chapterId: string }>();
   const location = useLocation();
@@ -105,6 +106,10 @@ const ResourcesDetail = () => {
 
   const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation();
   const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
+
+  if (!hasLoaded || topics.length === 0) {
+    return <ResourcesDetailSkeleton />;
+  }
 
   return (
     <div className="min-h-screen bg-[#f8f9fa] p-4 pb-24">

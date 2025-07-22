@@ -9,6 +9,7 @@ import { useState, useEffect, useLayoutEffect } from "react";
 import { fetchChapterById, fetchTopicsByChapterId, fetchStoriesByTopicId, fetchResourcesByTopicId, subscribeToTableChanges } from "@/lib/supabase/supabaseApi";
 import { getConsistentColor } from "@/lib/colors";
 import Submit from "@/components/Submit";
+import { TopicsSkeleton } from "@/components/ui/skeletons";
 
 const Topics = () => {
   const { chapterId } = useParams<{ chapterId: string }>();
@@ -140,6 +141,10 @@ const Topics = () => {
 
   const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation();
   const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
+
+  if (!hasLoaded || topics.length === 0) {
+    return <TopicsSkeleton />;
+  }
 
   return (
     <div className="min-h-screen bg-[#f8f9fa] p-4 pb-40">

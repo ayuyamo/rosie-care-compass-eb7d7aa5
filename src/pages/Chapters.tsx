@@ -9,6 +9,7 @@ import { fetchTopicsByChapterId, subscribeToTableChanges, fetchChapters } from "
 import { useState, useEffect, useLayoutEffect } from "react";
 import { getConsistentColor } from "@/lib/colors";
 import Submit from "@/components/Submit";
+import { ChaptersSkeleton } from "@/components/ui/skeletons";
 
 const Chapters = () => {
   const [chapters, setChapters] = useState([]);
@@ -97,6 +98,10 @@ const Chapters = () => {
 
   const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation();
   const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
+
+  if (!hasLoaded || chapters.length === 0) {
+    return <ChaptersSkeleton />;
+  }
 
   return (
     <div className="min-h-screen bg-[#f8f9fa] p-4 pb-40">

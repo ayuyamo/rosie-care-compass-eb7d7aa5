@@ -9,6 +9,7 @@ import { useState, useEffect, useLayoutEffect } from "react";
 import { fetchStoriesByTopicId, fetchTopicById, fetchResourcesByTopicId, subscribeToTableChanges } from "@/lib/supabase/supabaseApi";
 import { Slide, ToastContainer, Zoom, toast } from "react-toastify";
 import Submit from "@/components/Submit";
+import { StoriesSkeleton } from "@/components/ui/skeletons";
 
 const Stories = () => {
     const { chapterId } = useParams<{ chapterId: string }>();
@@ -156,6 +157,10 @@ const Stories = () => {
     const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation();
     const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
     const { ref: imgRef, isVisible: imgVisible } = useScrollAnimation();
+
+    if (!hasLoaded || stories.length === 0) {
+        return <StoriesSkeleton />;
+    }
 
     const handleShare = async ({ title, text, url }) => {
         if (navigator.share) {

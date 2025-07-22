@@ -6,10 +6,11 @@ import { ArrowLeft, Heart, MessageCircle, Users, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import { group } from "console";
-import { title } from "process";
+import { CommunitySkeleton } from "@/components/ui/skeletons";
+import { useState, useEffect } from "react";
 
 const Community = () => {
+  const [isLoading, setIsLoading] = useState(true);
   const { ref: titleRef, isVisible: titleVisible } = useScrollAnimation();
   const { ref: postsRef, isVisible: postsVisible } = useScrollAnimation();
   const { ref: groupRef, isVisible: groupVisible } = useScrollAnimation();
@@ -53,6 +54,15 @@ const Community = () => {
     { name: "Legal & Financial", members: 890, color: "#5a7a85" },
     { name: "Home Safety Tips", members: 2100, color: "#4a90a4" }
   ];
+
+  useEffect(() => {
+    // Simulate initial load time
+    setTimeout(() => setIsLoading(false), 900);
+  }, []);
+
+  if (isLoading) {
+    return <CommunitySkeleton />;
+  }
 
   return (
     <div className="min-h-screen bg-[#f8f9fa] p-4 pb-24">

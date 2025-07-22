@@ -1,13 +1,15 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ArrowLeft, Send, Bot, User } from "lucide-react";
 import { Link } from "react-router-dom";
+import { ChatSkeleton } from "@/components/ui/skeletons";
 
 const Chat = () => {
   const [message, setMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
   const [messages, setMessages] = useState([
     {
       id: 1,
@@ -28,6 +30,15 @@ const Chat = () => {
       timestamp: "1 min ago"
     }
   ]);
+
+  useEffect(() => {
+    // Simulate initial load time
+    setTimeout(() => setIsLoading(false), 800);
+  }, []);
+
+  if (isLoading) {
+    return <ChatSkeleton />;
+  }
 
   const handleSend = () => {
     if (message.trim()) {

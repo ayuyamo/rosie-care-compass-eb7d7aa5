@@ -9,6 +9,7 @@ import { useState, useEffect, useLayoutEffect } from "react";
 import { fetchTopicsByChapterId, subscribeToTableChanges, fetchStoriesByTopicId, fetchResourcesByTopicId, fetchChapters } from "@/lib/supabase/supabaseApi";
 import { getConsistentColor } from "@/lib/colors";
 import Submit from "@/components/Submit";
+import { ResourcesSkeleton } from "@/components/ui/skeletons";
 
 const Resources = () => {
   const [chapters, setChapters] = useState([]);
@@ -89,6 +90,10 @@ const Resources = () => {
 
   const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation();
   const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
+
+  if (!hasLoaded || chapters.length === 0) {
+    return <ResourcesSkeleton />;
+  }
 
   return (
     <div className="min-h-screen bg-[#f8f9fa] p-4 pb-40">

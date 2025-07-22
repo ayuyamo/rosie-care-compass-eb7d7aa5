@@ -13,6 +13,7 @@ import { searchContent } from "@/lib/searchContent";
 import { Link } from "react-router-dom";
 import { Typewriter } from "react-simple-typewriter";
 import Submit from "@/components/Submit";
+import { IndexSkeleton } from "@/components/ui/skeletons";
 
 type SearchResults = {
   chapters: any[];
@@ -22,6 +23,13 @@ type SearchResults = {
 };
 
 const Index = () => {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate initial load time
+    setTimeout(() => setIsLoading(false), 1000);
+  }, []);
+
   function highlightMatch(text: string, query: string) {
     if (!query) return text;
     const regex = new RegExp(`(${query})`, 'gi');
@@ -66,6 +74,9 @@ const Index = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  if (isLoading) {
+    return <IndexSkeleton />;
+  }
 
   return (
     <div className="min-h-screen bg-white relative overflow-hidden pb-24">
