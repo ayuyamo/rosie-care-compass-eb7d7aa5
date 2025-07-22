@@ -14,3 +14,5 @@ export { BookDetailsSkeleton } from './BookDetailsSkeleton';
 export { CreativeStorySkeleton } from './CreativeStorySkeleton';
 export { OfficialBookSkeleton } from './OfficialBookSkeleton';
 export { MusicSkeleton } from './MusicSkeleton';
+export { FlashcardsSkeleton } from './FlashcardsSkeleton';
+export { FlashcardsByChapterSkeleton } from './FlashcardsByChapterSkeleton';

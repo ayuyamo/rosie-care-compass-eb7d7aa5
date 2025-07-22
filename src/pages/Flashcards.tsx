@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { ArrowLeft, BookOpen, Heart, Clock, ArrowRight } from "lucide-react";
 import { getConsistentColor } from '@/lib/colors';
+import { FlashcardsSkeleton } from '@/components/ui/skeletons';
 
 const Flashcards = () => {
     const [chapters, setChapters] = useState([]);
@@ -54,7 +55,7 @@ const Flashcards = () => {
     const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation(0.1, hasLoaded);
     const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation(0.1, hasLoaded);
 
-    if (!hasLoaded) return <div>Loading...</div>
+    if (!hasLoaded) return <FlashcardsSkeleton />;
     return (
         <div className="min-h-screen bg-[#f8f9fa] p-4 pb-40">
             <div className="max-w-md mx-auto">

@@ -7,6 +7,7 @@ import { ArrowLeft } from "lucide-react";
 import { useState, useEffect, useLayoutEffect } from "react";
 import { fetchFlashcardsByChapterId } from "@/lib/supabase/supabaseApi";
 import { CheckCircle } from "lucide-react";
+import { FlashcardsByChapterSkeleton } from '@/components/ui/skeletons';
 
 const FlashcardsByChapter = () => {
     const { chapterId } = useParams<{ chapterId: string }>();
@@ -15,14 +16,17 @@ const FlashcardsByChapter = () => {
     const [currentCard, setCurrentCard] = useState(0);
     const [questions, setQuestions] = useState([]);
     const [completed, setCompleted] = useState<Set<string>>(new Set());
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         const loadFlashcards = async () => {
             if (!chapterId) return;
+            setIsLoading(true);
             const flashcards = await fetchFlashcardsByChapterId(chapterId);
             const questions = flashcards.map((card) => card.question);
             setQuestions(questions);
             console.log('questions: ', questions);
+            setIsLoading(false);
         }
         loadFlashcards();
         setCompleted(new Set());
@@ -62,6 +66,8 @@ const FlashcardsByChapter = () => {
     const allComplete = questions.length > 0 && questions.every((q) => completed.has(q));
     const mark = questions.length > 0 && completed.has(questions[currentCard]);
     const progress = questions.length > 0 ? (completed.size / questions.length) * 100 : 0;
+
+    if (isLoading) return <FlashcardsByChapterSkeleton />;
 
     return (
         <div className="min-h-screen bg-[#f8f9fa] p-6 pb-24 max-w-md mx-auto space-y-4">
