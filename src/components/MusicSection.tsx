@@ -4,6 +4,7 @@ import { Music, ExternalLink, Headphones, Play } from "lucide-react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { fetchMusicInfo, subscribeToTableChanges } from "@/lib/supabase/supabaseApi";
 import { useEffect, useState, useLayoutEffect } from "react";
+import { MusicSkeleton } from "@/components/ui/skeletons";
 
 const MusicSection = () => {
   const [musicPlatforms, setMusicPlatforms] = useState([]);
@@ -48,6 +49,9 @@ const MusicSection = () => {
     }
   }, [musicPlatforms]);
 
+  if (!hasLoaded || musicPlatforms.length === 0) {
+    return <MusicSkeleton />;
+  }
 
   return (
     <section ref={headerRef} className={`py-8 px-4 bg-gradient-to-b from-white to-gray-50 transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>

@@ -9,6 +9,7 @@ import { useState, useEffect, useLayoutEffect } from "react";
 import { subscribeToTableChanges } from "@/lib/supabase/supabaseApi";
 import { fetchChapters, fetchTopicsByChapterId } from "@/lib/supabase/supabaseApi";
 import { getConsistentColor } from "@/lib/colors";
+import { CreativeStorySkeleton } from "@/components/ui/skeletons";
 
 
 export const CreativeStorySection = () => {
@@ -85,6 +86,10 @@ export const CreativeStorySection = () => {
   }, [chapters]);
   const { ref: titleRef, isVisible: titleVisible } = useScrollAnimation();
   const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation();
+
+  if (!hasLoaded || chapters.length === 0) {
+    return <CreativeStorySkeleton />;
+  }
 
   return (
     <section className="relative z-10 py-6">

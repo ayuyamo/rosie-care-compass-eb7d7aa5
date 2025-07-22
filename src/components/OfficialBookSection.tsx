@@ -8,6 +8,7 @@ import { fetchBookDetails } from "@/lib/supabase/supabaseApi";
 import { subscribeToTableChanges } from "@/lib/supabase/supabaseApi";
 import { useEffect, useState, useLayoutEffect } from "react";
 import { getConsistentColor } from "@/lib/colors";
+import { OfficialBookSkeleton } from "@/components/ui/skeletons";
 
 const OfficialBookSection = () => {
   const [book, setBook] = useState(null);
@@ -57,6 +58,10 @@ const OfficialBookSection = () => {
       console.log('book is null');
     }
   }, [book]);
+
+  if (!hasLoaded || !book) {
+    return <OfficialBookSkeleton />;
+  }
 
   return (
     <section className="relative z-10 py-6">
