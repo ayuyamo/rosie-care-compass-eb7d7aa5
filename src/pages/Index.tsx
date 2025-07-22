@@ -23,12 +23,6 @@ type SearchResults = {
 };
 
 const Index = () => {
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    // Simulate initial load time
-    setTimeout(() => setIsLoading(false), 1000);
-  }, []);
 
   function highlightMatch(text: string, query: string) {
     if (!query) return text;
@@ -73,10 +67,21 @@ const Index = () => {
   const [query, setQuery] = useState('');
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [profileLoaded, setprofileLoaded] = useState(false);
 
-  if (isLoading) {
+  useEffect(() => {
+    const img = new Image();
+    img.src = "/ChatGPT-rosie.png";
+    img.onload = () => {
+      setprofileLoaded(true);
+    };
+  }, []);
+
+  if (!profileLoaded) {
     return <IndexSkeleton />;
   }
+
+  console.log('profile loading: ', profileLoaded);
 
   return (
     <div className="min-h-screen bg-white relative overflow-hidden pb-24">

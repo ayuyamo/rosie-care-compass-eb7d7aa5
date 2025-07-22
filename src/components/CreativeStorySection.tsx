@@ -79,13 +79,11 @@ export const CreativeStorySection = () => {
 
   useLayoutEffect(() => {
     if (chapters.length > 0) {
-      requestAnimationFrame(() => {
-        setHasLoaded(true);
-      });
+      setHasLoaded(true);
     }
   }, [chapters]);
-  const { ref: titleRef, isVisible: titleVisible } = useScrollAnimation();
-  const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation();
+  const { ref: titleRef, isVisible: titleVisible } = useScrollAnimation(0.1, hasLoaded);
+  const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation(0.1, hasLoaded);
 
   if (!hasLoaded || chapters.length === 0) {
     return <CreativeStorySkeleton />;

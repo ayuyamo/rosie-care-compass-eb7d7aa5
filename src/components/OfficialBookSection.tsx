@@ -13,7 +13,7 @@ import { OfficialBookSkeleton } from "@/components/ui/skeletons";
 const OfficialBookSection = () => {
   const [book, setBook] = useState(null);
   const [hasLoaded, setHasLoaded] = useState(false);
-  const { ref: sectionRef, isVisible: sectionVisible } = useScrollAnimation();
+  const { ref: sectionRef, isVisible: sectionVisible } = useScrollAnimation(0.1, hasLoaded);
 
   useEffect(() => {
     const loadBookInfo = async () => {
@@ -51,9 +51,7 @@ const OfficialBookSection = () => {
   useLayoutEffect(() => {
     if (book) {
       console.log('book has been set: ', book);
-      requestAnimationFrame(() => {
-        setHasLoaded(true);
-      });
+      setHasLoaded(true);
     } else {
       console.log('book is null');
     }

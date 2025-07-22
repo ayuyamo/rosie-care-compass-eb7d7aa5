@@ -13,8 +13,6 @@ const BookDetails = () => {
   const { bookId } = useParams<{ bookId: string }>();
   const location = useLocation();
   const passedBook = location.state?.book;
-  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
-  const { ref: contentRef, isVisible: contentVisible } = useScrollAnimation();
   const [showDetails, setShowDetails] = useState(false);
   const [selectedEdition, setSelectedEdition] = useState('paperback');
 
@@ -87,11 +85,12 @@ const BookDetails = () => {
 
   useLayoutEffect(() => {
     if (bookDetails && chapters.length > 0) {
-      requestAnimationFrame(() => {
-        setHasLoaded(true);
-      });
+      setHasLoaded(true);
     }
   }, [bookDetails, chapters]);
+
+  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation(0.1, hasLoaded);
+  const { ref: contentRef, isVisible: contentVisible } = useScrollAnimation(0.1, hasLoaded);
 
   if (!hasLoaded || !bookDetails) {
     return <BookDetailsSkeleton />;

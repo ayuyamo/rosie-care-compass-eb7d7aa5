@@ -37,24 +37,6 @@ export const IndexSkeleton = () => {
           </div>
         </div>
       </section>
-
-      {/* Content Sections Skeleton */}
-      <div className="space-y-8 px-4 max-w-md mx-auto">
-        {[1, 2, 3].map((section) => (
-          <div key={section} className="space-y-4">
-            <Skeleton className="h-6 w-48 mb-4" />
-            <div className="grid grid-cols-2 gap-4">
-              {[1, 2].map((card) => (
-                <div key={card} className="bg-white rounded-lg p-4 shadow-sm">
-                  <Skeleton className="w-full h-24 rounded mb-3" />
-                  <Skeleton className="h-4 w-full mb-2" />
-                  <Skeleton className="h-4 w-3/4" />
-                </div>
-              ))}
-            </div>
-          </div>
-        ))}
-      </div>
     </div>
   );
 };

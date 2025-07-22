@@ -10,8 +10,8 @@ const MusicSection = () => {
   const [musicPlatforms, setMusicPlatforms] = useState([]);
   const [hasLoaded, setHasLoaded] = useState(false);
 
-  const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation();
-  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
+  const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation(0.1, hasLoaded);
+  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation(0.1, hasLoaded);
 
   useEffect(() => {
     const fetchMusicData = async () => {
@@ -20,15 +20,6 @@ const MusicSection = () => {
     }
 
     fetchMusicData();
-  }, []);
-
-  useLayoutEffect(() => {
-    if (musicPlatforms.length > 0) {
-      requestAnimationFrame(() => {
-        setHasLoaded(true);
-      });
-    }
-
     const musicSubscriber = subscribeToTableChanges('music', (payload) => {
       const { eventType, new: newData, old: oldData } = payload;
       setMusicPlatforms((prev) => {
@@ -47,6 +38,13 @@ const MusicSection = () => {
     return () => {
       musicSubscriber();
     }
+  }, []);
+
+  useLayoutEffect(() => {
+    if (musicPlatforms.length > 0) {
+      setHasLoaded(true);
+    }
+
   }, [musicPlatforms]);
 
   if (!hasLoaded || musicPlatforms.length === 0) {
