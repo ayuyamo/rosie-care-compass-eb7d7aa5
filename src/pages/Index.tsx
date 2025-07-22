@@ -68,6 +68,8 @@ const Index = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [profileLoaded, setprofileLoaded] = useState(false);
+  const [isSearching, setIsSearching] = useState(false);
+  const [hasInput, setHasInput] = useState(false);
 
   useEffect(() => {
     const img = new Image();
@@ -163,19 +165,48 @@ const Index = () => {
               onChange={(e) => setInputQuery(e.target.value)}
               onKeyDown={async (e) => {
                 if (e.key === 'Enter') {
+                  setHasInput(true);
+                  setIsSearching(true);
                   setQuery(inputQuery);
-                  const results = await searchContent(inputQuery);
-                  setResults(results);
-                  console.log('results: ', results)
+                  try {
+                    const results = await searchContent(inputQuery);
+                    setResults(results);
+                    console.log('results: ', results)
+                  } catch (err) {
+                    console.error('Error searching: ', err);
+                  } finally {
+                    setIsSearching(false);
+                  }
                 }
               }}
               className="w-full p-4 rounded-lg text-lg shadow-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#a5aba0]"
             />
           </div>
-          {results ? (
+          <div className='mt-6 bg-white p-4 rounded shadow max-h-[60vh] overflow-y-auto w-[340px] md:w-[400px] lg:w-[470px]'>
+            {!hasInput && (
+              <p className="text-gray-500 text-center">No search yet. Try entering a keyword.</p>
+            )}
 
-            <div className='mt-6 bg-white p-4 rounded shadow max-h-[60vh] overflow-y-auto w-[340px] md:w-[400px] lg:w-[470px]'>
-              {Object.entries(results).map(([table, items]) => {
+            {isSearching && (
+              <div className='flex flex-col items-center justify-center gap-1 p-4'>
+                <svg className="w-16 h-16 animate-spin text-gray-900/50" viewBox="0 0 64 64" fill="none"
+                  xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                  <path
+                    d="M32 3C35.8083 3 39.5794 3.75011 43.0978 5.20749C46.6163 6.66488 49.8132 8.80101 52.5061 11.4939C55.199 14.1868 57.3351 17.3837 58.7925 20.9022C60.2499 24.4206 61 28.1917 61 32C61 35.8083 60.2499 39.5794 58.7925 43.0978C57.3351 46.6163 55.199 49.8132 52.5061 52.5061C49.8132 55.199 46.6163 57.3351 43.0978 58.7925C39.5794 60.2499 35.8083 61 32 61C28.1917 61 24.4206 60.2499 20.9022 58.7925C17.3837 57.3351 14.1868 55.199 11.4939 52.5061C8.801 49.8132 6.66487 46.6163 5.20749 43.0978C3.7501 39.5794 3 35.8083 3 32C3 28.1917 3.75011 24.4206 5.2075 20.9022C6.66489 17.3837 8.80101 14.1868 11.4939 11.4939C14.1868 8.80099 17.3838 6.66487 20.9022 5.20749C24.4206 3.7501 28.1917 3 32 3L32 3Z"
+                    stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"></path>
+                  <path
+                    d="M32 3C36.5778 3 41.0906 4.08374 45.1692 6.16256C49.2477 8.24138 52.7762 11.2562 55.466 14.9605C58.1558 18.6647 59.9304 22.9531 60.6448 27.4748C61.3591 31.9965 60.9928 36.6232 59.5759 40.9762"
+                    stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" className="text-gray-900">
+                  </path>
+                </svg>
+                <h2 className="text-lg font-semibold text-gray-700">Loading...</h2>              </div>
+            )}
+
+            {hasInput && !isSearching && !results && (
+              <p className="text-gray-500 text-center">No results found.</p>
+            )}
+            {results && !isSearching &&
+              Object.entries(results).map(([table, items]) => {
                 if (!items || items.length === 0) return null;
                 return (
                   <div key={table} className='mb-4'>
@@ -218,13 +249,9 @@ const Index = () => {
                     </ul>
                   </div>
                 )
-              })}
-            </div>
-          ) : (
-            <div className='mt-6 bg-white p-4 rounded shadow max-h-[60vh] overflow-y-auto w-[340px] md:w-[400px] lg:w-[470px]'>
-              <h2>No results found.</h2>
-            </div>
-          )}
+              })
+            }
+          </div>
         </div>
       )}
       {/* Hero Section with Profile Picture */}
