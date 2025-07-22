@@ -5,38 +5,26 @@ export const OfficialBookSkeleton = () => {
   return (
     <section className="relative z-10 py-6">
       <div className="max-w-md mx-auto px-4">
-        <div className="text-center mb-6">
-          <Skeleton className="h-8 w-2/3 mx-auto mb-3" />
-          <Skeleton className="h-4 w-3/4 mx-auto" />
-        </div>
+        <Skeleton className="h-6 w-32 mb-4" />
+        <Card className="bg-white shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer rounded-xl overflow-hidden flex flex-col h-[450px]">
+          {/* Top: image skeleton with fixed height */}
+          <div className="basis-1/3 max-h-[200px]">
+            <Skeleton className="w-full h-full" />
+          </div>
 
-        <Card className="relative bg-white/90 backdrop-blur-md shadow-lg overflow-hidden p-0">
-          {/* Book cover background skeleton */}
-          <Skeleton className="h-48 w-full" />
-          
-          {/* Content skeleton */}
-          <div className="relative z-10 p-6 -mt-10 bg-white/90 backdrop-blur-md rounded-t-3xl">
-            <div className="text-center space-y-4">
-              <div className="mb-4">
-                <Skeleton className="h-6 w-3/4 mx-auto mb-2" />
-                <Skeleton className="h-4 w-1/2 mx-auto" />
-              </div>
-              
-              <div className="space-y-2">
+          {/* Bottom: text content skeleton */}
+          <div className="flex-1 p-6 flex flex-col justify-between">
+            <div>
+              <Skeleton className="h-5 w-3/4 mb-2" />
+              <div className="space-y-2 mb-4">
                 <Skeleton className="h-4 w-full" />
-                <Skeleton className="h-4 w-5/6 mx-auto" />
-                <Skeleton className="h-4 w-4/5 mx-auto" />
+                <Skeleton className="h-4 w-5/6" />
+                <Skeleton className="h-4 w-4/5" />
               </div>
+            </div>
 
-              <div className="space-y-4">
-                <div className="flex justify-center space-x-4">
-                  <Skeleton className="h-8 w-20" />
-                  <Skeleton className="h-8 w-16" />
-                </div>
-                <Skeleton className="h-6 w-24 mx-auto" />
-              </div>
-
-              <Skeleton className="h-12 w-full" />
+            <div className="flex items-center justify-end">
+              <Skeleton className="h-8 w-28" />
             </div>
           </div>
         </Card>
