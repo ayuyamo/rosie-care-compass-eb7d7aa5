@@ -10,8 +10,8 @@ const MusicSection = () => {
   const [musicPlatforms, setMusicPlatforms] = useState([]);
   const [hasLoaded, setHasLoaded] = useState(false);
 
-  const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation(0.1, hasLoaded);
-  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation(0.1, hasLoaded);
+  const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation(window.innerHeight, hasLoaded);
+  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation(window.innerHeight, hasLoaded);
 
   useEffect(() => {
     const fetchMusicData = async () => {

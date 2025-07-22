@@ -86,8 +86,8 @@ const Resources = () => {
     }
   }, [chapters]);
 
-  const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation(0.1, hasLoaded);
-  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation(0.1, hasLoaded);
+  const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation(window.innerHeight, hasLoaded);
+  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation(window.innerHeight, hasLoaded);
 
   if (!hasLoaded) {
     return <ResourcesSkeleton />;

@@ -94,8 +94,10 @@ const Chapters = () => {
     }
   }, [chapters]);
 
-  const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation(0.1, hasLoaded);
-  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation(0.1, hasLoaded);
+  console.log('current screen height: ', window.innerHeight);
+
+  const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation(window.innerHeight, hasLoaded);
+  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation(window.innerHeight, hasLoaded);
 
   if (!hasLoaded) {
     return <ChaptersSkeleton />;

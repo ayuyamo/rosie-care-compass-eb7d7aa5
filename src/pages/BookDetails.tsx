@@ -89,8 +89,8 @@ const BookDetails = () => {
     }
   }, [bookDetails, chapters]);
 
-  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation(0.1, hasLoaded);
-  const { ref: contentRef, isVisible: contentVisible } = useScrollAnimation(0.1, hasLoaded);
+  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation(window.innerHeight, hasLoaded);
+  const { ref: contentRef, isVisible: contentVisible } = useScrollAnimation(window.innerHeight, hasLoaded);
 
   if (!hasLoaded || !bookDetails) {
     return <BookDetailsSkeleton />;

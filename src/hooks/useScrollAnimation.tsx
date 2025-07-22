@@ -1,12 +1,17 @@
 
 import { useEffect, useRef, useState } from 'react';
 
-export const useScrollAnimation = (threshold = 0.01, enabled = true) => {
+export const useScrollAnimation = (screenHeight = 0, enabled = true) => {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!enabled || !ref.current) return;
+    if (!enabled || !ref.current || screenHeight == 0) return;
+    console.log('curr element height: ', ref.current.getBoundingClientRect().height);
+    const currElmHeight = ref.current.getBoundingClientRect().height;
+
+    const threshold = screenHeight < currElmHeight ? ((screenHeight / ref.current.getBoundingClientRect().height) / 10) : 1.0;
+    console.log('threshold: ', threshold);
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
@@ -25,7 +30,7 @@ export const useScrollAnimation = (threshold = 0.01, enabled = true) => {
         observer.unobserve(ref.current);
       }
     };
-  }, [threshold, enabled]);
+  }, [enabled]);
 
   return { ref, isVisible };
 };

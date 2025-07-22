@@ -13,7 +13,7 @@ import { OfficialBookSkeleton } from "@/components/ui/skeletons";
 const OfficialBookSection = () => {
   const [book, setBook] = useState(null);
   const [hasLoaded, setHasLoaded] = useState(false);
-  const { ref: sectionRef, isVisible: sectionVisible } = useScrollAnimation(0.1, hasLoaded);
+  const { ref: sectionRef, isVisible: sectionVisible } = useScrollAnimation(window.innerHeight, hasLoaded);
 
   useEffect(() => {
     const loadBookInfo = async () => {

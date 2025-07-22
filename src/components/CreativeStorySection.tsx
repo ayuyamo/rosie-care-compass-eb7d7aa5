@@ -82,8 +82,8 @@ export const CreativeStorySection = () => {
       setHasLoaded(true);
     }
   }, [chapters]);
-  const { ref: titleRef, isVisible: titleVisible } = useScrollAnimation(0.1, hasLoaded);
-  const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation(0.1, hasLoaded);
+  const { ref: titleRef, isVisible: titleVisible } = useScrollAnimation(window.innerHeight, hasLoaded);
+  const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation(window.innerHeight, hasLoaded);
 
   if (!hasLoaded || chapters.length === 0) {
     return <CreativeStorySkeleton />;

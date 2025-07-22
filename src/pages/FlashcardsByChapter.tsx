@@ -59,9 +59,9 @@ const FlashcardsByChapter = () => {
         })
     }
 
-    const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation(0.1, !isLoading);
-    const { ref: barRef, isVisible: barVisible } = useScrollAnimation(0.1, !isLoading);
-    const { ref: cardRef, isVisible: cardVisible } = useScrollAnimation(0.1, !isLoading);
+    const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation(window.innerHeight, !isLoading);
+    const { ref: barRef, isVisible: barVisible } = useScrollAnimation(window.innerHeight, !isLoading);
+    const { ref: cardRef, isVisible: cardVisible } = useScrollAnimation(window.innerHeight, !isLoading);
 
     const allComplete = questions.length > 0 && questions.every((q) => completed.has(q));
     const mark = questions.length > 0 && completed.has(questions[currentCard]);

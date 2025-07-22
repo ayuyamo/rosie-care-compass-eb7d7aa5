@@ -139,8 +139,8 @@ const Topics = () => {
 
   console.log('topics length: ', topics.length);
 
-  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation(0.1, hasLoaded);
-  const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation(0.001, hasLoaded);
+  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation(window.innerHeight, hasLoaded);
+  const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation(window.innerHeight, hasLoaded);
 
   console.log('grid is visible ? ->', gridVisible);
 
