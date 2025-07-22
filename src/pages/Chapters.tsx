@@ -8,6 +8,7 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { fetchTopicsByChapterId, subscribeToTableChanges, fetchChapters } from "@/lib/supabase/supabaseApi";
 import { useState, useEffect, useLayoutEffect } from "react";
 import { getConsistentColor } from "@/lib/colors";
+import Submit from "@/components/Submit";
 
 const Chapters = () => {
   const [chapters, setChapters] = useState([]);
@@ -196,6 +197,7 @@ const Chapters = () => {
             );
           })}
         </div>
+        <Submit />
       </div>
       <BottomNavigation />
     </div>

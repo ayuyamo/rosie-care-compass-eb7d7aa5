@@ -9,6 +9,7 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useState, useEffect, useLayoutEffect } from "react";
 import { fetchTopicsByChapterId, fetchStoriesByTopicId, fetchResourcesByTopicId, fetchChapterById } from "@/lib/supabase/supabaseApi";
 import { subscribeToTableChanges } from "@/lib/supabase/supabaseApi";
+import Submit from "@/components/Submit";
 const ResourcesDetail = () => {
   const { chapterId } = useParams<{ chapterId: string }>();
   const location = useLocation();
@@ -183,6 +184,7 @@ const ResourcesDetail = () => {
             );
           })}
         </div>
+        <Submit />
       </div>
       <BottomNavigation />
     </div>

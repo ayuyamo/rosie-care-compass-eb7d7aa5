@@ -8,6 +8,7 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useState, useEffect, useLayoutEffect } from "react";
 import { fetchStoriesByTopicId, fetchTopicById, fetchResourcesByTopicId, subscribeToTableChanges } from "@/lib/supabase/supabaseApi";
 import { Slide, ToastContainer, Zoom, toast } from "react-toastify";
+import Submit from "@/components/Submit";
 
 const Stories = () => {
     const { chapterId } = useParams<{ chapterId: string }>();
@@ -375,6 +376,7 @@ const Stories = () => {
                     </div>
                 )}
             </div>
+            <Submit />
             <BottomNavigation />
         </div>
     );

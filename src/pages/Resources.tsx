@@ -8,6 +8,7 @@ import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useState, useEffect, useLayoutEffect } from "react";
 import { fetchTopicsByChapterId, subscribeToTableChanges, fetchStoriesByTopicId, fetchResourcesByTopicId, fetchChapters } from "@/lib/supabase/supabaseApi";
 import { getConsistentColor } from "@/lib/colors";
+import Submit from "@/components/Submit";
 
 const Resources = () => {
   const [chapters, setChapters] = useState([]);
@@ -186,6 +187,7 @@ const Resources = () => {
               </div>
             );
           })}
+          <Submit />
         </div>
       </div>
       <BottomNavigation />

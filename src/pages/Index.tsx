@@ -12,6 +12,7 @@ import MusicSection from "@/components/MusicSection";
 import { searchContent } from "@/lib/searchContent";
 import { Link } from "react-router-dom";
 import { Typewriter } from "react-simple-typewriter";
+import Submit from "@/components/Submit";
 
 type SearchResults = {
   chapters: any[];
@@ -261,14 +262,17 @@ const Index = () => {
         <CreativeStorySection />
       </div>
 
-      {/* Music Section */}
-      <div className="animate-slide-up" style={{ animationDelay: '0.3s' }}>
-        <MusicSection />
-      </div>
       {/* Official Book Section */}
-      <div className="animate-slide-up" style={{ animationDelay: '0.4s' }}>
+      <div className="animate-slide-up" style={{ animationDelay: '0.3s' }}>
         <OfficialBookSection />
       </div>
+
+      {/* Music Section */}
+      <div className="animate-slide-up" style={{ animationDelay: '0.4s' }}>
+        <MusicSection />
+      </div>
+
+      <Submit />
 
 
       {/* Poetry Collection Section */}
