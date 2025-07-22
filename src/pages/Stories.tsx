@@ -23,7 +23,6 @@ const Stories = () => {
     const [hasLoaded, setHasLoaded] = useState(false);
     const [openStories, setOpenStories] = useState<string[]>([]);
     const [scrollTargetId, setScrollTargetId] = useState<string | null>(null);
-    const [offsetY, setOffsetY] = useState(0);
     const [intro, setIntro] = useState('');
 
     const toggleStory = (storyId: string) => {
@@ -154,9 +153,9 @@ const Stories = () => {
         return colors[index];
     };
 
-    const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation();
-    const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation();
-    const { ref: imgRef, isVisible: imgVisible } = useScrollAnimation();
+    const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation(0.1, hasLoaded);
+    const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation(0.1, hasLoaded);
+    const { ref: imgRef, isVisible: imgVisible } = useScrollAnimation(0.1, hasLoaded);
 
     if (!hasLoaded || stories.length === 0) {
         return <StoriesSkeleton />;
