@@ -66,7 +66,7 @@ const MusicSection = () => {
           </p>
         </div>
 
-        <div ref={gridRef} className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-2 transition-all duration-1000 ${gridVisible && hasLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <div ref={gridRef} className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-2 transition-all duration-1000 ${gridVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           {musicPlatforms.map((platform, index) => (
             <Card key={platform.name} className="group hover:shadow-md transition-all duration-300 border border-gray-200/50">
               <CardContent className="p-4">

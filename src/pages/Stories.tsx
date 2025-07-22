@@ -132,26 +132,9 @@ const Stories = () => {
 
     useLayoutEffect(() => {
         if (topicName.length > 0 && stories.length > 0 && resources.length > 0) {
-            requestAnimationFrame(() => {
-                setHasLoaded(true);
-            });
+            setHasLoaded(true);
         }
     }, [topicName, stories, resources]);
-
-    const colors = [
-        "#d79a8c", "#367588", "#49796B", "#8F9779", "#5a7a85",
-        "#B8860B", "#8B4513", "#556B2F", "#800080", "#008080",
-        "#CD853F", "#4682B4", "#2E8B57", "#9932CC", "#20B2AA"
-    ];
-
-    const getConsistentColor = (key: string): string => {
-        let hash = 0;
-        for (let i = 0; i < key.length; i++) {
-            hash = key.charCodeAt(i) + ((hash << 5) - hash);
-        }
-        const index = Math.abs(hash) % colors.length;
-        return colors[index];
-    };
 
     const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation(0.1, hasLoaded);
     const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation(0.1, hasLoaded);
@@ -207,7 +190,7 @@ const Stories = () => {
                     </div>
                 </header>
 
-                <div ref={imgRef} className={`relative mb-8 p-10 flex items-center justify-center transition-all duration-1000 ${imgVisible && hasLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
+                <div ref={imgRef} className={`relative mb-8 p-10 flex items-center justify-center transition-all duration-1000 ${imgVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}
                     style={{
                         backgroundImage: `url(${backgroundImage})`,
                         backgroundRepeat: 'no-repeat',
@@ -226,7 +209,6 @@ const Stories = () => {
 
                 <div ref={gridRef} className="space-y-8">
                     {stories.map((story, index) => {
-                        const randomColor = getConsistentColor(story.title);
                         const isOpen = openStories.includes(story.id);
                         const storyPreview = getStoryPreview(story.content);
                         const storyTargetScroll = (el: HTMLElement | null) => {
@@ -241,10 +223,10 @@ const Stories = () => {
                             <Collapsible id={`story-${story.id}`} key={story.id} open={isOpen} onOpenChange={() => toggleStory(story.id)}>
                                 <article className={`
                                     bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-700
-                                    ${gridVisible && hasLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}
+                                    ${gridVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}
                                 `}
                                     style={{
-                                        transitionDelay: gridVisible && hasLoaded ? `${index * 150}ms` : '0ms'
+                                        transitionDelay: gridVisible ? `${index * 150}ms` : '0ms'
                                     }}>
 
                                     {/* Story Header */}
@@ -290,14 +272,14 @@ const Stories = () => {
                                         <div className="mt-2 flex gap-2">
                                             {story.content.length > 200 && !isOpen && (
                                                 <CollapsibleTrigger asChild>
-                                                    <Button variant="link" className="p-0 h-auto text-sm" style={{ color: randomColor }}>
+                                                    <Button variant="link" className="p-0 h-auto text-sm text-gray-600">
                                                         Read more
                                                     </Button>
                                                 </CollapsibleTrigger>
                                             )}
                                             {isOpen && story.content.length > 200 && (
                                                 <CollapsibleTrigger asChild>
-                                                    <Button variant="link" className="p-0 h-auto text-sm" style={{ color: randomColor }}>
+                                                    <Button variant="link" className="p-0 h-auto text-sm text-gray-600">
                                                         Show less
                                                     </Button>
                                                 </CollapsibleTrigger>
@@ -373,7 +355,7 @@ const Stories = () => {
                     )}
                 </div>
 
-                {stories.length === 0 && hasLoaded && (
+                {stories.length === 0 && (
                     <div className="text-center py-12">
                         <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-4" />
                         <p className="text-gray-600">No stories found in this section.</p>

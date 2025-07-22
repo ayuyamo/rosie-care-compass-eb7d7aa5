@@ -108,19 +108,19 @@ export const CreativeStorySection = () => {
               <Link
                 key={chapter.name}
                 to={`/chapters/${chapter.id}/topics`}
-                className={`block group cursor-pointer transition-all duration-700 ${gridVisible && hasLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
+                className={`block group cursor-pointer transition-all duration-700 ${gridVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
                   }`}
                 style={{
-                  transitionDelay: gridVisible && hasLoaded ? `${index * 150}ms` : '0ms'
+                  transitionDelay: gridVisible ? `${index * 150}ms` : '0ms'
                 }}
                 state={{ chapter }}
               >
                 <Card className={`
                     bg-white/90 backdrop-blur-md shadow-lg overflow-hidden group cursor-pointer will-change-transform transition-all duration-700 hover:shadow-xl hover:scale-[1.02]
-                    ${gridVisible && hasLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}
+                    ${gridVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}
                   `}
                   style={{
-                    transitionDelay: gridVisible && hasLoaded ? `${index * 150}ms` : '0ms',
+                    transitionDelay: gridVisible ? `${index * 150}ms` : '0ms',
                     position: "relative",
                   }}>
 

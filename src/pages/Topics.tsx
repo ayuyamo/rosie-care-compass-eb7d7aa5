@@ -4,12 +4,12 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, BookOpen, Clock, User, Heart, ArrowRight } from "lucide-react";
 import { Link, useParams, useLocation } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
-import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useState, useEffect, useLayoutEffect } from "react";
 import { fetchChapterById, fetchTopicsByChapterId, fetchStoriesByTopicId, fetchResourcesByTopicId, subscribeToTableChanges } from "@/lib/supabase/supabaseApi";
 import { getConsistentColor } from "@/lib/colors";
 import Submit from "@/components/Submit";
 import { TopicsSkeleton } from "@/components/ui/skeletons";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 
 const Topics = () => {
   const { chapterId } = useParams<{ chapterId: string }>();
@@ -132,19 +132,22 @@ const Topics = () => {
   }, []);
 
   useLayoutEffect(() => {
-    if (chapterName.length > 0 && topics.length > 0) {
-      requestAnimationFrame(() => {
-        setHasLoaded(true);
-      });
+    if (topics.length > 0) {
+      setHasLoaded(true);
     }
-  }, [topics, chapterName]);
+  }, [topics]);
 
-  const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation(0.1, hasLoaded);
+  console.log('topics length: ', topics.length);
+
   const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation(0.1, hasLoaded);
+  const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation(0.001, hasLoaded);
+
+  console.log('grid is visible ? ->', gridVisible);
 
   if (!hasLoaded) {
     return <TopicsSkeleton />;
   }
+
 
   return (
     <div className="min-h-screen bg-[#f8f9fa] p-4 pb-40">
@@ -164,20 +167,19 @@ const Topics = () => {
         <div ref={gridRef} className="space-y-6">
           {topics.map((topic, index) => {
             const randomColor = getConsistentColor(topic.name);
-            const topicImg = topic.image_url;
             return (
               <Card key={topic.id} className={`
                   bg-white/90 backdrop-blur-md shadow-lg overflow-hidden group cursor-pointer transition-all duration-700 hover:shadow-xl hover:scale-[1.02]
-                  ${gridVisible && hasLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}
+                  ${gridVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}
                 `}
                 style={{
-                  transitionDelay: gridVisible && hasLoaded ? `${index * 150}ms` : '0ms'
+                  transitionDelay: gridVisible ? `${index * 150}ms` : '0ms'
                 }}>
 
                 {/* Section Image - Top Half */}
                 <div className="relative h-48 overflow-hidden">
                   <img
-                    src={topicImg}
+                    src={topic.image_url}
                     alt={topic.name}
                     className="w-full h-full object-cover"
                   />

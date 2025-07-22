@@ -64,7 +64,7 @@ const OfficialBookSection = () => {
   return (
     <section className="relative z-10 py-6">
       <div className="max-w-md mx-auto px-4">
-        <div ref={sectionRef} className={`transition-all duration-1000 ${sectionVisible && hasLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <div ref={sectionRef} className={`transition-all duration-1000 ${sectionVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
           <h3 className="text-xl font-bold text-[#232323] mb-4">Our Official Book</h3>
           <Link to={`/book-details/${book?.id}`} state={{ book }}>
             <Card className="bg-white shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer rounded-xl overflow-hidden pointer-events-none flex flex-col h-[450px]">

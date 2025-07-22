@@ -7,7 +7,7 @@ import BottomNavigation from "@/components/BottomNavigation";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useEffect, useLayoutEffect, useState, useRef } from "react";
 import { fetchBookDetails, fetchBookChapters, subscribeToTableChanges } from "@/lib/supabase/supabaseApi";
-import { BookDetailsSkeleton } from "@/components/ui/skeletons";
+import { OfficialBookSkeleton } from "@/components/ui/skeletons";
 
 const BookDetails = () => {
   const { bookId } = useParams<{ bookId: string }>();
@@ -93,7 +93,8 @@ const BookDetails = () => {
   const { ref: contentRef, isVisible: contentVisible } = useScrollAnimation(0.1, hasLoaded);
 
   if (!hasLoaded || !bookDetails) {
-    return <BookDetailsSkeleton />;
+    return <OfficialBookSkeleton />;
+
   }
 
   return (
@@ -108,7 +109,7 @@ const BookDetails = () => {
           <h1 className="text-2xl font-bold text-[#232323]">Our Official Book</h1>
         </header>
 
-        <div ref={contentRef} className={`transition-all duration-1000 ${contentVisible && hasLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.2s' }}>
+        <div ref={contentRef} className={`transition-all duration-1000 ${contentVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`} style={{ transitionDelay: '0.2s' }}>
           {/* Book Overview Card */}
           <Card className="relative bg-white/90 backdrop-blur-md shadow-lg overflow-hidden p-0 mb-6">
             {/* Book cover background top half */}
