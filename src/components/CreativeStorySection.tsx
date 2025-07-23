@@ -152,7 +152,7 @@ export const CreativeStorySection = () => {
                               variant="secondary"
                               className="text-xs px-2 py-1"
                               style={{
-                                backgroundColor: `${randomColor}20`,
+                                backgroundColor: `${randomColor}10`,
                                 color: randomColor,
                                 border: `1px solid ${randomColor}40`
                               }}

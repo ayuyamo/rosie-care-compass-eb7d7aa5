@@ -10,8 +10,6 @@ const MusicSection = () => {
   const [musicPlatforms, setMusicPlatforms] = useState([]);
   const [hasLoaded, setHasLoaded] = useState(false);
 
-  const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation(window.innerHeight, hasLoaded);
-  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation(window.innerHeight, hasLoaded);
 
   useEffect(() => {
     const fetchMusicData = async () => {
@@ -47,12 +45,15 @@ const MusicSection = () => {
 
   }, [musicPlatforms]);
 
+  const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation(window.innerHeight, hasLoaded);
+  const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation(window.innerHeight, hasLoaded);
+
   if (!hasLoaded || musicPlatforms.length === 0) {
     return <MusicSkeleton />;
   }
 
   return (
-    <section ref={headerRef} className={`py-8 px-4 bg-gradient-to-b from-white to-gray-50 transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+    <section ref={headerRef} className={`py-8 px-4 transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
       <div className="max-w-md mx-auto">
         <div className="text-center mb-6">
           <div className="flex items-center justify-center mb-3">
