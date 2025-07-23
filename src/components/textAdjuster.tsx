@@ -10,7 +10,7 @@ const TextAdjuster = () => {
     return (
         <>
             <button
-                className='fixed top-4 right-4 z-50 w-10 h-10 bg-black text-white p-2 rounded-full shadow-lg'
+                className='fixed top-16 right-4 z-50 w-10 h-10 bg-black text-white flex items-center justify-center p-2 rounded-full shadow-xl'
                 onClick={() => setOpen(!open)}
                 title='Text Settings'
             >
@@ -19,7 +19,7 @@ const TextAdjuster = () => {
             </button>
 
             {open && (
-                <div className='fixed top-20 right-4 bg-white shadow-lg rounded-lg p-4 w-48 z-50 border border-gray-300'>
+                <div className='fixed top-28 right-7 bg-white shadow-lg rounded-lg p-4 w-48 z-50 border border-gray-300'>
                     <label className='block mb-2 text-sm font-medium'>Font Size</label>
                     <select
                         value={fontScale}
