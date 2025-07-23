@@ -12,7 +12,7 @@ export const FlashcardsSkeleton = () => {
       {/* Chapter cards skeleton */}
       <div className="space-y-4">
         {[...Array(6)].map((_, index) => (
-          <div key={index} className="bg-card border rounded-lg p-4 space-y-3">
+          <div key={index} className="bg-card rounded-lg p-4 space-y-3 border border-gray-200/50 shadow-lg">
             <div className="flex items-start gap-4">
               <Skeleton className="h-16 w-16 rounded-lg flex-shrink-0" />
               <div className="flex-1 space-y-2">

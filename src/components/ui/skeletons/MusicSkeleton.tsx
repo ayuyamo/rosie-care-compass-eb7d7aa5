@@ -15,7 +15,7 @@ export const MusicSkeleton = () => {
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-2">
           {[1, 2, 3, 4, 5, 6].map((index) => (
-            <Card key={index} className="border border-gray-200/50">
+            <Card key={index} className="border border-gray-200/50 shadow-lg">
               <CardContent className="p-4">
                 <div className="flex flex-col items-center space-y-3">
                   <Skeleton className="w-8 h-8" />

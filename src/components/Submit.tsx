@@ -1,13 +1,15 @@
 import { useState } from 'react';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 const Submit = () => {
     const [showForm, setShowForm] = useState(false);
+    const { ref: cardRef, isVisible: cardVisible } = useScrollAnimation(window.innerHeight, true);
     const googleFormUrl =
         'https://docs.google.com/forms/d/e/1FAIpQLSdJ6z0fKohEOq_CGLH6dcpIuPY4uU5Zk8jh_Itic1Ajhk0Drg/viewform?embedded=true';
 
     return (
-        <section className="relative z-10 mb-10">
-            <div className="max-w-md mx-auto px-4">
+        <section ref={cardRef} className={`relative z-10 mb-10 px-4 transition-all duration-1000 ${cardVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}>
+            <div className="max-w-md mx-auto">
                 <div className="border border-gray-200 rounded-xl shadow-xl text-center text-black p-8 m-6 max-w-md lg:max-w-[670px] mx-auto space-y-6">
                     <h2 className="text-2xl font-semibold">Stories & Resources</h2>
                     <p className="text-gray-600 text-sm">

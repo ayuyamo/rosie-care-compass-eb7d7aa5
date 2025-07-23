@@ -59,6 +59,7 @@ const FlashcardsByChapter = () => {
         })
     }
 
+
     const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation(window.innerHeight, !isLoading);
     const { ref: barRef, isVisible: barVisible } = useScrollAnimation(window.innerHeight, !isLoading);
     const { ref: cardRef, isVisible: cardVisible } = useScrollAnimation(window.innerHeight, !isLoading);
@@ -67,6 +68,10 @@ const FlashcardsByChapter = () => {
     const mark = questions.length > 0 && completed.has(questions[currentCard]);
     const progress = questions.length > 0 ? (completed.size / questions.length) * 100 : 0;
 
+    const resetProgress = () => {
+        setCompleted(new Set());
+        setCurrentCard(0);
+    }
     if (isLoading) return <FlashcardsByChapterSkeleton />;
 
     return (
@@ -98,7 +103,7 @@ const FlashcardsByChapter = () => {
                         {questions[currentCard]}
                     </h2>
                 </div>
-                <div className='space-x-4 flex justify-between'>
+                <div className='flex flex-wrap gap-4 justify-center'>
                     <button
                         onClick={next}
                         className="px-4 py-2 bg-white border-2 border-black text-black rounded-lg"
@@ -119,9 +124,18 @@ const FlashcardsByChapter = () => {
                     </button>
                 </div>
             </div>) : (
-                <h2 className="text-center text-2xl font-semibold text-green-600">
-                    All Cards Completed!
-                </h2>
+                <div className='text-center space-y-4'>
+
+                    <h2 className="text-center text-2xl font-semibold text-green-600">
+                        All Cards Completed!
+                    </h2>
+                    <button
+                        onClick={resetProgress}
+                        className="px-4 py-2 bg-white border-2 border-black text-black rounded-lg"
+                    >
+                        Reset Progress
+                    </button>
+                </div>
             )}
             <BottomNavigation />
         </div>

@@ -88,7 +88,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-white relative overflow-hidden pb-24">
       {/* Mobile App Header */}
-      <header className="relative z-50 p-4 animate-fade-in bg-white/90 backdrop-blur-md border-b border-gray-200/30">
+      <header className="relative z-40 p-4 animate-fade-in bg-white/90 backdrop-blur-md border-b border-gray-200/30">
         <div className="flex items-center justify-between max-w-md mx-auto">
           <div className="flex items-center space-x-3">
             <div className="relative">

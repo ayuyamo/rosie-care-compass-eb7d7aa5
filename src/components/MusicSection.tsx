@@ -47,15 +47,16 @@ const MusicSection = () => {
 
   const { ref: gridRef, isVisible: gridVisible } = useScrollAnimation(window.innerHeight, hasLoaded);
   const { ref: headerRef, isVisible: headerVisible } = useScrollAnimation(window.innerHeight, hasLoaded);
+  const { ref: bottomRef, isVisible: bottomVisible } = useScrollAnimation(window.innerHeight, hasLoaded);
 
   if (!hasLoaded || musicPlatforms.length === 0) {
     return <MusicSkeleton />;
   }
 
   return (
-    <section ref={headerRef} className={`py-8 px-4 transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+    <section className='py-8 px-4'>
       <div className="max-w-md mx-auto">
-        <div className="text-center mb-6">
+        <div ref={headerRef} className={`text-center mb-6 transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}>
           <div className="flex items-center justify-center mb-3">
             <div className="w-10 h-10 rounded-full bg-[#ceda88]/20 flex items-center justify-center mr-3">
               <Music className="w-5 h-5 text-[#4B5320]" />
@@ -67,9 +68,10 @@ const MusicSection = () => {
           </p>
         </div>
 
-        <div ref={gridRef} className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-2 transition-all duration-1000 ${gridVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <div ref={gridRef} className={`grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-2`}>
           {musicPlatforms.map((platform, index) => (
-            <Card key={platform.name} className="group hover:shadow-md transition-all duration-300 border border-gray-200/50">
+            <Card key={platform.name} className={`group hover:shadow-md transition-all duration-1000 border border-gray-200/50 ${gridVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}
+              style={{ transitionDelay: gridVisible ? `${index * 150}ms` : '0ms' }}>
               <CardContent className="p-4">
                 <div className="flex flex-col items-center">
                   <img src={platform.icon_url} alt={`${platform.name} icon`} />
@@ -91,7 +93,7 @@ const MusicSection = () => {
           ))}
         </div>
 
-        <div className="mt-6 text-center">
+        <div ref={bottomRef} className={`mt-6 text-center transition-all duration-1000 ${bottomVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}>
           <div className="bg-[#f8f9f6] rounded-2xl p-4 border border-[#e4e8e1]">
             <Headphones className="w-6 h-6 text-[#4B5320] mx-auto mb-2" />
             <p className="text-xs text-[#4B5320] leading-relaxed">
