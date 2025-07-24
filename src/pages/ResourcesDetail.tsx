@@ -1,7 +1,6 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, ExternalLink, BookOpen, Video, FileText, Globe } from "lucide-react";
 import { Link, useParams, useLocation } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
@@ -112,84 +111,87 @@ const ResourcesDetail = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#f8f9fa] p-4 pb-24">
-      <div className="max-w-md mx-auto">
-        <header ref={headerRef} className={`flex items-center mb-6 transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <Link to="/resources" className="mr-4">
-            <Button variant="ghost" size="sm" className="text-[#5a7a85]">
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
-          </Link>
-          <div>
-            <h1 className="text-2xl font-bold text-black">Resources by Topics</h1>
-            <p className="text-md text-gray-600 italic">Chapter: {chapterName}</p>
-          </div>
-        </header>
+    <div className="min-h-screen">
 
-        <div ref={gridRef} className="space-y-6">
-          {topics.map((topic, index) => {
-            return (
-              <Card key={topic.id} className={`
+      <header ref={headerRef} className={`flex items-center pt-4 mb-6 transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <Link to="/resources" className="mr-4">
+          <Button variant="ghost" size="sm" className="text-[#5a7a85]">
+            <ArrowLeft className="h-5 w-5" />
+          </Button>
+        </Link>
+        <div>
+          <h1 className="text-2xl font-bold text-black">Resources by Topics</h1>
+          <p className="text-base text-gray-600 italic">Chapter: {chapterName}</p>
+        </div>
+      </header>
+
+      <div ref={gridRef} className="space-y-6 mb-6">
+        {topics.map((topic, index) => {
+          return (
+            <Card key={topic.id} className={`
                 bg-white/90 backdrop-blur-md shadow-lg overflow-hidden transition-all duration-700 hover:shadow-xl
                 ${gridVisible && hasLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}
               `}
-                style={{
-                  transitionDelay: gridVisible && hasLoaded ? `${index * 150}ms` : '0ms'
-                }}>
-                <CardContent className="p-6">
-                  <div className="space-y-4">
-                    {/* Section Header */}
-                    <div className="flex items-start space-x-4">
-                      <div
-                        className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 overflow-hidden"
-                      >
-                        <img
-                          src={topic.image_url}
-                          alt="Section"
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
+              style={{
+                transitionDelay: gridVisible && hasLoaded ? `${index * 150}ms` : '0ms'
+              }}>
+              <CardContent className="p-6">
+                <div className="space-y-4">
+                  {/* Section Header */}
+                  <div className="flex items-start space-x-4">
+                    <div
+                      className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 overflow-hidden"
+                    >
+                      <img
+                        src={topic.image_url}
+                        alt="Section"
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
 
-                      <div className="flex-1 min-w-0">
-                        <h3 className="text-lg font-bold" style={{ color: '#232323' }}>
-                          Topic: {topic.name}
-                        </h3>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-lg font-bold" style={{ color: '#232323' }}>
+                        Topic: {topic.name}
+                      </h3>
+                    </div>
+                  </div>
+                  {topic.resources?.length > 0 && (
+                    <div className="space-y-2">
+                      <div className="flex items-center space-x-2">
+                      </div>
+                      <div className="space-y-2 ml-6">
+                        {topic.resources.map((resource, resourceIndex) => (
+                          <div
+                            key={resourceIndex}
+                            className="flex items-center justify-between p-2 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors"
+                          >
+                            <a
+                              key={resourceIndex}
+                              href={resource.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center justify-between p-2 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors no-underline"
+                            >
+                              <span className="text-xs text-blue-600 truncate max-w-[80%]">
+                                {new URL(resource.url).hostname}
+                              </span>
+                              <ExternalLink className="h-4 w-4 text-gray-500 ml-2 flex-shrink-0" />
+                            </a>
+                          </div>
+                        ))}
                       </div>
                     </div>
-                    {topic.resources?.length > 0 && (
-                      <div className="space-y-2">
-                        <div className="flex items-center space-x-2">
-                        </div>
-                        <div className="space-y-2 ml-6">
-                          {topic.resources.map((resource, resourceIndex) => (
-                            <div
-                              key={resourceIndex}
-                              className="flex items-center justify-between p-2 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors"
-                            >
-                              <a
-                                key={resourceIndex}
-                                href={resource.url}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                className="flex items-center justify-between p-2 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors no-underline"
-                              >
-                                <span className="text-xs text-blue-600 truncate max-w-[80%]">
-                                  {new URL(resource.url).hostname}
-                                </span>
-                                <ExternalLink className="h-4 w-4 text-gray-500 ml-2 flex-shrink-0" />
-                              </a>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-            );
-          })}
-        </div>
-        <Submit />
+                  )}
+                </div>
+              </CardContent>
+            </Card>
+          );
+        })}
+      </div>
+      <Submit />
+      <div className="pb-24">
+        <p className="text-xl font-semibold text-center mb-4">Powered By</p>
+        <img src="/1.png" alt="logo" className="mx-auto block w-60 my-0 py-0" />
       </div>
       <BottomNavigation />
     </div>

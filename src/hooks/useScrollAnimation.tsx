@@ -10,7 +10,7 @@ export const useScrollAnimation = (screenHeight = 0, enabled = true) => {
     console.log('curr element height: ', ref.current.getBoundingClientRect().height);
     const currElmHeight = ref.current.getBoundingClientRect().height;
 
-    const threshold = screenHeight < currElmHeight ? ((screenHeight / ref.current.getBoundingClientRect().height) / 10) : 1.0;
+    const threshold = screenHeight < currElmHeight ? ((screenHeight / ref.current.getBoundingClientRect().height) / 10) : 0.1;
     console.log('threshold: ', threshold);
     const observer = new IntersectionObserver(
       ([entry]) => {

@@ -86,11 +86,11 @@ const Index = () => {
   console.log('profile loading: ', profileLoaded);
 
   return (
-    <div className="min-h-screen bg-white relative overflow-hidden pb-24">
+    <div className="min-h-screen relative">
       {/* Mobile App Header */}
-      <header className="relative z-40 p-4 animate-fade-in bg-white/90 backdrop-blur-md border-b border-gray-200/30">
-        <div className="flex items-center justify-between max-w-md mx-auto">
-          <div className="flex items-center space-x-3">
+      <header className="relative z-40 py-4 animate-fade-in bg-white/90 backdrop-blur-md border-b border-gray-200/30">
+        <div className="flex flex-wrap items-center justify-between">
+          <div className="flex items-center space-x-3 py-3">
             <div className="relative">
               <div className="w-12 h-12 rounded-xl border-4 border-[#e4e8e1] overflow-hidden">
                 <img
@@ -98,9 +98,6 @@ const Index = () => {
                   alt="Rosie Care Bot"
                   className="w-full h-full object-cover"
                 />
-              </div>
-              <div className="absolute -top-1 -right-1 w-4 h-4 bg-[#ceda88] rounded-full flex items-center justify-center">
-                <Bell className="w-3 h-3 text-white" />
               </div>
             </div>
             <div>
@@ -255,49 +252,48 @@ const Index = () => {
         </div>
       )}
       {/* Hero Section with Profile Picture */}
-      <section className="relative z-10 py-8 animate-fade-in duration-500">
-        <div className="max-w-md mx-auto px-4">
-          <div className="text-center">
-            {/* Profile Card */}
-            <div className="relative bg-[url('/ChatGPT-rosie.png')] bg-cover bg-center rounded-3xl shadow-2xl overflow-hidden">
-              {/* Frosted glass overlay */}
-              <div className="absolute inset-0 bg-white/60 backdrop-blur-2xl rounded-3xl pointer-events-none" />
-              {/* Bottom white overlay */}
-              <div className="absolute bottom-0 h-[75%] w-full bg-white/70 rounded-b-3xl" />
+      <section className="relative py-4 z-10 animate-fade-in duration-500">
+        <div className="text-center">
+          {/* Profile Card */}
+          <div className="relative bg-[url('/ChatGPT-rosie.png')] bg-cover bg-center rounded-3xl shadow-xl">
+            {/* Frosted glass overlay */}
+            <div className="absolute inset-0 bg-white/60 backdrop-blur-2xl rounded-3xl pointer-events-none" />
+            {/* Bottom white overlay */}
+            <div className="absolute bottom-0 h-[75%] w-full bg-white/70 rounded-b-3xl" />
 
-              {/* Foreground content */}
-              <div className="relative p-6">
-                {/* Avatar */}
-                <div className="mb-4">
-                  <div className="w-24 h-24 rounded-full mx-auto border-4 border-[#e4e8e1] shadow-lg flex items-center justify-center overflow-hidden">
-                    <img
-                      src="/ChatGPT-rosie.png"
-                      alt="Rosie Care Bot"
-                      className="w-full h-full object-cover rounded-full"
-                    />
-                  </div>
-                </div>
-                {/* Text content */}
-                <h2 className="text-2xl font-black text-[#232323] mb-2 text-center">
-                  Welcome to Your Journey
-                </h2>
-                <p className="text-[#373618] mb-4 text-sm leading-relaxed text-center">
-                  <Typewriter
-                    words={['I\'m Rosie, your AI guide for caregiving.',
-                      '',
-                      'Let\'s navigate this path together with stories, wisdom, and support.']}
-                    cursor
-                    cursorStyle="_"
-                    typeSpeed={50}
-                    deleteSpeed={50}
-                    delaySpeed={1500}
+            {/* Foreground content */}
+            <div className="relative p-6">
+              {/* Avatar */}
+              <div className="mb-4">
+                <div className="w-24 h-24 rounded-full mx-auto border-4 border-[#e4e8e1] shadow-lg flex items-center justify-center overflow-hidden">
+                  <img
+                    src="/ChatGPT-rosie.png"
+                    alt="Rosie Care Bot"
+                    className="w-full h-full object-cover rounded-full"
                   />
-                </p>
+                </div>
               </div>
+              {/* Text content */}
+              <h2 className="text-2xl font-black text-[#232323] mb-2 text-center">
+                Welcome to Your Journey
+              </h2>
+              <p className="text-[#373618] mb-4 text-sm leading-relaxed text-center">
+                <Typewriter
+                  words={['I\'m Rosie, your AI guide for caregiving.',
+                    '',
+                    'Let\'s navigate this path together with stories, wisdom, and support.']}
+                  cursor
+                  cursorStyle="_"
+                  typeSpeed={50}
+                  deleteSpeed={50}
+                  delaySpeed={1500}
+                />
+              </p>
             </div>
-
           </div>
+
         </div>
+
       </section>
 
       {/* Enhanced Creative Stories Section */}
@@ -332,7 +328,10 @@ const Index = () => {
       {/* <div className="animate-slide-up" style={{ animationDelay: '0.7s' }}>
         <CommunityHighlights />
       </div> */}
-
+      <div className="pb-24">
+        <p className="text-xl font-semibold text-center mb-4">Powered By</p>
+        <img src="/1.png" alt="logo" className="mx-auto block w-60 my-0 py-0" />
+      </div>
       <BottomNavigation />
     </div>
   );

@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card";
 export const OfficialBookSkeleton = () => {
   return (
     <section className="relative z-10 py-6">
-      <div className="max-w-md mx-auto px-4">
+      <div className="px-4">
         <Skeleton className="h-6 w-32 mb-4" />
         <Card className="bg-white shadow-lg hover:shadow-xl transition-shadow duration-300 cursor-pointer rounded-xl overflow-hidden flex flex-col h-[450px]">
           {/* Top: image skeleton with fixed height */}

@@ -150,101 +150,105 @@ const Topics = () => {
 
 
   return (
-    <div className="min-h-screen bg-[#f8f9fa] p-4 pb-40">
-      <div className="max-w-md mx-auto">
-        <header ref={headerRef} className={`flex items-center mb-6 transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-          <Link to="/chapters" className="mr-4">
-            <Button variant="ghost" size="sm" className="text-[#5a7a85]">
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
-          </Link>
-          <div className="flex flex-col">
-            <h1 className="text-2xl font-bold text-black">Chapter: <span className="italic">{chapterName}</span></h1>
-            <h2 className="text-sm text-gray-700">{topics.length} topics</h2>
-          </div>
-        </header>
+    <div className="min-h-screen">
 
-        <div ref={gridRef} className="space-y-6">
-          {topics.map((topic, index) => {
-            const randomColor = getConsistentColor(topic.name);
-            return (
-              <Card key={topic.id} className={`
+      <header ref={headerRef} className={`flex flex-wrap items-center pt-4 mb-6 transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <Link to="/chapters" className="mr-4">
+          <Button variant="ghost" size="sm" className="text-[#5a7a85]">
+            <ArrowLeft className="h-5 w-5" />
+          </Button>
+        </Link>
+        <div className="flex flex-col">
+          <h1 className="text-2xl font-bold text-black">Chapter: <span className="italic">{chapterName}</span></h1>
+          <h2 className="text-sm text-gray-700">{topics.length} topics</h2>
+        </div>
+      </header>
+
+      <div ref={gridRef} className="space-y-6 mb-6">
+        {topics.map((topic, index) => {
+          const randomColor = getConsistentColor(topic.name);
+          return (
+            <Card key={topic.id} className={`
                   bg-white/90 backdrop-blur-md shadow-lg overflow-hidden group cursor-pointer transition-all duration-700 hover:shadow-xl hover:scale-[1.02]
                   ${gridVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}
                 `}
-                style={{
-                  transitionDelay: gridVisible ? `${index * 150}ms` : '0ms'
-                }}>
+              style={{
+                transitionDelay: gridVisible ? `${index * 150}ms` : '0ms'
+              }}>
 
-                {/* Section Image - Top Half */}
-                <div className="relative h-48 overflow-hidden">
-                  <img
-                    src={topic.image_url}
-                    alt={topic.name}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-                </div>
+              {/* Section Image - Top Half */}
+              <div className="relative h-48 overflow-hidden">
+                <img
+                  src={topic.image_url}
+                  alt={topic.name}
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
+              </div>
 
-                <CardContent className="p-6">
-                  <div className="space-y-4">
-                    {/* Header section with title */}
-                    <h3 className="text-lg font-bold mb-2" style={{ color: '#232323' }}>
-                      Topic: {topic.name}
-                    </h3>
-                    <div className="mb-4">
-                      <div className="flex flex-wrap items-center gap-2">
-                        <p className="text-xs font-medium text-gray-500 mr-2 leading-none pt-[2px]">
-                          Stories:
-                        </p>
-                        {topic.stories.slice(0, 3).map((story, storyIndex) => (
-                          <Badge
-                            key={storyIndex}
-                            variant="secondary"
-                            className="text-xs px-2 py-1"
-                            style={{
-                              backgroundColor: `${randomColor}10`,
-                              color: randomColor,
-                              border: `1px solid ${randomColor}40`
-                            }}
-                          >
-                            {story.title}
-                          </Badge>
-                        ))}
-                        {topic.stories.length > 3 && (
-                          <Badge
-                            variant="secondary"
-                            className="text-xs px-2 py-1 font-medium"
-                            style={{
-                              backgroundColor: `${randomColor}10`,
-                              color: randomColor,
-                              border: `1px dashed ${randomColor}50`
-                            }}
-                          >
-                            +{topic.stories.length - 3} more
-                          </Badge>
-                        )}
-                      </div>
-                    </div>
-
-
-                    {/* Footer section */}
-                    <div className="flex items-center justify-end pt-2">
-                      <Link to={`/chapters/${chapterId}/topics/${topic.id}/stories`}
-                        state={{ topic }}>
-                        <Button variant="ghost" size="sm" className="group/btn" style={{ color: randomColor }}>
-                          View All {topic.stories.length} Stories
-                          <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
-                        </Button>
-                      </Link>
+              <CardContent className="p-6">
+                <div className="space-y-4">
+                  {/* Header section with title */}
+                  <h3 className="text-lg font-bold mb-2" style={{ color: '#232323' }}>
+                    Topic: {topic.name}
+                  </h3>
+                  <div className="mb-4">
+                    <div className="flex flex-wrap items-center gap-2">
+                      <p className="text-base font-medium text-gray-500 mr-2 leading-none pt-[2px]">
+                        Stories:
+                      </p>
+                      {topic.stories.slice(0, 3).map((story, storyIndex) => (
+                        <Badge
+                          key={storyIndex}
+                          variant="secondary"
+                          className="text-sm text-center px-2 py-1"
+                          style={{
+                            backgroundColor: `${randomColor}10`,
+                            color: randomColor,
+                            border: `1px solid ${randomColor}40`
+                          }}
+                        >
+                          {story.title}
+                        </Badge>
+                      ))}
+                      {topic.stories.length > 3 && (
+                        <Badge
+                          variant="secondary"
+                          className="text-sm text-center px-2 py-1 font-medium"
+                          style={{
+                            backgroundColor: `${randomColor}10`,
+                            color: randomColor,
+                            border: `1px dashed ${randomColor}50`
+                          }}
+                        >
+                          +{topic.stories.length - 3} more
+                        </Badge>
+                      )}
                     </div>
                   </div>
-                </CardContent>
-              </Card>
-            );
-          })}
-        </div>
-        <Submit />
+
+
+                  {/* Footer section */}
+                  <Link className="flex items-center justify-end pt-2"
+                    to={`/chapters/${chapterId}/topics/${topic.id}/stories`}
+                    state={{ topic }}>
+                    <p className="text-base" style={{ color: randomColor }}>
+                      View All {topic.stories.length} Stories
+                    </p>
+                    <Button variant="ghost" size="sm" className="text-[#5a7a85]">
+                      <ArrowRight className="h-4 w-4" />
+                    </Button>
+                  </Link>
+                </div>
+              </CardContent>
+            </Card>
+          );
+        })}
+      </div>
+      <Submit />
+      <div className="pb-24">
+        <p className="text-xl font-semibold text-center mb-4">Powered By</p>
+        <img src="/1.png" alt="logo" className="mx-auto block w-60 my-0 py-0" />
       </div>
       <BottomNavigation />
     </div >

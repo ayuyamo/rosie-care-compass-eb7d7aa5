@@ -55,65 +55,68 @@ const Flashcards = () => {
 
     if (!hasLoaded) return <FlashcardsSkeleton />;
     return (
-        <div className="min-h-screen bg-[#f8f9fa] p-4 pb-40">
-            <div className="max-w-md mx-auto">
-                <header ref={headerRef} className={`flex items-center mb-6 transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-                    <Link to="/" className="mr-4">
-                        <Button variant="ghost" size="sm" className="text-[#5a7a85]">
-                            <ArrowLeft className="h-5 w-5" />
-                        </Button>
-                    </Link>
-                    <div className='flex flex-col'>
-                        <h1 className="text-2xl font-bold text-black">
-                            Conversation Cards
-                        </h1>
-                        <h2 className="text-md italic text-gray-700">Ask these questions to bond with your loved ones.</h2>
-                    </div>
-                </header>
+        <div className="min-h-screen">
 
-                <div ref={gridRef} className="space-y-4">
-                    {chapters.map((chapter, index) => {
-                        const randomColor = getConsistentColor(chapter.name);
-                        return (
-                            <div key={chapter.id}>
-                                <Card className={`
+            <header ref={headerRef} className={`flex flex-wrap items-center pt-4 mb-6 transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+                <Link to="/" className="mr-4">
+                    <Button variant="ghost" size="sm" className="text-[#5a7a85]">
+                        <ArrowLeft className="h-5 w-5" />
+                    </Button>
+                </Link>
+                <div className='flex flex-col'>
+                    <h1 className="text-2xl font-bold text-black">
+                        Conversation Starters
+                    </h1>
+                    <h2 className="text-base italic text-gray-700">Ask these questions to bond with your loved ones.</h2>
+                </div>
+            </header>
+
+            <div ref={gridRef} className="space-y-4 mb-6">
+                {chapters.map((chapter, index) => {
+                    const randomColor = getConsistentColor(chapter.name);
+                    return (
+                        <div key={chapter.id}>
+                            <Card className={`
                     bg-white/90 backdrop-blur-md shadow-lg overflow-hidden group cursor-pointer will-change-transform transition-all duration-700 hover:shadow-xl hover:scale-[1.02]
                     ${gridVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}
                   `}
-                                    style={{
-                                        transitionDelay: gridVisible ? `${index * 150}ms` : '0ms',
-                                        position: "relative",
-                                    }}>
+                                style={{
+                                    transitionDelay: gridVisible ? `${index * 150}ms` : '0ms',
+                                    position: "relative",
+                                }}>
 
-                                    <CardContent className="p-6">
-                                        <div className="space-y-4 flex justify-between">
-                                            <div>
-                                                <h3 className="text-lg font-bold mb-2" style={{ color: '#232323' }}>
-                                                    Chapter: <span className="italic">{chapter.name}</span>
-                                                </h3>
-                                                <p className="text-sm mb-4" style={{ color: '#373618' }}>
-                                                    {chapter.description}
-                                                </p>
-                                            </div>
-
-
-                                            <div className="flex items-center justify-between">
-                                                <Link to={`/flashcards/${chapter.id}`}
-                                                    state={{ chapter }}
-                                                >
-                                                    <Button variant="ghost" size="sm" className="group/btn" style={{ color: randomColor }}>
-                                                        View cards
-                                                        <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
-                                                    </Button>
-                                                </Link>
-                                            </div>
+                                <CardContent className="p-6">
+                                    <div className="flex flex-wrap justify-between gap-4">
+                                        <div>
+                                            <h3 className="text-lg font-bold mb-2" style={{ color: '#232323' }}>
+                                                Chapter: <span className="italic">{chapter.name}</span>
+                                            </h3>
+                                            <p className="text-sm mb-4" style={{ color: '#373618' }}>
+                                                {chapter.description}
+                                            </p>
                                         </div>
-                                    </CardContent>
-                                </Card>
-                            </div>
-                        );
-                    })}
-                </div>
+
+
+                                        <div className="flex items-center justify-between">
+                                            <Link to={`/flashcards/${chapter.id}`}
+                                                state={{ chapter }}
+                                            >
+                                                <Button variant="ghost" size="sm" className="group/btn" style={{ color: randomColor }}>
+                                                    View cards
+                                                    <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+                                                </Button>
+                                            </Link>
+                                        </div>
+                                    </div>
+                                </CardContent>
+                            </Card>
+                        </div>
+                    );
+                })}
+            </div>
+            <div className="pb-24">
+                <p className="text-xl font-semibold text-center mb-4">Powered By</p>
+                <img src="/1.png" alt="logo" className="mx-auto block w-60 my-0 py-0" />
             </div>
             <BottomNavigation />
         </div>

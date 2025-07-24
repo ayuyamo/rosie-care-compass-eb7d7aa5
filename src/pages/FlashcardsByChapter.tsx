@@ -75,8 +75,8 @@ const FlashcardsByChapter = () => {
     if (isLoading) return <FlashcardsByChapterSkeleton />;
 
     return (
-        <div className="min-h-screen bg-[#f8f9fa] p-6 pb-24 max-w-md mx-auto space-y-4">
-            <header ref={headerRef} className={`flex items-center mb-6 transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+        <div className="min-h-screen p-6 space-y-4">
+            <header ref={headerRef} className={`flex flex-wrap items-center mb-6 transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
                 <Link to="/flashcards" className="mr-4">
                     <Button variant="ghost" size="sm" className="text-[#5a7a85]">
                         <ArrowLeft className="h-5 w-5" />

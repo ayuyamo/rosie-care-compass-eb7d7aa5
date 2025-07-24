@@ -1,17 +1,8 @@
-import { Outlet } from "react-router-dom";
-import { useTextSettings } from "./context/TextSettingsContext";
-
-const Layout = () => {
-    const { fontScale } = useTextSettings();
+const Layout = ({ children }: { children: React.ReactNode }) => {
     return (
-        <div className='break-words'
-            style={{
-                fontSize: `${fontScale * 100}%`,
-                minHeight: '100vh',
-                transition: 'all 0.3s ease',
-            }}
+        <div className='break-words max-w-2xl mx-auto px-4 pb-28'
         >
-            <Outlet />
+            {children}
         </div>
     );
 };

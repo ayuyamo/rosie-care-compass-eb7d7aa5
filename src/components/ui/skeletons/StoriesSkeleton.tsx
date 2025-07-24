@@ -17,7 +17,6 @@ export const StoriesSkeleton = () => {
         <div className="relative mb-8 p-10 flex items-center justify-center bg-gray-200 rounded">
           <div className="relative z-10 text-center">
             <Skeleton className="h-1 w-14 mx-auto mb-2" />
-            <Skeleton className="h-16 w-80 mb-2" />
             <Skeleton className="h-1 w-14 mx-auto" />
           </div>
         </div>

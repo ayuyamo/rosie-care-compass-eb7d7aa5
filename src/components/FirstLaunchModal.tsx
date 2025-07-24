@@ -9,7 +9,7 @@ import {
   DialogOverlay
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { injectElevenLabsWidget } from "@/lib/elevenlabsWidget";
+import { ElevenLabsWidget } from "@/lib/elevenlabsWidget";
 
 const FirstLaunchModal = () => {
   const location = useLocation();
@@ -32,7 +32,7 @@ const FirstLaunchModal = () => {
   useEffect(() => {
     const hasAgreed = localStorage.getItem("termsAgreed");
     if (hasAgreed === "true") {
-      injectElevenLabsWidget(); // Safe to load
+      setIsOpen(false);
     }
   }, []);
 
@@ -40,12 +40,11 @@ const FirstLaunchModal = () => {
   const handleAgree = () => {
     localStorage.setItem("termsAgreed", "true");
     setIsOpen(false);
-    injectElevenLabsWidget();
   };
-
 
   return (
     <Dialog open={isOpen} onOpenChange={() => { }}>
+      {!isOpen && <ElevenLabsWidget />}
       <DialogContent className="max-w-[340px] lg:max-w-[400px] rounded-lg">
         <DialogHeader>
           <DialogTitle className="text-center text-lg font-semibold">

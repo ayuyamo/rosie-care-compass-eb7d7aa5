@@ -31,10 +31,11 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <TextAdjuster />
-          <FirstLaunchModal />
-          <Routes>
-            <Route element={<Layout />}>
+          <Layout>
+            <TextAdjuster />
+            <FirstLaunchModal />
+            <Routes>
+
               <Route path="/" element={<Index />} />
               <Route path="/chapters" element={<Chapters />} />
               <Route path="/chapters/:chapterId/topics" element={<Topics />} />
@@ -52,8 +53,8 @@ const App = () => (
               {/* <Route path="/poems-collection" element={<PoemsCollection />} /> */}
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
-            </Route>
-          </Routes>
+            </Routes>
+          </Layout>
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
