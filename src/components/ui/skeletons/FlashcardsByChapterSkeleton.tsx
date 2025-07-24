@@ -2,7 +2,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export const FlashcardsByChapterSkeleton = () => {
   return (
-    <div className="min-h-screen bg-background p-6 pb-24 max-w-md mx-auto space-y-4">
+    <div className="min-h-screen bg-background p-6 space-y-4">
       {/* Header skeleton */}
       <div className="flex items-center mb-6">
         <Skeleton className="h-10 w-10 mr-4" />
