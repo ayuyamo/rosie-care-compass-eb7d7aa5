@@ -23,7 +23,7 @@ function updateWidgetColors(widget: HTMLElement) {
 }
 
 function updateBottomOffset(widget: HTMLElement) {
-  const basePadding = 5;
+  const basePadding = 20;
   const nav = document.getElementById('bottom-nav');
   const navHeight = nav?.offsetHeight || 0;
   widget.style.bottom = `${navHeight + basePadding}px`;
