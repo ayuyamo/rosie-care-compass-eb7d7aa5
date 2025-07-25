@@ -1,5 +1,4 @@
 import { useEffect } from 'react';
-import { useTextSettings } from '@/context/TextSettingsContext';
 
 declare global {
   interface Window {
@@ -35,7 +34,6 @@ const ELEVENLABS_ID =
 const SCRIPT_ID = 'elevenlabs-widget-script';
 
 export const ElevenLabsWidget = () => {
-  const { fontScale } = useTextSettings();
   useEffect(() => {
     const existingWidget = document.getElementById(ELEVENLABS_ID);
     const existingScript = document.getElementById(SCRIPT_ID);
@@ -138,11 +136,6 @@ export const ElevenLabsWidget = () => {
 
     document.head.appendChild(script);
   }, []);
-  // Update bottom position on fontScale change
-  useEffect(() => {
-    const widget = document.getElementById(ELEVENLABS_ID) as HTMLElement | null;
-    if (widget) updateBottomOffset(widget);
-  }, [fontScale]);
 
   return null;
 };

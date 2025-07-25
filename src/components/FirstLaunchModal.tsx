@@ -15,8 +15,8 @@ const FirstLaunchModal = () => {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
 
+  const hasAgreed = localStorage.getItem("termsAgreed");
   useEffect(() => {
-    const hasAgreed = localStorage.getItem("termsAgreed");
     const isOnPolicyPage =
       location.pathname === '/privacy-policy' ||
       location.pathname === '/terms-of-service' ||
@@ -30,11 +30,10 @@ const FirstLaunchModal = () => {
   }, [location]);
 
   useEffect(() => {
-    const hasAgreed = localStorage.getItem("termsAgreed");
     if (hasAgreed === "true") {
       setIsOpen(false);
     }
-  }, []);
+  }, [hasAgreed]);
 
 
   const handleAgree = () => {
@@ -42,9 +41,11 @@ const FirstLaunchModal = () => {
     setIsOpen(false);
   };
 
+  console.log('popup is open? : ', isOpen);
+
   return (
     <Dialog open={isOpen} onOpenChange={() => { }}>
-      {!isOpen && <ElevenLabsWidget />}
+      {!isOpen && hasAgreed && <ElevenLabsWidget />}
       <DialogContent className="max-w-[340px] lg:max-w-[400px] rounded-lg">
         <DialogHeader>
           <DialogTitle className="text-center text-lg font-semibold">
