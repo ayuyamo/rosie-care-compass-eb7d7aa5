@@ -64,7 +64,7 @@ export const ElevenLabsWidget = () => {
       widget.setAttribute('variant', 'compact');
       widget.setAttribute(
         'avatar-image-url',
-        'https://ovexmcodlyhefuhmdfez.supabase.co/storage/v1/object/public/topics-images//ChatGPT-rosie.png'
+        'https://ovexmcodlyhefuhmdfez.supabase.co/storage/v1/object/public/topics-images//blue-rosie.png'
       );
       widget.style.position = 'fixed';
 
