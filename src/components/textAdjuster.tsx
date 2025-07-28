@@ -6,64 +6,57 @@ const TextAdjuster = () => {
     const { fontScale, setFontScale } = useTextSettings();
     const buttonRef = useRef<HTMLButtonElement>(null);
     const panelRef = useRef<HTMLDivElement>(null);
-    const nav = document.getElementById('bottom-nav');
+    function updateOffsets(fontScale: number, button: HTMLElement | null, panel: HTMLElement | null) {
+        const nav = document.getElementById('bottom-nav');
+        const navHeight = nav?.offsetHeight || 48;
+        const basePadding = 20;
+        const panelOffset = 48 * fontScale;
+
+        if (button) {
+            button.style.bottom = `${basePadding + navHeight}px`;
+            button.style.transition = 'bottom 0.3s ease';
+        }
+
+        if (panel) {
+            panel.style.bottom = `${basePadding + panelOffset + navHeight}px`;
+            panel.style.transition = 'bottom 0.3s ease';
+        }
+    }
+
     useEffect(() => {
         const savedScale = localStorage.getItem('fontScale');
         if (savedScale) {
             setFontScale(parseFloat(savedScale));
         }
-        const update = () => {
-            const widget = buttonRef.current;
-            if (!nav || !widget) return;
-            const navHeight = nav.offsetHeight;
-            const basePadding = 20;
-            widget.style.bottom = `${basePadding + navHeight}px`;
-        };
-
-        update(); // initial position
-
-        if (nav) {
-            const observer = new ResizeObserver(update);
-            observer.observe(nav);
-            return () => observer.disconnect();
-        }
     }, []);
+
     useEffect(() => {
         document.documentElement.style.fontSize = `${fontScale * 16}px`;
         localStorage.setItem('fontScale', fontScale.toString());
-        let timeout: ReturnType<typeof setTimeout>;
+
         requestAnimationFrame(() => {
-            timeout = setTimeout(() => {
-                const basePadding = 20;
-                const panelOffset = 48 * fontScale;
+            setTimeout(() => {
+                updateOffsets(fontScale, buttonRef.current, panelRef.current);
+            }, 50); // Optional: slight delay if layout is heavy
+        });
+    }, [fontScale, open]);
 
-                const nav = document.getElementById('bottom-nav');
-                const navHeight = nav?.offsetHeight || 48;
+    useEffect(() => {
+        const nav = document.getElementById('bottom-nav');
+        if (!nav) return;
 
-                console.log('bottom nav: ', navHeight);
+        const observer = new ResizeObserver(() => {
+            updateOffsets(fontScale, buttonRef.current, panelRef.current);
+        });
 
-                if (buttonRef.current) {
-                    buttonRef.current.style.bottom = `${basePadding + navHeight}px`;
-                    buttonRef.current.style.transition = 'bottom 0.3s ease';
-                }
-                if (panelRef.current) {
-                    panelRef.current.style.bottom = `${basePadding + panelOffset + navHeight}px`;
-                    panelRef.current.style.transition = 'bottom 0.3s ease';
-                }
-
-            }, 100);
-        })
-
-        return () => clearTimeout(timeout);
-    }, [fontScale, nav]);
-
-
-
+        observer.observe(nav);
+        return () => observer.disconnect();
+    }, [fontScale]); // depends on fontScale because nav height may change with it
 
     return (
         <div>
             <button ref={buttonRef}
-                className='fixed left-4 z-50 w-10 h-10 bg-black text-white flex items-center justify-center p-2 rounded-full shadow-xl'
+                className={`fixed left-4 z-50 w-10 h-10 bg-black text-white flex items-center justify-center p-2 rounded-full shadow-xl overflow-hidden`}
                 onClick={() => setOpen(!open)}
                 title='Text Settings'
             >
