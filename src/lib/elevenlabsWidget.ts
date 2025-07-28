@@ -25,13 +25,13 @@ function updateWidgetColors(widget: HTMLElement) {
 function updateBottomOffset(widget: HTMLElement) {
   console.log('update bottom offset chat icon');
 
-  requestAnimationFrame(() => {
+  setTimeout(() => {
     const basePadding = 10;
     const nav = document.getElementById('bottom-nav');
     const navHeight = nav?.offsetHeight || 48;
     widget.style.bottom = `${navHeight + basePadding}px`;
     widget.style.transition = 'bottom 0.3s ease';
-  });
+  }, 100);
 }
 
 const ELEVENLABS_ID =
@@ -132,6 +132,7 @@ export const ElevenLabsWidget = () => {
       // Cleanup
       return () => {
         themeObserver.disconnect();
+        resizeObserver.disconnect();
         window.removeEventListener('resize', handleResize);
         widget.remove();
         wrapper.remove();

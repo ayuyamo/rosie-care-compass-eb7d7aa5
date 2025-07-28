@@ -6,12 +6,12 @@ const TextAdjuster = () => {
     const { fontScale, setFontScale } = useTextSettings();
     const buttonRef = useRef<HTMLButtonElement>(null);
     const panelRef = useRef<HTMLDivElement>(null);
+    const nav = document.getElementById('bottom-nav');
     useEffect(() => {
         const savedScale = localStorage.getItem('fontScale');
         if (savedScale) {
             setFontScale(parseFloat(savedScale));
         }
-        const nav = document.getElementById('bottom-nav');
         const update = () => {
             const widget = buttonRef.current;
             if (!nav || !widget) return;
@@ -31,7 +31,7 @@ const TextAdjuster = () => {
     useEffect(() => {
         document.documentElement.style.fontSize = `${fontScale * 16}px`;
         localStorage.setItem('fontScale', fontScale.toString());
-        requestAnimationFrame(() => {
+        const timeout = setTimeout(() => {
             const basePadding = 20;
             const panelOffset = 48 * fontScale;
 
@@ -48,9 +48,11 @@ const TextAdjuster = () => {
                 panelRef.current.style.bottom = `${basePadding + panelOffset + navHeight}px`;
                 panelRef.current.style.transition = 'bottom 0.3s ease';
             }
-        })
 
-    }, [fontScale, open]);
+        }, 100);
+
+        return () => clearTimeout(timeout);
+    }, [fontScale, nav]);
 
 
 
