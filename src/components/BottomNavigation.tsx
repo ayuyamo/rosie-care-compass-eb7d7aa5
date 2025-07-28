@@ -7,7 +7,7 @@ const navItems = [
     { to: "/", label: "Home", icon: Home },
     { to: "/chapters", label: "Chapters", icon: BookOpen },
     { to: "/resources", label: "Resources", icon: Layers },
-    { to: "/flashcards", label: "Conversations", icon: Blocks },
+    { to: "/flashcards", label: "Conversation Cards", icon: Blocks },
 ];
 
 const BottomNavigation: React.FC = () => {
