@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { useTextSettings } from '@/context/TextSettingsContext';
 
 declare global {
   interface Window {
@@ -23,7 +24,7 @@ function updateWidgetColors(widget: HTMLElement) {
 
 function updateBottomOffset(widget: HTMLElement) {
   console.log('update bottom offset chat icon');
-  const basePadding = 20;
+  const basePadding = 10;
   const nav = document.getElementById('bottom-nav');
   const navHeight = nav?.offsetHeight || 48;
   widget.style.bottom = `${navHeight + basePadding}px`;
@@ -35,6 +36,7 @@ const ELEVENLABS_ID =
 const SCRIPT_ID = 'elevenlabs-widget-script';
 
 export const ElevenLabsWidget = () => {
+  const { fontScale } = useTextSettings();
   useEffect(() => {
     const existingWidget = document.getElementById(ELEVENLABS_ID);
     const existingScript = document.getElementById(SCRIPT_ID);
@@ -81,13 +83,6 @@ export const ElevenLabsWidget = () => {
       const handleResize = () => updateWidgetVariant(widget);
       window.addEventListener('resize', handleResize);
 
-      // Handle bottom nav resize
-      const nav = document.getElementById('bottom-nav');
-      const resizeObserver = new ResizeObserver(() =>
-        updateBottomOffset(widget)
-      );
-      if (nav) resizeObserver.observe(nav);
-
       // Listen to widget "call" event
       widget.addEventListener('elevenlabs-convai:call', (e) => {
         const event = e as CustomEvent;
@@ -125,7 +120,6 @@ export const ElevenLabsWidget = () => {
       return () => {
         themeObserver.disconnect();
         window.removeEventListener('resize', handleResize);
-        resizeObserver.disconnect();
         widget.remove();
         wrapper.remove();
       };
@@ -137,6 +131,15 @@ export const ElevenLabsWidget = () => {
 
     document.head.appendChild(script);
   }, []);
+
+  useEffect(() => {
+    const widget = document.getElementById(ELEVENLABS_ID);
+    if (widget) {
+      updateBottomOffset(widget);
+    } else {
+      console.log('elevenlabs widget not found');
+    }
+  }, [fontScale]);
 
   return null;
 };
