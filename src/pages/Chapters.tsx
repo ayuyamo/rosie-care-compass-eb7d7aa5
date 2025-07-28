@@ -192,7 +192,7 @@ const Chapters = () => {
                       <p className="text-base" style={{ color: randomColor }}>
                         View All {chapter.topics.length} {chapter.topics.length > 1 ? 'Topics' : 'Topic'}
                       </p>
-                      <Button variant="ghost" size="sm" className="text-[#5a7a85]">
+                      <Button variant="ghost" size="sm" style={{ color: randomColor }}>
                         <ArrowRight className="h-4 w-4" />
                       </Button>
                     </Link>

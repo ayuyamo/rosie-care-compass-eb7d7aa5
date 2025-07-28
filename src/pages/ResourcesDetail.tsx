@@ -113,7 +113,7 @@ const ResourcesDetail = () => {
   return (
     <div className="min-h-screen">
 
-      <header ref={headerRef} className={`flex items-center pt-4 mb-6 transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+      <header ref={headerRef} className={`flex flex-wrap items-center pt-4 mb-6 transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
         <Link to="/resources" className="mr-4">
           <Button variant="ghost" size="sm" className="text-[#5a7a85]">
             <ArrowLeft className="h-5 w-5" />
@@ -138,7 +138,7 @@ const ResourcesDetail = () => {
               <CardContent className="p-6">
                 <div className="space-y-4">
                   {/* Section Header */}
-                  <div className="flex items-start space-x-4">
+                  <div className="flex flex-wrap items-start space-x-4">
                     <div
                       className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0 overflow-hidden"
                     >
@@ -157,20 +157,17 @@ const ResourcesDetail = () => {
                   </div>
                   {topic.resources?.length > 0 && (
                     <div className="space-y-2">
-                      <div className="flex items-center space-x-2">
-                      </div>
                       <div className="space-y-2 ml-6">
                         {topic.resources.map((resource, resourceIndex) => (
                           <div
                             key={resourceIndex}
-                            className="flex items-center justify-between p-2 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors"
                           >
                             <a
                               key={resourceIndex}
                               href={resource.url}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="flex items-center justify-between p-2 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors no-underline"
+                              className="flex flex-wrap items-center justify-between p-2 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors no-underline"
                             >
                               <span className="text-xs text-blue-600 truncate max-w-[80%]">
                                 {new URL(resource.url).hostname}

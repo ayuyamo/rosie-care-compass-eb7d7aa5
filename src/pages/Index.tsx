@@ -90,20 +90,19 @@ const Index = () => {
       {/* Mobile App Header */}
       <header className="relative z-40 py-4 animate-fade-in bg-white/90 backdrop-blur-md border-b border-gray-200/30">
         <div className="flex flex-wrap items-center justify-between">
-          <div className="flex items-center space-x-3 py-3">
+          <div className="flex items-center justify-center space-x-3 py-3">
             <div className="relative">
-              <div className="w-12 h-12 rounded-xl border-4 border-[#e4e8e1] overflow-hidden">
+              <div className="w-12 h-10 rounded-xl">
                 <img
-                  src="/ChatGPT-rosie.png"
+                  src="/2.png"
                   alt="Rosie Care Bot"
                   className="w-full h-full object-cover"
                 />
               </div>
             </div>
-            <div>
-              <h1 className="text-lg font-bold text-[#232323]">Rosie Care</h1>
-              <p className="text-[#4B5320] text-sm">Your Guide</p>
-            </div>
+            {/* <div>
+              <h1 className="text-lg text-center font-bold text-[#232323]">Rosie Care</h1>
+            </div> */}
           </div>
 
           <div className="flex items-center space-x-3">

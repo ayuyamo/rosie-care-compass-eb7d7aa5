@@ -96,7 +96,7 @@ const Resources = () => {
   return (
     <div className="min-h-screen pb-14">
 
-      <header ref={headerRef} className={`flex items-center mb-6 transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+      <header ref={headerRef} className={`flex flex-wrap items-center mb-6 transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
         <Link to="/" className="mr-4">
           <Button variant="ghost" size="sm" className="text-[#5a7a85]">
             <ArrowLeft className="h-5 w-5" />
@@ -174,16 +174,15 @@ const Resources = () => {
                     </div>
 
 
-                    <div className="flex items-center justify-end">
-                      <Link to={`/chapters/${chapter.id}/resources/detail`}
-                        state={{ chapter }}
-                      >
-                        <Button variant="ghost" size="sm" className="group/btn text-base" style={{ color: randomColor }}>
-                          View Resources
-                          <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
-                        </Button>
-                      </Link>
-                    </div>
+                    <Link className='flex items-center justify-end'
+                      to={`/chapters/${chapter.id}/resources/detail`}
+                      state={{ chapter }}
+                    >
+                      <p className='text-base' style={{ color: randomColor }}>View Resources</p>
+                      <Button variant="ghost" size="sm" className="group/btn text-base" style={{ color: randomColor }}>
+                        <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
+                      </Button>
+                    </Link>
                   </div>
                 </CardContent>
               </Card>
