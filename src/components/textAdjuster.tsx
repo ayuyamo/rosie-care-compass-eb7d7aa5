@@ -7,24 +7,48 @@ const TextAdjuster = () => {
     const buttonRef = useRef<HTMLButtonElement>(null);
     const panelRef = useRef<HTMLDivElement>(null);
     useEffect(() => {
-        document.documentElement.style.fontSize = `${fontScale * 16}px`;
-        const basePadding = 20;
-        const panelOffset = 48 * fontScale;
-
-
+        const savedScale = localStorage.getItem('fontScale');
+        if (savedScale) {
+            setFontScale(parseFloat(savedScale));
+        }
         const nav = document.getElementById('bottom-nav');
-        const navHeight = nav?.offsetHeight || 48;
+        const update = () => {
+            const widget = buttonRef.current;
+            if (!nav || !widget) return;
+            const navHeight = nav.offsetHeight;
+            const basePadding = 20;
+            widget.style.bottom = `${basePadding + navHeight}px`;
+        };
 
-        console.log('bottom nav: ', navHeight);
+        update(); // initial position
 
-        if (buttonRef.current) {
-            buttonRef.current.style.bottom = `${basePadding + navHeight}px`;
-            buttonRef.current.style.transition = 'bottom 0.3s ease';
+        if (nav) {
+            const observer = new ResizeObserver(update);
+            observer.observe(nav);
+            return () => observer.disconnect();
         }
-        if (panelRef.current) {
-            panelRef.current.style.bottom = `${basePadding + panelOffset + navHeight}px`;
-            panelRef.current.style.transition = 'bottom 0.3s ease';
-        }
+    }, []);
+    useEffect(() => {
+        document.documentElement.style.fontSize = `${fontScale * 16}px`;
+        localStorage.setItem('fontScale', fontScale.toString());
+        requestAnimationFrame(() => {
+            const basePadding = 20;
+            const panelOffset = 48 * fontScale;
+
+            const nav = document.getElementById('bottom-nav');
+            const navHeight = nav?.offsetHeight || 48;
+
+            console.log('bottom nav: ', navHeight);
+
+            if (buttonRef.current) {
+                buttonRef.current.style.bottom = `${basePadding + navHeight}px`;
+                buttonRef.current.style.transition = 'bottom 0.3s ease';
+            }
+            if (panelRef.current) {
+                panelRef.current.style.bottom = `${basePadding + panelOffset + navHeight}px`;
+                panelRef.current.style.transition = 'bottom 0.3s ease';
+            }
+        })
 
     }, [fontScale, open]);
 
