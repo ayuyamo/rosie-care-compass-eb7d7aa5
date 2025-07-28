@@ -31,25 +31,28 @@ const TextAdjuster = () => {
     useEffect(() => {
         document.documentElement.style.fontSize = `${fontScale * 16}px`;
         localStorage.setItem('fontScale', fontScale.toString());
-        const timeout = setTimeout(() => {
-            const basePadding = 20;
-            const panelOffset = 48 * fontScale;
+        let timeout: ReturnType<typeof setTimeout>;
+        requestAnimationFrame(() => {
+            timeout = setTimeout(() => {
+                const basePadding = 20;
+                const panelOffset = 48 * fontScale;
 
-            const nav = document.getElementById('bottom-nav');
-            const navHeight = nav?.offsetHeight || 48;
+                const nav = document.getElementById('bottom-nav');
+                const navHeight = nav?.offsetHeight || 48;
 
-            console.log('bottom nav: ', navHeight);
+                console.log('bottom nav: ', navHeight);
 
-            if (buttonRef.current) {
-                buttonRef.current.style.bottom = `${basePadding + navHeight}px`;
-                buttonRef.current.style.transition = 'bottom 0.3s ease';
-            }
-            if (panelRef.current) {
-                panelRef.current.style.bottom = `${basePadding + panelOffset + navHeight}px`;
-                panelRef.current.style.transition = 'bottom 0.3s ease';
-            }
+                if (buttonRef.current) {
+                    buttonRef.current.style.bottom = `${basePadding + navHeight}px`;
+                    buttonRef.current.style.transition = 'bottom 0.3s ease';
+                }
+                if (panelRef.current) {
+                    panelRef.current.style.bottom = `${basePadding + panelOffset + navHeight}px`;
+                    panelRef.current.style.transition = 'bottom 0.3s ease';
+                }
 
-        }, 100);
+            }, 100);
+        })
 
         return () => clearTimeout(timeout);
     }, [fontScale, nav]);
