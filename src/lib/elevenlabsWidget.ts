@@ -22,9 +22,10 @@ function updateWidgetColors(widget: HTMLElement) {
 }
 
 function updateBottomOffset(widget: HTMLElement) {
+  console.log('update bottom offset chat icon');
   const basePadding = 20;
   const nav = document.getElementById('bottom-nav');
-  const navHeight = nav?.offsetHeight || 0;
+  const navHeight = nav?.offsetHeight || 48;
   widget.style.bottom = `${navHeight + basePadding}px`;
   widget.style.transition = 'bottom 0.3s ease';
 }

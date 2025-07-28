@@ -313,25 +313,6 @@ const Index = () => {
 
       <Submit />
 
-
-      {/* Poetry Collection Section */}
-      {/* <div className="animate-slide-up" style={{ animationDelay: '0.4s' }}>
-        <PoetryCollectionSection />
-      </div> */}
-
-      {/* Enhanced Floating Modules Grid */}
-      {/* <div className="animate-slide-up" style={{ animationDelay: '0.5s' }}>
-        <FloatingModuleGrid />
-      </div> */}
-
-      {/* Community Section with Pictures */}
-      {/* <div className="animate-slide-up" style={{ animationDelay: '0.7s' }}>
-        <CommunityHighlights />
-      </div> */}
-      <div className="pb-24">
-        <p className="text-xl font-semibold text-center mb-4">Powered By</p>
-        <img src="/1.png" alt="logo" className="mx-auto block w-60 my-0 py-0" />
-      </div>
       <BottomNavigation />
     </div>
   );

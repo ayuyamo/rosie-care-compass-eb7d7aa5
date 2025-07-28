@@ -4,7 +4,6 @@ import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 const Submit = () => {
     const [showForm, setShowForm] = useState(false);
     const { ref: cardRef, isVisible: cardVisible } = useScrollAnimation(window.innerHeight, true);
-    console.log('is form  visible? -> ', cardVisible);
     const googleFormUrl =
         'https://docs.google.com/forms/d/e/1FAIpQLSdJ6z0fKohEOq_CGLH6dcpIuPY4uU5Zk8jh_Itic1Ajhk0Drg/viewform?embedded=true';
 
@@ -16,7 +15,7 @@ const Submit = () => {
                     Have something to share? Submit your story or resource below.
                 </p>
                 <button
-                    className="inline-block bg-black text-white hover:bg-gray-900 hover:scale-105 font-semibold py-3 px-6 rounded-full shadow-md transition transform duration-200"
+                    className="inline-block text-base bg-black text-white hover:bg-gray-900 hover:scale-105 font-semibold py-3 px-6 rounded-full shadow-md transition transform duration-200"
                     onClick={() => setShowForm(!showForm)}
                 >
                     {showForm ? 'Hide' : 'Show'} Form

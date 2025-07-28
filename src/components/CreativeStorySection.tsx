@@ -193,7 +193,7 @@ export const CreativeStorySection = () => {
         })}
       </div>
 
-      <div className="text-center mt-6 animate-fade-in" style={{ animationDelay: '1s' }}>
+      <div className="text-center mt-6 text-lg animate-fade-in" style={{ animationDelay: '1s' }}>
         <Link to="/chapters">
           <button
             className="w-full inline-flex items-center rounded-md justify-center min-w-[140px] md:min-w-[170px] h-12 px-4 shadow-lg border-2 border-[#754848] text-[#754848] font-semibold text-base leading-6 tracking-tight bg-white hover:text-[#06f] hover:border-[#06f] focus:text-[#171e29] transition-all duration-300"

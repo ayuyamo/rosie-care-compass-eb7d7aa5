@@ -41,8 +41,6 @@ const FirstLaunchModal = () => {
     setIsOpen(false);
   };
 
-  console.log('popup is open? : ', isOpen);
-
   return (
     <Dialog open={isOpen} onOpenChange={() => { }}>
       {!isOpen && hasAgreed && <ElevenLabsWidget />}

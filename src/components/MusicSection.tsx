@@ -96,7 +96,7 @@ const MusicSection = () => {
       <div ref={bottomRef} className={`mt-6 text-center transition-all duration-1000 ${bottomVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}>
         <div className="bg-[#f8f9f6] rounded-2xl p-4 border border-[#e4e8e1]">
           <Headphones className="w-6 h-6 text-[#4B5320] mx-auto mb-2" />
-          <p className="text-xs text-[#4B5320] leading-relaxed">
+          <p className="text-base text-[#4B5320] leading-relaxed">
             Music can provide comfort during challenging caregiving moments.
             These collections are thoughtfully chosen to support your emotional well-being.
           </p>

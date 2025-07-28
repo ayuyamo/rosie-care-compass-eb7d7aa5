@@ -189,10 +189,6 @@ const ResourcesDetail = () => {
         })}
       </div>
       <Submit />
-      <div className="pb-24">
-        <p className="text-xl font-semibold text-center mb-4">Powered By</p>
-        <img src="/1.png" alt="logo" className="mx-auto block w-60 my-0 py-0" />
-      </div>
       <BottomNavigation />
     </div>
   );

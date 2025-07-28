@@ -26,12 +26,6 @@ const TextAdjuster = () => {
             panelRef.current.style.transition = 'bottom 0.3s ease';
         }
 
-        ['text-base', 'text-lg', 'text-xl'].forEach((className) => {
-            const el = document.querySelector(`.${className}`);
-            if (el) {
-                console.log(`${className}:`, window.getComputedStyle(el).fontSize);
-            }
-        });
     }, [fontScale, open]);
 
 
@@ -61,7 +55,7 @@ const TextAdjuster = () => {
                     <option value='1.1'>110%</option>
                     <option value='1.25'>125%</option>
                     <option value='1.5'>150%</option>
-                    <option value='2'>200%</option>
+                    <option value='1.75'>175%</option>
                 </select>
             </div>
         </div>
