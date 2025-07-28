@@ -184,7 +184,7 @@ const Stories = () => {
                     </Link>
                     <div>
                         <h1 className="text-2xl font-bold text-black">Topic: <span className='italic'>{topicName}</span></h1>
-                        <p className="text-sm text-gray-700 mt-1">{stories.length} stories</p>
+                        <p className="text-base text-gray-700 mt-1">{stories.length} stories</p>
                     </div>
                 </div>
             </header>
@@ -244,7 +244,7 @@ const Stories = () => {
                                                             <Badge
                                                                 key={personIndex}
                                                                 variant="outline"
-                                                                className="text-sm text-center px-3 py-2 bg-gray-50 text-gray-700 border-gray-200"
+                                                                className="text-base text-center px-3 py-2 bg-gray-50 text-gray-700 border-gray-200"
                                                             >
                                                                 {person}
                                                             </Badge>
@@ -278,7 +278,7 @@ const Stories = () => {
                                         )}
                                         {isOpen && story.content.length > 200 && (
                                             <CollapsibleTrigger asChild>
-                                                <Button variant="link" className="p-0 h-auto text-sm text-gray-600">
+                                                <Button variant="link" className="p-0 h-auto text-base text-gray-600">
                                                     Show less
                                                 </Button>
                                             </CollapsibleTrigger>
@@ -325,7 +325,7 @@ const Stories = () => {
                                     href={resource.url}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="flex items-center space-x-2 bg-white border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-blue-600 hover:bg-blue-50 hover:border-blue-300 transition-all duration-200 shadow-sm hover:shadow-md group"
+                                    className="flex items-center space-x-2 bg-white border border-gray-200 rounded-lg px-3 py-2.5 text-base text-blue-600 hover:bg-blue-50 hover:border-blue-300 transition-all duration-200 shadow-sm hover:shadow-md group"
                                 >
                                     {resource.image ? (
                                         <>

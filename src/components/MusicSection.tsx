@@ -76,11 +76,11 @@ const MusicSection = () => {
               <div className="flex flex-col items-center">
                 <img src={platform.icon_url} alt={`${platform.name} icon`} />
                 <h3 className="font-semibold text-[#232323] text-base mb-1">{platform.name}</h3>
-                <p className="text-sm text-[#4B5320] mb-3 leading-tight text-center">{platform.description}</p>
+                <p className="text-base text-[#4B5320] mb-3 leading-tight text-center">{platform.description}</p>
                 <Button
                   size="sm"
                   variant="outline"
-                  className="flex flex-wrap h-full w-full p-2 text-sm group-hover:bg-[#ceda88]/10 group-hover:border-[#ceda88] group-hover:text-[#4B5320] transition-all"
+                  className="flex flex-wrap h-full w-full p-2 text-base group-hover:bg-[#ceda88]/10 group-hover:border-[#ceda88] group-hover:text-[#4B5320] transition-all"
                   onClick={() => window.open(platform.url, '_blank')}
                 >
                   <Play className="w-3 h-3 mr-1" />

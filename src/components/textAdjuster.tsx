@@ -67,7 +67,7 @@ const TextAdjuster = () => {
 
             <div ref={panelRef}
                 className={`fixed left-7 bg-white shadow-lg rounded-lg p-4 max-w-md  overflow-hidden z-50 border border-gray-300 ${open ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-                <label className='block mb-2 text-sm font-medium'>Font Size</label>
+                <label className='block mb-2 text-base font-medium'>Font Size</label>
                 <select
                     value={fontScale}
                     onChange={(e) => setFontScale(parseFloat(e.target.value))}

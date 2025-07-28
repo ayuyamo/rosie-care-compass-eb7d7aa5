@@ -158,7 +158,7 @@ const Topics = () => {
         </Link>
         <div className="flex flex-col">
           <h1 className="text-2xl font-bold text-black">Chapter: <span className="italic">{chapterName}</span></h1>
-          <h2 className="text-sm text-gray-700">{topics.length} topics</h2>
+          <h2 className="text-base text-gray-700">{topics.length} topics</h2>
         </div>
       </header>
 
@@ -199,7 +199,7 @@ const Topics = () => {
                         <Badge
                           key={storyIndex}
                           variant="secondary"
-                          className="text-sm text-center px-2 py-1"
+                          className="text-base text-center px-2 py-1"
                           style={{
                             backgroundColor: `${randomColor}10`,
                             color: randomColor,
@@ -212,7 +212,7 @@ const Topics = () => {
                       {topic.stories.length > 3 && (
                         <Badge
                           variant="secondary"
-                          className="text-sm text-center px-2 py-1 font-medium"
+                          className="text-base text-center px-2 py-1 font-medium"
                           style={{
                             backgroundColor: `${randomColor}10`,
                             color: randomColor,

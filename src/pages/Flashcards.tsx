@@ -91,7 +91,7 @@ const Flashcards = () => {
                                             <h3 className="text-lg font-bold mb-2" style={{ color: '#232323' }}>
                                                 Chapter: <span className="italic">{chapter.name}</span>
                                             </h3>
-                                            <p className="text-sm mb-4" style={{ color: '#373618' }}>
+                                            <p className="text-base mb-4" style={{ color: '#373618' }}>
                                                 {chapter.description}
                                             </p>
                                         </div>
@@ -101,7 +101,7 @@ const Flashcards = () => {
                                             <Link to={`/flashcards/${chapter.id}`}
                                                 state={{ chapter }}
                                             >
-                                                <Button variant="ghost" size="sm" className="group/btn" style={{ color: randomColor }}>
+                                                <Button variant="ghost" size="sm" className="group/btn text-base" style={{ color: randomColor }}>
                                                     View cards
                                                     <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover/btn:translate-x-1" />
                                                 </Button>

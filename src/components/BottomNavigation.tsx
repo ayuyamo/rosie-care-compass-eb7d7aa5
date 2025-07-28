@@ -26,7 +26,7 @@ const BottomNavigation: React.FC = () => {
                                 }`}
                         >
                             <Icon className="h-5 w-5" color={isActive ? "#c4a91a" : "#5a7a85"} />
-                            <span className="text-xs">{label}</span>
+                            <span className="text-sm">{label}</span>
                         </Link>
                     );
                 })}

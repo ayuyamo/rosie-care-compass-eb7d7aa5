@@ -147,7 +147,7 @@ const Resources = () => {
                           <Badge
                             key={topicIndex}
                             variant="secondary"
-                            className="text-sm px-2 py-1"
+                            className="text-base px-2 py-1"
                             style={{
                               backgroundColor: `${randomColor}10`,
                               color: randomColor,
@@ -160,7 +160,7 @@ const Resources = () => {
                         {chapter.topics.length > 3 && (
                           <Badge
                             variant="secondary"
-                            className="text-sm px-2 py-1 font-medium"
+                            className="text-base px-2 py-1 font-medium"
                             style={{
                               backgroundColor: `${randomColor}10`,
                               color: randomColor,

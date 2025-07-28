@@ -93,7 +93,7 @@ const FlashcardsByChapter = () => {
                             style={{ width: `${progress}%` }}
                         ></div>
                     </div>
-                    <p className='text-sm font-medium text-gray-700 whitespace-nowrap'>{completed.size}/{questions.length}</p>
+                    <p className='text-base font-medium text-gray-700 whitespace-nowrap'>{completed.size}/{questions.length}</p>
                 </div>
             </div>
             {!allComplete ? (<div ref={cardRef} className={`space-y-6 transition-all duration-1000 ${cardVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>

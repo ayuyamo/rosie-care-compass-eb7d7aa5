@@ -127,9 +127,9 @@ const BookDetails = () => {
                 <h2 className="text-xl font-bold text-[#232323] mb-1 italic">
                   {bookDetails?.title}
                 </h2>
-                <p className="text-sm text-[#555]">by <span className="italic">{bookDetails?.author}</span></p>
+                <p className="text-base text-[#555]">by <span className="italic">{bookDetails?.author}</span></p>
               </div>
-              <p className="text-[#373618] text-sm mb-4">
+              <p className="text-[#373618] text-base mb-4">
                 {bookDetails?.description}
               </p>
 
@@ -212,7 +212,7 @@ const BookDetails = () => {
             onClick={() => setShowDetails(!showDetails)}
             className="w-full flex items-center justify-between p-3 bg-white/50 hover:bg-white/70 border border-gray-200 rounded-lg transition-all duration-300 shadow-sm"
           >
-            <span className="text-sm font-medium text-[#232323] flex items-center transition-colors duration-200">
+            <span className="text-base font-medium text-[#232323] flex items-center transition-colors duration-200">
               <Bookmark className="h-4 w-4 mr-2 text-[#679aa3] transition-colors duration-200" />
               Book Details
             </span>
@@ -226,36 +226,36 @@ const BookDetails = () => {
               <div className="flex flex-wrap items-center space-x-3 space-y-2">
                 <Calendar className="h-4 w-4 text-[#679aa3]" />
                 <div>
-                  <p className="text-xs text-[#373618]">Published</p>
-                  <p className="text-sm font-medium text-[#232323]">{bookDetails?.published_date}</p>
+                  <p className="text-base text-[#373618]">Published</p>
+                  <p className="text-base font-medium text-[#232323]">{bookDetails?.published_date}</p>
                 </div>
               </div>
               <div className="flex flex-wrap items-center space-x-3 space-y-2">
                 <Tag className="h-4 w-4 text-[#679aa3]" />
                 <div>
-                  <p className="text-xs text-[#373618]">ISBN-13</p>
-                  <p className="text-sm font-medium text-[#232323]">{bookDetails?.isbn13}</p>
+                  <p className="text-base text-[#373618]">ISBN-13</p>
+                  <p className="text-base font-medium text-[#232323]">{bookDetails?.isbn13}</p>
                 </div>
               </div>
               <div className="flex flex-wrap items-center space-x-3 space-y-2">
                 <Globe className="h-4 w-4 text-[#679aa3]" />
                 <div>
-                  <p className="text-xs text-[#373618]">Language</p>
-                  <p className="text-sm font-medium text-[#232323]">{bookDetails?.language}</p>
+                  <p className="text-base text-[#373618]">Language</p>
+                  <p className="text-base font-medium text-[#232323]">{bookDetails?.language}</p>
                 </div>
               </div>
               <div className="flex flex-wrap items-center space-x-3 space-y-2">
                 <BookOpen className="h-4 w-4 text-[#679aa3]" />
                 <div>
-                  <p className="text-xs text-[#373618]">Pages</p>
-                  <p className="text-sm font-medium text-[#232323]">{bookDetails?.page_count}</p>
+                  <p className="text-base text-[#373618]">Pages</p>
+                  <p className="text-base font-medium text-[#232323]">{bookDetails?.page_count}</p>
                 </div>
               </div>
               <div className="flex flex-wrap items-center space-x-3 space-y-2">
                 <Heart className="h-4 w-4 text-[#679aa3]" />
                 <div>
-                  <p className="text-xs text-[#373618]">Genre</p>
-                  <p className="text-sm font-medium text-[#232323]">{bookDetails?.genre}</p>
+                  <p className="text-base text-[#373618]">Genre</p>
+                  <p className="text-base font-medium text-[#232323]">{bookDetails?.genre}</p>
                 </div>
               </div>
             </div>
@@ -270,14 +270,14 @@ const BookDetails = () => {
             <Card key={index} className="bg-white/90 backdrop-blur-md p-4 cursor-pointer hover:shadow-lg transition-shadow">
               <div className="flex flex-wrap items-start space-x-3 space-y-2">
                 <div className="w-8 h-8 bg-[#679aa3] rounded-lg flex items-center justify-center flex-shrink-0">
-                  <span className="text-white text-sm font-bold">{index + 1}</span>
+                  <span className="text-white text-base font-bold">{index + 1}</span>
                 </div>
                 <div className="flex-1">
                   <h4 className="font-bold text-[#232323] mb-1">{chapter.title}</h4>
-                  <p className="text-[#373618] text-sm mb-2">{chapter.description}</p>
+                  <p className="text-[#373618] text-base mb-2">{chapter.description}</p>
                   <div className="flex items-center space-x-2 text-[#679aa3]">
                     <Clock className="h-3 w-3" />
-                    <span className="text-xs">{chapter.pages}</span>
+                    <span className="text-base">{chapter.pages}</span>
                   </div>
                 </div>
               </div>

@@ -73,7 +73,7 @@ const Index = () => {
 
   useEffect(() => {
     const img = new Image();
-    img.src = "/ChatGPT-rosie.png";
+    img.src = "/blue-rosie.png";
     img.onload = () => {
       setprofileLoaded(true);
     };
@@ -82,6 +82,20 @@ const Index = () => {
   if (!profileLoaded) {
     return <IndexSkeleton />;
   }
+  const handleSearch = async () => {
+    setHasInput(true);
+    setIsSearching(true);
+    setQuery(inputQuery);
+    try {
+      const results = await searchContent(inputQuery);
+      setResults(results);
+      console.log('results: ', results);
+    } catch (err) {
+      console.error('Error searching: ', err);
+    } finally {
+      setIsSearching(false);
+    }
+  };
 
   console.log('profile loading: ', profileLoaded);
 
@@ -95,7 +109,7 @@ const Index = () => {
               <div className="w-12 h-10 rounded-xl">
                 <img
                   src="/2.png"
-                  alt="Rosie Care Bot"
+                  alt="villagecore logo"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -107,7 +121,7 @@ const Index = () => {
 
           <div className="flex items-center space-x-3">
             <button
-              className="p-2 bg-[#a5aba0] rounded-lg active:scale-105"
+              className="p-2 bg-[#a0a1ab] rounded-lg active:scale-105"
               onClick={() => setIsSearchOpen(true)}
               aria-label="Open Search"
             >
@@ -151,32 +165,26 @@ const Index = () => {
             >
               <X className="h-6 w-6" />
             </button>
-
-            {/* Search Bar */}
-            <input
-              type="text"
-              autoFocus
-              placeholder="Search..."
-              value={inputQuery}
-              onChange={(e) => setInputQuery(e.target.value)}
-              onKeyDown={async (e) => {
-                if (e.key === 'Enter') {
-                  setHasInput(true);
-                  setIsSearching(true);
-                  setQuery(inputQuery);
-                  try {
-                    const results = await searchContent(inputQuery);
-                    setResults(results);
-                    console.log('results: ', results)
-                  } catch (err) {
-                    console.error('Error searching: ', err);
-                  } finally {
-                    setIsSearching(false);
+            <div className="flex flex-row gap-4">
+              {/* Search Bar */}
+              <input
+                type="text"
+                autoFocus
+                placeholder="Search..."
+                value={inputQuery}
+                onChange={(e) => setInputQuery(e.target.value)}
+                onKeyDown={async (e) => {
+                  if (e.key === 'Enter') {
+                    handleSearch();
                   }
-                }
-              }}
-              className="w-full p-4 rounded-lg text-lg shadow-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#a5aba0]"
-            />
+                }}
+                className="flex-1 w-full p-4 rounded-lg text-lg shadow-lg bg-white focus:outline-none focus:ring-2 focus:ring-[#a5aba0]"
+              />
+              <button
+                className="text-white rounded-lg p-4 bg-gray-700 hover:bg-gray-800 transition-colors"
+                onClick={handleSearch}
+              >Enter</button>
+            </div>
           </div>
           <div className='mt-6 bg-white p-4 rounded shadow max-h-[60vh] overflow-y-auto w-[340px] md:w-[400px] lg:w-[470px]'>
             {!hasInput && (
@@ -210,7 +218,7 @@ const Index = () => {
                     <ul className='list-none ml-6'>
                       {items.map((item, i) => {
                         return (
-                          <li key={item.id || i} className="text-sm border-b pb-2">
+                          <li key={item.id || i} className="text-base border-b pb-2">
                             {table === "chapters" && (
                               <Link
                                 to={`/chapters/${item.id}/topics`}
@@ -254,7 +262,7 @@ const Index = () => {
       <section className="relative py-4 z-10 animate-fade-in duration-500">
         <div className="text-center">
           {/* Profile Card */}
-          <div className="relative bg-[url('/ChatGPT-rosie.png')] bg-cover bg-center rounded-3xl shadow-xl">
+          <div className="relative bg-[url('/blue-rosie.png')] bg-cover bg-center rounded-3xl shadow-xl">
             {/* Frosted glass overlay */}
             <div className="absolute inset-0 bg-white/60 backdrop-blur-2xl rounded-3xl pointer-events-none" />
             {/* Bottom white overlay */}
@@ -266,7 +274,7 @@ const Index = () => {
               <div className="mb-4">
                 <div className="w-24 h-24 rounded-full mx-auto border-4 border-[#e4e8e1] shadow-lg flex items-center justify-center overflow-hidden">
                   <img
-                    src="/ChatGPT-rosie.png"
+                    src="/blue-rosie.png"
                     alt="Rosie Care Bot"
                     className="w-full h-full object-cover rounded-full"
                   />
@@ -276,7 +284,7 @@ const Index = () => {
               <h2 className="text-2xl font-black text-[#232323] mb-2 text-center">
                 Welcome to Your Journey
               </h2>
-              <p className="text-[#373618] mb-4 text-sm leading-relaxed text-center">
+              <p className="text-[#373618] mb-4 text-base leading-relaxed text-center">
                 <Typewriter
                   words={['I\'m Rosie, your AI guide for caregiving.',
                     '',

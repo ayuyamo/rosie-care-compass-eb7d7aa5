@@ -51,7 +51,7 @@ const FirstLaunchModal = () => {
           </DialogTitle>
         </DialogHeader>
         <div className="py-4 text-center">
-          <p className="text-sm text-muted-foreground leading-relaxed">
+          <p className="text-base text-muted-foreground leading-relaxed">
             By using this app, you agree to our{" "}
             <Link
               to="/privacy-policy"

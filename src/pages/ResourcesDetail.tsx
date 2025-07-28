@@ -169,7 +169,7 @@ const ResourcesDetail = () => {
                               rel="noopener noreferrer"
                               className="flex flex-wrap items-center justify-between p-2 rounded-lg bg-gray-50 hover:bg-gray-100 transition-colors no-underline"
                             >
-                              <span className="text-xs text-blue-600 truncate max-w-[80%]">
+                              <span className="text-base text-blue-600 truncate max-w-[80%]">
                                 {new URL(resource.url).hostname}
                               </span>
                               <ExternalLink className="h-4 w-4 text-gray-500 ml-2 flex-shrink-0" />

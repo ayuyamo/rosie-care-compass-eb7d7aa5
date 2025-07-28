@@ -96,7 +96,7 @@ export const CreativeStorySection = () => {
         <h3 className="text-2xl font-black mb-3 text-[#232323]">
           Real Stories, Real Impact
         </h3>
-        <p className="text-sm text-[#373618]">
+        <p className="text-base text-[#373618]">
           Learn from others walking similar paths
         </p>
       </div>
