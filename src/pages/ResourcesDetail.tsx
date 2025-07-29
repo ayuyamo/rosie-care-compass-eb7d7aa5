@@ -114,15 +114,15 @@ const ResourcesDetail = () => {
     <div className="min-h-screen">
 
       <header ref={headerRef} className={`flex flex-wrap items-center pt-4 mb-6 transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-        <Link to="/resources" className="mr-4">
-          <Button variant="ghost" size="sm" className="text-[#5a7a85]">
+        <Link to="/resources" className="flex flex-row">
+          <Button variant="ghost" size="sm" className="text-[#5a7a85] mr-4">
             <ArrowLeft className="h-5 w-5" />
           </Button>
+          <div className="flex flex-col">
+            <h1 className="text-2xl font-bold text-black">Resources by Topics</h1>
+            <p className="text-base text-gray-600 italic">Chapter: {chapterName}</p>
+          </div>
         </Link>
-        <div>
-          <h1 className="text-2xl font-bold text-black">Resources by Topics</h1>
-          <p className="text-base text-gray-600 italic">Chapter: {chapterName}</p>
-        </div>
       </header>
 
       <div ref={gridRef} className="space-y-6 mb-6">

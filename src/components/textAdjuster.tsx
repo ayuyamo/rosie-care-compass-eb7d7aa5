@@ -8,7 +8,7 @@ const TextAdjuster = () => {
     const panelRef = useRef<HTMLDivElement>(null);
     function updateOffsets(fontScale: number, button: HTMLElement | null, panel: HTMLElement | null) {
         const nav = document.getElementById('bottom-nav');
-        const navHeight = nav?.offsetHeight || 48;
+        const navHeight = nav?.offsetHeight || 80;
         const basePadding = 30;
         const panelOffset = 48 * fontScale;
 

@@ -10,9 +10,9 @@ const AcceptableUsePolicy = () => {
       <div className="max-w-3xl mx-auto">
         <div className="mb-6">
           <Link to="/">
-            <Button variant="ghost" className="mb-4">
+            <Button variant="ghost" className="mb-4 text-lg">
               <ArrowLeft className="h-4 w-4 mr-2" />
-              Back to App
+              Back to Home
             </Button>
           </Link>
         </div>

@@ -27,7 +27,7 @@ function updateBottomOffset(widget: HTMLElement) {
 
   const basePadding = 10;
   const nav = document.getElementById('bottom-nav');
-  const navHeight = nav?.offsetHeight || 48;
+  const navHeight = nav?.offsetHeight || 90;
   widget.style.bottom = `${navHeight + basePadding}px`;
   widget.style.transition = 'bottom 0.3s ease';
 }

@@ -7,7 +7,7 @@ const navItems = [
     { to: "/", label: "Home", icon: Home },
     { to: "/chapters", label: "Chapters", icon: BookOpen },
     { to: "/resources", label: "Resources", icon: Layers },
-    { to: "/flashcards", label: "Conversation Cards", icon: Blocks },
+    { to: "/flashcards", label: "Talk Starters", icon: Blocks },
 ];
 
 const BottomNavigation: React.FC = () => {
@@ -15,7 +15,7 @@ const BottomNavigation: React.FC = () => {
 
     return (
         <nav id='bottom-nav' className="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-gray-200/30 z-50">
-            <div className="flex flex-wrap max-w-md mx-auto items-center justify-around py-3">
+            <div className="flex flex-wrap max-w-md mx-auto items-center justify-around py-6">
                 {navItems.map(({ to, label, icon: Icon }) => {
                     const isActive = location.pathname === to;
                     return (

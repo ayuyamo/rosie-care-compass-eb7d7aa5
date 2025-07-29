@@ -150,7 +150,7 @@ export const CreativeStorySection = () => {
                           <Badge
                             key={topicIndex}
                             variant="secondary"
-                            className="text-base px-2 py-1"
+                            className="text-base px-2 py-1 text-center"
                             style={{
                               backgroundColor: `${randomColor}10`,
                               color: randomColor,
@@ -163,7 +163,7 @@ export const CreativeStorySection = () => {
                         {chapter.topics.length > 3 && (
                           <Badge
                             variant="secondary"
-                            className="text-base px-2 py-1 font-medium"
+                            className="text-base px-2 py-1 font-medium text-center"
                             style={{
                               backgroundColor: `${randomColor}10`,
                               color: randomColor,

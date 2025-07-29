@@ -97,15 +97,15 @@ const Resources = () => {
     <div className="min-h-screen pb-14">
 
       <header ref={headerRef} className={`flex flex-wrap items-center mb-6 transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-        <Link to="/" className="mr-4">
-          <Button variant="ghost" size="sm" className="text-[#5a7a85]">
+        <Link to="/" className="flex flex-row">
+          <Button variant="ghost" size="sm" className="text-[#5a7a85] mr-4">
             <ArrowLeft className="h-5 w-5" />
           </Button>
+          <div className="flex flex-col">
+            <h1 className="text-2xl font-bold text-black">Resources</h1>
+            <h2 className="text-base italic text-gray-700">Helpful resources shared in each chapter</h2>
+          </div>
         </Link>
-        <div className="flex flex-col p-4">
-          <h1 className="text-2xl font-bold text-black">Resources</h1>
-          <h2 className="text-base italic text-gray-700">Helpful resources shared in each chapter</h2>
-        </div>
       </header>
 
       <div ref={gridRef} className="space-y-8">

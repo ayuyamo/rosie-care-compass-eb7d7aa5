@@ -177,15 +177,15 @@ const Stories = () => {
             >
                 {/* Content */}
                 <div className="relative z-10 flex flex-wrap items-center w-full">
-                    <Link to={`/chapters/${chapterId}/topics`} className="mr-4">
-                        <Button variant="ghost" size="sm" className="text-[#5a7a85] hover:bg-white/20">
+                    <Link to={`/chapters/${chapterId}/topics`} className=" flex flex-row mr-4">
+                        <Button variant="ghost" size="sm" className="text-[#5a7a85] hover:bg-white/20 mr-4">
                             <ArrowLeft className="h-5 w-5" />
                         </Button>
+                        <div className="flex flex-col">
+                            <h1 className="text-2xl font-bold text-black">Topic: <span className='italic'>{topicName}</span></h1>
+                            <p className="text-base text-gray-700 mt-1">{stories.length} stories</p>
+                        </div>
                     </Link>
-                    <div>
-                        <h1 className="text-2xl font-bold text-black">Topic: <span className='italic'>{topicName}</span></h1>
-                        <p className="text-base text-gray-700 mt-1">{stories.length} stories</p>
-                    </div>
                 </div>
             </header>
 
