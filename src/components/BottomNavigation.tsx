@@ -5,9 +5,9 @@ import { Home, BookOpen, Users, Layers, Blocks } from "lucide-react";
 
 const navItems = [
     { to: "/", label: "Home", icon: Home },
-    { to: "/chapters", label: "Chapters", icon: BookOpen },
+    { to: "/chapters", label: "Stories", icon: BookOpen },
     { to: "/resources", label: "Resources", icon: Layers },
-    { to: "/flashcards", label: "Talk Starters", icon: Blocks },
+    { to: "/flashcards", label: "CareTalk Cards", icon: Blocks },
 ];
 
 const BottomNavigation: React.FC = () => {

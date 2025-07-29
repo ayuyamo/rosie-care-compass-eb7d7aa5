@@ -23,16 +23,8 @@ const TextAdjuster = () => {
         }
     }
 
-    // useEffect(() => {
-    //     const savedScale = localStorage.getItem('fontScale');
-    //     if (savedScale) {
-    //         setFontScale(parseFloat(savedScale));
-    //     }
-    // }, []);
-
     useEffect(() => {
         document.documentElement.style.fontSize = `${fontScale * 16}px`;
-        // localStorage.setItem('fontScale', fontScale.toString());
 
 
         updateOffsets(fontScale, buttonRef.current, panelRef.current);
@@ -46,7 +38,7 @@ const TextAdjuster = () => {
                 onClick={() => setOpen(!open)}
                 title='Text Settings'
             >
-                A
+                <h1 className='text-xl leading-none'>A<span className='text-sm'>A</span></h1>
 
             </button>
 

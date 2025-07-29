@@ -76,7 +76,7 @@ const FlashcardsByChapter = () => {
 
     return (
         <div className="min-h-screen">
-            <header ref={headerRef} className={`flex flex-wrap items-center mb-6 transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+            <header ref={headerRef} className={`flex flex-wrap items-center mb-6 pt-4 transition-all duration-1000 ${headerVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
                 <Link to="/flashcards" className="flex flex-row">
                     <Button variant="ghost" size="sm" className="text-[#5a7a85] mr-4">
                         <ArrowLeft className="h-5 w-5" />
@@ -87,7 +87,7 @@ const FlashcardsByChapter = () => {
                 </Link>
             </header>
             <div>
-                <div ref={barRef} className={`flex items-center gap-2 transition-all duration-1000 ${barVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
+                <div ref={barRef} className={`flex items-center gap-2 pb-4 transition-all duration-1000 ${barVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
                     <div className='flex-1 bg-gray-200 rounded-full h-4'>
                         <div className='bg-green-500 h-4 rounded-full transition-all duration-500'
                             style={{ width: `${progress}%` }}

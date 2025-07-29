@@ -17,9 +17,8 @@ function updateWidgetVariant(widget: HTMLElement) {
 }
 
 function updateWidgetColors(widget: HTMLElement) {
-  const isDark = !document.documentElement.classList.contains('light');
-  widget.setAttribute('avatar-orb-color-1', isDark ? '#2E2E2E' : '#4D9CFF');
-  widget.setAttribute('avatar-orb-color-2', isDark ? '#B8B8B8' : '#9CE6E6');
+  widget.setAttribute('avatar-orb-color-1', '#4D9CFF');
+  widget.setAttribute('avatar-orb-color-2', '#9CE6E6');
 }
 
 function updateBottomOffset(widget: HTMLElement) {
@@ -59,14 +58,13 @@ export const ElevenLabsWidget = () => {
       widget.id = ELEVENLABS_ID;
       widget.setAttribute('agent-id', 'agent_01jy4gwf2wemqr4qqp2jay5t4q');
       widget.setAttribute('variant', 'compact');
-      widget.setAttribute(
-        'avatar-image-url',
-        'https://ovexmcodlyhefuhmdfez.supabase.co/storage/v1/object/public/topics-images//ChatGPT-rosie.png'
-      );
+      widget.setAttribute('avatar-image-url', '/blue-rosie.png');
+      widget.setAttribute('avatar-orb-color-1', '#4D9CFF');
+      widget.setAttribute('avatar-orb-color-2', '#9CE6E6');
       widget.style.position = 'fixed';
 
       // Set initial styles
-      updateWidgetColors(widget);
+      // updateWidgetColors(widget);
       updateWidgetVariant(widget);
       updateBottomOffset(widget);
 

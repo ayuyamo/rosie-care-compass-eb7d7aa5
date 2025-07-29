@@ -64,7 +64,7 @@ const Flashcards = () => {
                     </Button>
                     <div className='flex flex-col'>
                         <h1 className="text-2xl font-bold text-black">
-                            Talk Starters
+                            CareTalk Cards
                         </h1>
                         <h2 className="text-base italic text-gray-700">Ask these questions to bond with your loved ones.</h2>
                     </div>
