@@ -4,7 +4,7 @@ import { useLocation, useParams } from "react-router-dom";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
-import { useState, useEffect, useLayoutEffect } from "react";
+import { useState, useEffect } from "react";
 import { fetchFlashcardsByChapterId } from "@/lib/supabase/supabaseApi";
 import { CheckCircle } from "lucide-react";
 import { FlashcardsByChapterSkeleton } from '@/components/ui/skeletons';

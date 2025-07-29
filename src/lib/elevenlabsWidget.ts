@@ -16,11 +16,6 @@ function updateWidgetVariant(widget: HTMLElement) {
   widget.setAttribute('variant', isMobile ? 'expandable' : 'compact');
 }
 
-function updateWidgetColors(widget: HTMLElement) {
-  widget.setAttribute('avatar-orb-color-1', '#4D9CFF');
-  widget.setAttribute('avatar-orb-color-2', '#9CE6E6');
-}
-
 function updateBottomOffset(widget: HTMLElement) {
   console.log('update bottom offset chat icon');
 
@@ -67,16 +62,6 @@ export const ElevenLabsWidget = () => {
       // updateWidgetColors(widget);
       updateWidgetVariant(widget);
       updateBottomOffset(widget);
-
-      // Observe theme changes
-      const themeObserver = new MutationObserver(() => {
-        updateWidgetColors(widget);
-      });
-
-      themeObserver.observe(document.documentElement, {
-        attributes: true,
-        attributeFilter: ['class'],
-      });
 
       // Handle bottom nav resize
 
@@ -127,7 +112,6 @@ export const ElevenLabsWidget = () => {
 
       // Cleanup
       return () => {
-        themeObserver.disconnect();
         resizeObserver.disconnect();
         window.removeEventListener('resize', handleResize);
         widget.remove();

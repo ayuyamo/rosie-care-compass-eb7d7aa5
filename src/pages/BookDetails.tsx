@@ -1,13 +1,13 @@
 
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, BookOpen, Heart, Clock, Download, Share, Star, ChevronDown, ChevronUp, Tag, Calendar, Globe, Bookmark } from "lucide-react";
+import { ArrowLeft, BookOpen, Heart, Clock, ChevronDown, Tag, Calendar, Globe, Bookmark } from "lucide-react";
 import { Link, useParams, useLocation } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useEffect, useLayoutEffect, useState, useRef } from "react";
 import { fetchBookDetails, fetchBookChapters, subscribeToTableChanges } from "@/lib/supabase/supabaseApi";
-import { OfficialBookSkeleton, BookDetailsSkeleton } from "@/components/ui/skeletons";
+import { BookDetailsSkeleton } from "@/components/ui/skeletons";
 
 const BookDetails = () => {
   const { bookId } = useParams<{ bookId: string }>();

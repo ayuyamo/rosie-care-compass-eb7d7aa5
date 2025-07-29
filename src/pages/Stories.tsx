@@ -1,13 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { ArrowLeft, BookOpen, ExternalLink, Share2, Facebook, Instagram, Linkedin, Twitter, ChevronDown } from "lucide-react";
+import { Collapsible, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { ArrowLeft, BookOpen, ExternalLink, Share2, ChevronDown } from "lucide-react";
 import { Link, useParams, useLocation } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useState, useEffect, useLayoutEffect } from "react";
 import { fetchStoriesByTopicId, fetchTopicById, fetchResourcesByTopicId, subscribeToTableChanges } from "@/lib/supabase/supabaseApi";
-import { Slide, ToastContainer, Zoom, toast } from "react-toastify";
+import { Slide, ToastContainer, toast } from "react-toastify";
 import Submit from "@/components/Submit";
 import { StoriesSkeleton } from "@/components/ui/skeletons";
 

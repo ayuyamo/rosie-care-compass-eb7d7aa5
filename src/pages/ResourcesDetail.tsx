@@ -1,12 +1,12 @@
 
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, ExternalLink, BookOpen, Video, FileText, Globe } from "lucide-react";
+import { ArrowLeft, ExternalLink } from "lucide-react";
 import { Link, useParams, useLocation } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useState, useEffect, useLayoutEffect } from "react";
-import { fetchTopicsByChapterId, fetchStoriesByTopicId, fetchResourcesByTopicId, fetchChapterById } from "@/lib/supabase/supabaseApi";
+import { fetchTopicsByChapterId, fetchResourcesByTopicId, fetchChapterById } from "@/lib/supabase/supabaseApi";
 import { subscribeToTableChanges } from "@/lib/supabase/supabaseApi";
 import Submit from "@/components/Submit";
 import { ResourcesDetailSkeleton } from "@/components/ui/skeletons";

@@ -1,12 +1,12 @@
 import BottomNavigation from "@/components/BottomNavigation";
-import { fetchChapters, fetchTopicsByChapterId, subscribeToTableChanges } from "@/lib/supabase/supabaseApi";
+import { fetchChapters, subscribeToTableChanges } from "@/lib/supabase/supabaseApi";
 import { useState, useEffect, useLayoutEffect } from "react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
-import { ArrowLeft, BookOpen, Heart, Clock, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { getConsistentColor } from '@/lib/colors';
 import { FlashcardsSkeleton } from '@/components/ui/skeletons';
 

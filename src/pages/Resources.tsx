@@ -1,12 +1,12 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Heart, BookOpen, Users, MessageCircle, Compass, Shield, Scale, Star, Clock, ArrowRight, Home } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import BottomNavigation from "@/components/BottomNavigation";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { useState, useEffect, useLayoutEffect } from "react";
-import { fetchTopicsByChapterId, subscribeToTableChanges, fetchStoriesByTopicId, fetchResourcesByTopicId, fetchChapters } from "@/lib/supabase/supabaseApi";
+import { fetchTopicsByChapterId, subscribeToTableChanges, fetchChapters } from "@/lib/supabase/supabaseApi";
 import { getConsistentColor } from "@/lib/colors";
 import Submit from "@/components/Submit";
 import { ResourcesSkeleton } from "@/components/ui/skeletons";

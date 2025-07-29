@@ -1,11 +1,7 @@
 
 import { useState, useEffect } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { Heart, BookOpen, Users, MessageCircle, Compass, Shield, Home, Scale, ArrowRight, Menu, X, Sparkles, Star, Zap, Camera, Bell, Search } from "lucide-react";
+import { Menu, X, Search } from "lucide-react";
 import BottomNavigation from "@/components/BottomNavigation";
-import { FloatingModuleGrid } from "@/components/FloatingModuleGrid";
 import { CreativeStorySection } from "@/components/CreativeStorySection";
 import OfficialBookSection from "@/components/OfficialBookSection";
 import MusicSection from "@/components/MusicSection";
@@ -187,20 +183,18 @@ const Index = () => {
             >
               {/* Menu icon */}
               <Menu
-                className={`
-      absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-      h-5 w-5 text-[#373618] transition-all duration-300
-      ${isMenuOpen ? 'opacity-0 rotate-45 scale-50' : 'opacity-100 rotate-0 scale-100'}
-    `}
+                className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+                            h-5 w-5 text-[#373618] transition-all duration-300
+                            ${isMenuOpen ? 'opacity-0 rotate-45 scale-50' : 'opacity-100 rotate-0 scale-100'}
+                          `}
               />
 
               {/* X icon */}
               <X
-                className={`
-      absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
-      h-5 w-5 text-[#373618] transition-all duration-300
-      ${isMenuOpen ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-45 scale-50'}
-    `}
+                className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+                            h-5 w-5 text-[#373618] transition-all duration-300
+                            ${isMenuOpen ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-45 scale-50'}
+                          `}
               />
             </button>
 
