@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import { Typewriter } from "react-simple-typewriter";
 import Submit from "@/components/Submit";
 import { IndexSkeleton } from "@/components/ui/skeletons";
+import { useTextSettings } from "@/context/TextSettingsContext";
 
 type SearchResults = {
   chapters: any[];
@@ -23,6 +24,7 @@ type SearchResults = {
 };
 
 const Index = () => {
+  const { fontScale } = useTextSettings();
 
   function highlightMatch(text: string, query: string) {
     if (!query) return text;
@@ -137,7 +139,7 @@ const Index = () => {
                 <Menu className="h-5 w-5 text-[#373618]" />
               </button>
               {isMenuOpen && (
-                <div className='absolute right-0 mt-2 w-40 bg-white border rounded-lg shadow-lg z-50 p-1'>
+                <div className={`absolute ${fontScale == 1.75 || fontScale == 1.5 ? 'left-0' : 'right-0'}  mt-2 w-36 bg-white border rounded-lg shadow-lg z-50 p-1`}>
                   <a href="/privacy-policy" className='block px-4 py-2 hover:bg-gray-100 text-gray-800'>
                     Privacy Policy
                   </a>
