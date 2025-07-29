@@ -15,14 +15,14 @@ const BottomNavigation: React.FC = () => {
 
     return (
         <nav id='bottom-nav' className="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-gray-200/30 z-50">
-            <div className="flex flex-wrap max-w-md mx-auto items-center justify-around py-6">
+            <div className="flex flex-wrap max-w-md mx-auto items-center justify-around py-6 px-4">
                 {navItems.map(({ to, label, icon: Icon }) => {
                     const isActive = location.pathname === to;
                     return (
                         <Link
                             key={to}
                             to={to}
-                            className={`flex flex-col px-2 items-center space-y-1 transition-colors ${isActive ? "text-[#c4a91a]" : "text-[#5a7a85] hover:text-[#c4a91a]"
+                            className={`flex flex-col items-center space-y-1 transition-colors ${isActive ? "text-[#c4a91a]" : "text-[#5a7a85] hover:text-[#c4a91a]"
                                 }`}
                         >
                             <Icon className="h-5 w-5" color={isActive ? "#c4a91a" : "#5a7a85"} />
