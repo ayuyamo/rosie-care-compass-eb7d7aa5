@@ -24,15 +24,12 @@ function updateWidgetColors(widget: HTMLElement) {
 
 function updateBottomOffset(widget: HTMLElement) {
   console.log('update bottom offset chat icon');
-  requestAnimationFrame(() => {
-    setTimeout(() => {
-      const basePadding = 10;
-      const nav = document.getElementById('bottom-nav');
-      const navHeight = nav?.offsetHeight || 48;
-      widget.style.bottom = `${navHeight + basePadding}px`;
-      widget.style.transition = 'bottom 0.3s ease';
-    }, 100);
-  });
+
+  const basePadding = 10;
+  const nav = document.getElementById('bottom-nav');
+  const navHeight = nav?.offsetHeight || 48;
+  widget.style.bottom = `${navHeight + basePadding}px`;
+  widget.style.transition = 'bottom 0.3s ease';
 }
 
 const ELEVENLABS_ID =
@@ -64,7 +61,7 @@ export const ElevenLabsWidget = () => {
       widget.setAttribute('variant', 'compact');
       widget.setAttribute(
         'avatar-image-url',
-        'https://ovexmcodlyhefuhmdfez.supabase.co/storage/v1/object/public/topics-images//blue-rosie.png'
+        'https://ovexmcodlyhefuhmdfez.supabase.co/storage/v1/object/public/topics-images//ChatGPT-rosie.png'
       );
       widget.style.position = 'fixed';
 

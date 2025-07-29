@@ -9,7 +9,7 @@ const TextAdjuster = () => {
     function updateOffsets(fontScale: number, button: HTMLElement | null, panel: HTMLElement | null) {
         const nav = document.getElementById('bottom-nav');
         const navHeight = nav?.offsetHeight || 48;
-        const basePadding = 20;
+        const basePadding = 30;
         const panelOffset = 48 * fontScale;
 
         if (button) {
@@ -23,35 +23,21 @@ const TextAdjuster = () => {
         }
     }
 
-    useEffect(() => {
-        const savedScale = localStorage.getItem('fontScale');
-        if (savedScale) {
-            setFontScale(parseFloat(savedScale));
-        }
-    }, []);
+    // useEffect(() => {
+    //     const savedScale = localStorage.getItem('fontScale');
+    //     if (savedScale) {
+    //         setFontScale(parseFloat(savedScale));
+    //     }
+    // }, []);
 
     useEffect(() => {
         document.documentElement.style.fontSize = `${fontScale * 16}px`;
-        localStorage.setItem('fontScale', fontScale.toString());
+        // localStorage.setItem('fontScale', fontScale.toString());
 
-        requestAnimationFrame(() => {
-            setTimeout(() => {
-                updateOffsets(fontScale, buttonRef.current, panelRef.current);
-            }, 50); // Optional: slight delay if layout is heavy
-        });
+
+        updateOffsets(fontScale, buttonRef.current, panelRef.current);
+
     }, [fontScale, open]);
-
-    useEffect(() => {
-        const nav = document.getElementById('bottom-nav');
-        if (!nav) return;
-
-        const observer = new ResizeObserver(() => {
-            updateOffsets(fontScale, buttonRef.current, panelRef.current);
-        });
-
-        observer.observe(nav);
-        return () => observer.disconnect();
-    }, [fontScale]); // depends on fontScale because nav height may change with it
 
     return (
         <div>
