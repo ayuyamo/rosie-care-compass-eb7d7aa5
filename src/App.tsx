@@ -6,8 +6,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Chapters from "./pages/Chapters";
 import Topics from "./pages/Topics";
-import Chat from "./pages/Chat";
-import Community from "./pages/Community";
 import Resources from "./pages/Resources";
 import BookDetails from "./pages/BookDetails";
 import NotFound from "./pages/NotFound";
@@ -41,8 +39,6 @@ const App = () => (
               <Route path="/chapters/:chapterId/topics" element={<Topics />} />
               <Route path="/chapters/:chapterId/resources/detail" element={<ResourcesDetail />} />
               <Route path="/chapters/:chapterId/topics/:topicId/stories" element={<Stories />} />
-              <Route path="/chat" element={<Chat />} />
-              <Route path="/community" element={<Community />} />
               <Route path="/resources" element={<Resources />} />
               <Route path="/book-details/:bookId" element={<BookDetails />} />
               <Route path="/privacy-policy" element={<PrivacyPolicy />} />
@@ -50,7 +46,6 @@ const App = () => (
               <Route path="/acceptable-use-policy" element={<AcceptableUsePolicy />} />
               <Route path="/flashcards" element={<Flashcards />} />
               <Route path="/flashcards/:chapterId" element={<FlashcardsByChapter />} />
-              {/* <Route path="/poems-collection" element={<PoemsCollection />} /> */}
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
