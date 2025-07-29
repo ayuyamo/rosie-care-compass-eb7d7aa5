@@ -190,7 +190,7 @@ const Index = () => {
                 className={`
       absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
       h-5 w-5 text-[#373618] transition-all duration-300
-      ${isMenuOpen ? 'opacity-0 rotate-45 scale-75' : 'opacity-100 rotate-0 scale-100'}
+      ${isMenuOpen ? 'opacity-0 rotate-45 scale-50' : 'opacity-100 rotate-0 scale-100'}
     `}
               />
 
@@ -199,7 +199,7 @@ const Index = () => {
                 className={`
       absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
       h-5 w-5 text-[#373618] transition-all duration-300
-      ${isMenuOpen ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-45 scale-75'}
+      ${isMenuOpen ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-45 scale-50'}
     `}
               />
             </button>
