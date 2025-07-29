@@ -5,7 +5,7 @@ export const FlashcardsByChapterSkeleton = () => {
     <div className="min-h-screen bg-background p-6 space-y-4">
       {/* Header skeleton */}
       <div className="flex items-center mb-6">
-        <Skeleton className="h-10 w-10 mr-4" />
+        <Skeleton className="h-10 w-10 mr-4 flex-shrink-0" />
         <Skeleton className="h-8 w-48" />
       </div>
 

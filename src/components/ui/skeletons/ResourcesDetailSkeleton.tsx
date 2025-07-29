@@ -6,10 +6,10 @@ export const ResourcesDetailSkeleton = () => {
 
       {/* Header Skeleton */}
       <header className="flex items-center mb-6">
-        <Skeleton className="w-8 h-8 rounded mr-4" />
-        <div>
-          <Skeleton className="h-7 w-56 mb-1" />
-          <Skeleton className="h-4 w-32" />
+        <Skeleton className="w-8 h-8 rounded mr-4 flex-shrink-0" />
+        <div className="w-full">
+          <Skeleton className="h-7 w-full mb-1" />
+          <Skeleton className="h-4 w-3/4" />
         </div>
       </header>
 
