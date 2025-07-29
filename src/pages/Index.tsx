@@ -104,7 +104,7 @@ const Index = () => {
   return (
     <div className="min-h-screen relative">
       {/* Mobile App Header */}
-      <header className="relative z-40 py-4 animate-fade-in bg-white/90 backdrop-blur-md border-b border-gray-200/30">
+      {/* <header className="relative z-40 py-4 animate-fade-in bg-white/90 backdrop-blur-md border-b border-gray-200/30">
         <div className="flex flex-wrap items-center justify-between">
           <div className="flex items-center justify-center space-x-3 py-3">
             <div className="relative">
@@ -138,7 +138,7 @@ const Index = () => {
                 <Menu className="h-5 w-5 text-[#373618]" />
               </button>
               {isMenuOpen && (
-                <div className={`absolute ${fontScale !== 1 ? 'left-0' : 'right-0'}  mt-2 w-36 bg-white border rounded-lg shadow-lg z-50 p-1`}>
+                <div className={`absolute ${fontScale !== 1 ? 'left-0' : 'right-0'} mt-2 w-36 bg-white border rounded-lg shadow-lg z-50 p-1`}>
                   <a href="/privacy-policy" className='block px-4 py-2 hover:bg-gray-100 text-gray-800'>
                     Privacy Policy
                   </a>
@@ -153,13 +153,86 @@ const Index = () => {
             </div>
           </div>
         </div>
+      </header> */}
+      <header className={`relative z-40 py-4 bg-white/90 backdrop-blur-md border-b border-gray-200/30`}>
+        <div className="flex flex-wrap items-center justify-between">
+          {/* Logo and Title */}
+          <div className="flex items-center justify-center space-x-3 py-3">
+            <div className="relative">
+              <div className="w-10 h-10 rounded-xl overflow-hidden p-1 border-4 border-slate-300">
+                <img
+                  src="/2.png"
+                  alt="villagecore logo"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+            <h1 className="text-lg font-semibold text-[#1b1c24] italic mr-2">Caregiving for Seniors</h1>
+          </div>
+
+          {/* Search + Menu */}
+          <div className="flex items-center space-x-3">
+            <button
+              className="p-2 bg-[#a0a0ab] rounded-lg active:scale-105"
+              onClick={() => setIsSearchOpen(true)}
+              aria-label="Open Search"
+            >
+              <Search className="h-5 w-5 text-white" />
+            </button>
+
+            <button
+              className="relative w-10 h-10 p-2 bg-gray-100 rounded-lg active:scale-105 overflow-hidden"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label="Toggle Menu"
+            >
+              {/* Menu icon */}
+              <Menu
+                className={`
+      absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+      h-5 w-5 text-[#373618] transition-all duration-300
+      ${isMenuOpen ? 'opacity-0 rotate-45 scale-75' : 'opacity-100 rotate-0 scale-100'}
+    `}
+              />
+
+              {/* X icon */}
+              <X
+                className={`
+      absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2
+      h-5 w-5 text-[#373618] transition-all duration-300
+      ${isMenuOpen ? 'opacity-100 rotate-0 scale-100' : 'opacity-0 -rotate-45 scale-75'}
+    `}
+              />
+            </button>
+
+          </div>
+        </div>
+
+        <div
+          className={`overflow-hidden transition-all duration-200 ${isMenuOpen ? 'max-h-[500px]' : 'max-h-0'
+            }`}
+        >
+          <div className={`p-4 space-y-2 transition-all duration-300 ${isMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10'}`}>
+            {/* dropdown content */}
+            <a href="/privacy-policy" className="block hover:underline text-gray-800">
+              Privacy Policy
+            </a>
+            <a href="/terms-of-service" className="block hover:underline text-gray-800">
+              Terms of Service
+            </a>
+            <a href="/acceptable-use-policy" className="block hover:underline text-gray-800">
+              Acceptable Use Policy
+            </a>
+          </div>
+        </div>
+
       </header>
+
 
 
       {/* Overlay */}
       {isSearchOpen && (
         <div className="fixed inset-0 z-50 bg-black bg-opacity-60 flex flex-col items-center justify-center">
-          <div className="relative w-[340px] md:w-[400px] lg:w-[500px] px-6">
+          <div className="relative w-3/4 px-6">
             {/* Close Button */}
             <button
               onClick={() => setIsSearchOpen(false)}
