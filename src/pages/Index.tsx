@@ -211,7 +211,7 @@ const Index = () => {
           className={`overflow-hidden transition-all duration-200 ${isMenuOpen ? 'max-h-[500px]' : 'max-h-0'
             }`}
         >
-          <div className={`p-4 space-y-2 transition-all duration-300 ${isMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10'}`}>
+          <div className={`p-4 space-y-2 text-center transition-all duration-300 ${isMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10'}`}>
             {/* dropdown content */}
             <a href="/privacy-policy" className="block hover:underline text-gray-800">
               Privacy Policy
