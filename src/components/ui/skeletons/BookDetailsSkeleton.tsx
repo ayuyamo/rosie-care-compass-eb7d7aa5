@@ -7,7 +7,7 @@ export const BookDetailsSkeleton = () => {
 
       {/* Header skeleton */}
       <header className="flex items-center mb-6">
-        <Skeleton className="w-8 h-8 rounded mr-4" />
+        <Skeleton className="w-8 h-8 rounded mr-4 flex-shrink-0" />
         <Skeleton className="h-7 w-48" />
       </header>
 
